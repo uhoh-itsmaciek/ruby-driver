@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - WhiteList</title>
+
+    <link href="../../../../css/style.css" rel="stylesheet">
+    <link href="../../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../../">Introduction</a></li>
+            <li><a href="../../../../features/">Features</a></li>
+            <li class="active"><a href="../../../">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              
+              
+              <li><a href="../../../">Cql</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../../">LoadBalancing</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Policies</a></li>
+              
+              
+              
+              
+              
+              <li class="active">WhiteList</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="page-header">
+  <h1>Cql::LoadBalancing::Policies::WhiteList <small>
+  class</small>
+</h1>
+</div>
+
+
+<h2>Inherits</h2>
+<div class="superclass"><code>Object</code></div>
+
+
+<h2>Extends</h2>
+<div class="extends">
+  <ul class="list-inline">
+    
+    <li><code>Forwardable</code></li>
+    
+  </ul>
+</div>
+
+
+<h2>Includes</h2>
+<div class="includes">
+  <ul class="list-inline">
+    
+    <li><code><a href="../../policy/" title="Cql::LoadBalancing::Policy (module)">Cql::LoadBalancing::Policy</a></code></li>
+    
+  </ul>
+</div>
+
+
+<h2>Methods</h2>
+<div class="module-methods">
+  
+    <div class="panel panel-default" id="initialize-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>ips</var>, <var>wrapped_policy</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new instance of WhiteList</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>ips</var></td>
+        
+        
+        <td class="type">
+<code>Enumerable</code>&lt;<code>String</code>, <code>IPAddr</code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          a list of ips to whitelist
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>wrapped_policy</var></td>
+        
+        
+        <td class="type"><code><a href="../../policy/" title="Cql::LoadBalancing::Policy (module)">Cql::LoadBalancing::Policy</a></code></td>
+        
+        <td class="details">
+          
+          
+          actual policy to filter
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if arguments are of unexpected types
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="plan-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>plan</strong></span><big>(</big><var>keyspace</var>, <var>statement</var>, <var>options</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Delegates to wrapped policy</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../policy/#plan-instance_method" title="Cql::LoadBalancing::Policy#plan (method)">Cql::LoadBalancing::Policy#plan</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="distance-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>distance</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Delegates to wrapped policy</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../policy/#distance-instance_method" title="Cql::LoadBalancing::Policy#distance (method)">Cql::LoadBalancing::Policy#distance</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_found-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_found</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Delegates to wrapped policy if host&#8217;s ip is whitelisted</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../../../host/" title="Cql::Host (class)">Cql::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../policy/#host_found-instance_method" title="Cql::LoadBalancing::Policy#host_found (method)">Cql::LoadBalancing::Policy#host_found</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_lost-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_lost</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Delegates to wrapped policy if host&#8217;s ip is whitelisted</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../../../host/" title="Cql::Host (class)">Cql::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../policy/#host_lost-instance_method" title="Cql::LoadBalancing::Policy#host_lost (method)">Cql::LoadBalancing::Policy#host_lost</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_up-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_up</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Delegates to wrapped policy if host&#8217;s ip is whitelisted</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../../../host/" title="Cql::Host (class)">Cql::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../policy/#host_up-instance_method" title="Cql::LoadBalancing::Policy#host_up (method)">Cql::LoadBalancing::Policy#host_up</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_down-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_down</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Delegates to wrapped policy if host&#8217;s ip is whitelisted</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../../../host/" title="Cql::Host (class)">Cql::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../policy/#host_down-instance_method" title="Cql::LoadBalancing::Policy#host_down (method)">Cql::LoadBalancing::Policy#host_down</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+
+<li><a href="../../../auth/">Auth</a></li>
+
+
+
+<li><a href="../../../builder/">Builder</a></li>
+
+
+
+<li><a href="../../../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../../../error/">Error</a></li>
+
+
+
+<li><a href="../../../errors/">Errors</a></li>
+
+
+
+<li><a href="../../../execution/">Execution</a></li>
+
+
+
+<li><a href="../../../future/">Future</a></li>
+
+
+
+<li><a href="../../../host/">Host</a></li>
+
+
+
+<li class="active">
+  <a href="../../">LoadBalancing</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li class="active">
+  <a href="../">Policies</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="../dcaware_round_robin/">DCAwareRoundRobin</a></li>
+
+
+
+<li><a href="../round_robin/">RoundRobin</a></li>
+
+
+
+<li class="active">
+  <a href="./">WhiteList</a>
+  
+</li>
+
+
+
+  </ul>
+  
+</li>
+
+
+
+<li><a href="../../policy/">Policy</a></li>
+
+
+
+  </ul>
+  
+</li>
+
+
+
+<li><a href="../../../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../../../result/">Result</a></li>
+
+
+
+<li><a href="../../../retry/">Retry</a></li>
+
+
+
+<li><a href="../../../session/">Session</a></li>
+
+
+
+<li><a href="../../../statement/">Statement</a></li>
+
+
+
+<li><a href="../../../statements/">Statements</a></li>
+
+
+
+<li><a href="../../../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../../../uuid/">Uuid</a></li>
+
+
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Session</title>
+
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../">Introduction</a></li>
+            <li><a href="../../features/">Features</a></li>
+            <li class="active"><a href="../">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              
+              
+              <li><a href="../">Cql</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Session</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="page-header">
+  <h1>Cql::Session <small>
+  class</small>
+</h1>
+</div>
+<p>Sessions are used for query execution. Each session tracks its current keyspace. A session should be reused as much as possible, however it is ok to create several independent session for interacting with different keyspaces in the same application.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+
+
+<h2>Inherits</h2>
+<div class="superclass"><code>Object</code></div>
+
+
+
+
+<h2>Methods</h2>
+<div class="module-methods">
+  
+    <div class="panel panel-default" id="execute_async-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>execute_async</strong></span><big>(</big><var>statement</var>, <var>*args</var>, <var>options</var> = {}<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Executes a given statement and returns a future result</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cql::Statements::Simple (class)">Cql::Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cql::Statements::Bound (class)">Cql::Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cql::Statements::Prepared (class)">Cql::Statements::Prepared</a></code>)</td>
+        
+        <td class="details">
+          
+          
+          statement to
+execute
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>args</var></td>
+        
+        
+        <td class="type">*<code>Object</code>
+</td>
+        
+        <td class="details">
+          
+          
+          arguments to paramterized query or prepared
+statement
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>options</var></td>
+        
+        
+        <td class="type"><code>Hash</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>{}</code>)</em>
+          
+          
+          a customizable set of options
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  
+    
+    
+    
+    
+    
+    
+    <dt class="tag-title">Keys for <var>options</var>:</dt>
+    <dd class="tag-content">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="name">Key</th>
+            <th class="type">Type</th>
+            <th class="details">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        <tr>
+          <td class="name"><var>:consistency</var></td>
+          <td class="type"><code>Symbol</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>:one</code>
+              
+            </span>
+            
+              consistency level for the
+request, one of <code><a href="../#CONSISTENCIES-constant" title="Cql::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:page_size</var></td>
+          <td class="type"><code>Integer</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>50000</code>
+              
+            </span>
+            
+              size of results page, you
+can page through results using <code><a href="../result/#next_page-instance_method" title="Cql::Result#next_page (method)">Result#next_page</a></code> or
+<code><a href="../result/#next_page_async-instance_method" title="Cql::Result#next_page_async (method)">Result#next_page_async</a></code>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:trace</var></td>
+          <td class="type"><code>Boolean</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>false</code>
+              
+            </span>
+            
+              whether to enable request
+tracing
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:timeout</var></td>
+          <td class="type"><code>Numeric</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>nil</code>
+              
+            </span>
+            
+              if specified, it is a number
+of seconds after which to time out the request if it hasn&#8217;t completed
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:serial_consistency</var></td>
+          <td class="type"><code>Symbol</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>nil</code>
+              
+            </span>
+            
+              this option is
+relevant for conditional updates and specifies a serial consistency to
+be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SERIAL_CONSISTENCIES (constant)">Cql::SERIAL_CONSISTENCIES</a></code>
+
+            
+          </td>
+        </tr>
+        
+        </tbody>
+      </table>
+    </dd>
+  
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code><a href="../future/" title="Cql::Future (class)">Cql::Future</a></code>&lt;<code><a href="../result/" title="Cql::Result (class)">Cql::Result</a></code>&gt;</td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="execute-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>execute</strong></span><big>(</big><var>statement</var>, <var>*args</var>, <var>options</var> = {}<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>A blocking wrapper around <code><a href="#execute_async-instance_method" title="Cql::Session#execute_async (method)">#execute_async</a></code></p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../result/" title="Cql::Result (class)">Cql::Result</a></code></td>
+        
+        <td class="details">
+          
+          
+          query result
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cql::Errors::NoHostsAvailable (class)">Cql::Errors::NoHostsAvailable</a></code></td>
+        
+        <td class="details">
+          
+          
+          if none of the hosts can be reached
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../errors/query_error/" title="Cql::Errors::QueryError (class)">Cql::Errors::QueryError</a></code></td>
+        
+        <td class="details">
+          
+          
+          if Cassandra returns an error response
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#execute_async-instance_method" title="Cql::Session#execute_async (method)">#execute_async</a></code></li>
+      
+        <li><code><a href="../future/#get-instance_method" title="Cql::Future#get (method)">Future#get</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="prepare_async-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>prepare_async</strong></span><big>(</big><var>statement</var>, <var>options</var> = nil<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="prepare-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>prepare</strong></span><big>(</big><var>*args</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="logged_batch-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>logged_batch</strong></span> {|batch| &#8230; }
+    
+  
+  
+  
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="batch-instance_method"><strong>batch</strong></span></span>
+    </span>
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new <code><a href="../statements/batch/" title="Cql::Statements::Batch (class)">Cql::Statements::Batch</a></code> instance and optionally yields it to a
+given block</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>batch</var></td>
+        
+        
+        <td class="type"><code><a href="../statements/batch/" title="Cql::Statements::Batch (class)">Statements::Batch</a></code></td>
+        
+        <td class="details">
+          
+          
+          a logged batch
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../statements/batch/" title="Cql::Statements::Batch (class)">Statements::Batch</a></code></td>
+        
+        <td class="details">
+          
+          
+          a logged batch
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="unlogged_batch-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>unlogged_batch</strong></span> {|statement| &#8230; }
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Yields:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>statement</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="counter_batch-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>counter_batch</strong></span> {|statement| &#8230; }
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Yields:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>statement</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="close_async-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>close_async</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="close-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>close</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="inspect-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>inspect</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+  </div>
+</div>
+
+  
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+
+<li><a href="../auth/">Auth</a></li>
+
+
+
+<li><a href="../builder/">Builder</a></li>
+
+
+
+<li><a href="../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../error/">Error</a></li>
+
+
+
+<li><a href="../errors/">Errors</a></li>
+
+
+
+<li><a href="../execution/">Execution</a></li>
+
+
+
+<li><a href="../future/">Future</a></li>
+
+
+
+<li><a href="../host/">Host</a></li>
+
+
+
+<li><a href="../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../result/">Result</a></li>
+
+
+
+<li><a href="../retry/">Retry</a></li>
+
+
+
+<li class="active">
+  <a href="./">Session</a>
+  
+</li>
+
+
+
+<li><a href="../statement/">Statement</a></li>
+
+
+
+<li><a href="../statements/">Statements</a></li>
+
+
+
+<li><a href="../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../uuid/">Uuid</a></li>
+
+
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

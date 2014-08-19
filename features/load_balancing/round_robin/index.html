@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Round Robin</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Features</a></li>
+            <li><a href="../../../api/">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              <li><a href="../../">Features</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Load Balancing</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Round Robin</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="feature-section">
+<h1 id="round-robin-policy">Round Robin Policy</h1>
+<p>The Round Robin load balancing policy dispatches requests evenly on cluster
+nodes.</p>
+
+<p>The effects of the policy can be seen by enabling requests tracing. The
+coordinator node that served every request is the last host in
+execution info.</p>
+<h2 id="round-robin-policy-is-used-by-default">Round Robin policy is used by default</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;songs&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">3</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="o">.</span><span class="n">sort</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>127.0.0.1
+127.0.0.2
+127.0.0.3</code></pre>
+</dd>
+</dl>
+<h2 id="round-robin-policy-is-used-explicitly">Round Robin policy is used explicitly</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;songs&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+  <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">3</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="o">.</span><span class="n">sort</span>
+
+<span class="nb">puts</span> <span class="n">ips</span><span class="o">.</span><span class="n">sort</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>127.0.0.1
+127.0.0.2
+127.0.0.3</code></pre>
+</dd>
+</dl>
+<h2 id="round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
+<dt>And </dt>
+<dd>a keyspace &#8220;simplex&#8221;</dd>
+<dt>And </dt>
+<dd>a table &#8220;songs&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cql'</span>
+
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+    <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">build</span>
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+  <span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+    <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+  <span class="k">end</span>
+
+  <span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="o">.</span><span class="n">sort</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>127.0.0.1
+127.0.0.2
+127.0.0.3
+127.0.0.4</code></pre>
+</dd>
+</dl>
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+            
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../../prepared_statements/">Prepared Statements</a></li>
+            
+            
+            
+            <li><a href="../../batch_statements/">Batch Statements</a></li>
+            
+            
+            
+            <li><a href="../../security/">Security</a></li>
+            
+            
+            
+            <li><a href="../../debugging/">Debugging</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Load Balancing</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li class="active">
+                  <a href="./">Round Robin</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#round-robin-policy-is-used-by-default">Round Robin policy is used by default</a></li>
+<li><a href="#round-robin-policy-is-used-explicitly">Round Robin policy is used explicitly</a></li>
+<li><a href="#round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters</a></li>
+</ul>
+                </li>
+                
+                
+                
+                <li><a href="../datacenter_aware/">Datacenter Aware</a></li>
+                
+                
+                
+                <li><a href="../whitelist/">Whitelist</a></li>
+                
+                
+                
+                <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
+                
+                
+              </ul>
+            </li>
+            
+            
+            
+            <li><a href="../../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Execution Info</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Features</a></li>
+            <li><a href="../../../api/">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              <li><a href="../../">Features</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Debugging</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Execution Info</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="feature-section">
+<h1 id="execution-information">Execution information</h1>
+<p>Every result contains useful execution information.</p>
+<h2 id="background">Background</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;songs&#8221;</dd>
+</dl>
+<h2 id="execution-information-is-accessible-from-execution-result">execution information is accessible from execution result</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+            <span class="o">.</span><span class="n">with_contact_points</span><span class="p">(</span><span class="s2">"127.0.0.1"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">build</span>
+
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+
+<span class="nb">puts</span> <span class="s2">"coordinator: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"keyspace: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">keyspace</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"cql: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">cql</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"requested consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"actual consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"number of retries: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">retries</span><span class="si">}</span><span class="s2">"</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should match:<pre><code>coordinator: 127\.0\.0\.(1|2|3)</code></pre>
+</dd>
+<dt>And </dt>
+<dd>its output should contain:<pre><code>keyspace: simplex
+cql: SELECT * FROM songs
+requested consistency: one
+actual consistency: one
+number of retries: 0</code></pre>
+</dd>
+</dl>
+<h2 id="execution-information-reflects-retry-decision">execution information reflects retry decision</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a file named &#8220;retrying_at_a_given_consistency_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">RetryingAtAGivenConsistencyPolicy</span>
+  <span class="kp">include</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Retry</span><span class="o">::</span><span class="no">Policy</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">consistency_to_use</span><span class="p">)</span>
+    <span class="vi">@consistency_to_use</span> <span class="o">=</span> <span class="n">consistency_to_use</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">read_timeout</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">required_responses</span><span class="p">,</span>
+                   <span class="n">received_responses</span><span class="p">,</span> <span class="n">data_retrieved</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
+    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">write_timeout</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">write_type</span><span class="p">,</span>
+                    <span class="n">acks_required</span><span class="p">,</span> <span class="n">acks_received</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
+    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">unavailable</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">replicas_required</span><span class="p">,</span>
+                  <span class="n">replicas_alive</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
+    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<span class="nb">require</span> <span class="s1">'retrying_at_a_given_consistency_policy'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+            <span class="o">.</span><span class="n">with_retry_policy</span><span class="p">(</span><span class="no">RetryingAtAGivenConsistencyPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:one</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">with_contact_points</span><span class="p">(</span><span class="s2">"127.0.0.1"</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">build</span>
+
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:all</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+
+<span class="nb">puts</span> <span class="s2">"requested consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"actual consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"number of retries: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">retries</span><span class="si">}</span><span class="s2">"</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>node 3 stops</dd>
+<dt>And </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>requested consistency: all
+actual consistency: one
+number of retries: 1</code></pre>
+</dd>
+</dl>
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+            
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../../prepared_statements/">Prepared Statements</a></li>
+            
+            
+            
+            <li><a href="../../batch_statements/">Batch Statements</a></li>
+            
+            
+            
+            <li><a href="../../security/">Security</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Debugging</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li class="active">
+                  <a href="./">Execution Info</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#execution-information-is-accessible-from-execution-result">execution information is accessible from execution result</a></li>
+<li><a href="#execution-information-reflects-retry-decision">execution information reflects retry decision</a></li>
+</ul>
+                </li>
+                
+                
+                
+                <li><a href="../request_tracing/">Request Tracing</a></li>
+                
+                
+              </ul>
+            </li>
+            
+            
+            
+            <li><a href="../../load_balancing/">Load Balancing</a></li>
+            
+            
+            
+            <li><a href="../../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

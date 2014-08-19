@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Generator</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li><a href="../../../features/">Features</a></li>
+            <li class="active"><a href="../../">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              
+              
+              <li><a href="../../">Cql</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">TimeUuid</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Generator</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="page-header">
+  <h1>Cql::TimeUuid::Generator <small>
+  class</small>
+</h1>
+</div>
+<p>A UUID version 1, variant 1 generator. It can generate a sequence of UUIDs
+with reasonable uniqueness guarantees:</p>
+
+<ul>
+<li>The clock ID and node ID components are set to random numbers when the
+generator is created.</li>
+<li>If two calls to <code><a href="#next-instance_method" title="Cql::TimeUuid::Generator#next (method)">#next</a></code> happen within the time afforded by the system
+clock resolution a counter is incremented and added to the time
+component.</li>
+<li>If the clock moves backwards the clock ID is reset to a new random
+number.</li>
+</ul>
+
+<p>Instances of this class are absolutely not threadsafe. You should
+never share instances between threads.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+
+
+<h2>Inherits</h2>
+<div class="superclass"><code>Object</code></div>
+
+
+
+
+<h2>Methods</h2>
+<div class="module-methods">
+  
+    <div class="panel panel-default" id="initialize-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>node_id</var> = nil, <var>clock_id</var> = nil, <var>clock</var> = Time<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Create a new UUID generator.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>node_id</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          an alternate node ID (defaults to a random number)
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>clock_id</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          an alternate clock ID (defaults to a random number)
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="next-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>next</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new UUID with a time component that is the current time.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../" title="Cql::TimeUuid (class)">Cql::TimeUuid</a></code></td>
+        
+        <td class="details">
+          
+          
+          a new UUID
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="from_time-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>from_time</strong></span><big>(</big><var>time</var>, <var>jitter</var> = rand(2**16)<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new UUID with a time component based on the specified Time.
+A piece of jitter is added to ensure that multiple calls with the same
+time do not generate the same UUID (if you want determinism you can set
+the second parameter to zero).</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>time</var></td>
+        
+        
+        <td class="type"><code>Time</code></td>
+        
+        <td class="details">
+          
+          
+          the time to encode into the UUID
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>jitter</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>rand(2**16)</code>)</em>
+          
+          
+          a number of microseconds to add to the time to make it unique
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../" title="Cql::TimeUuid (class)">Cql::TimeUuid</a></code></td>
+        
+        <td class="details">
+          
+          
+          a new UUID
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+
+<li><a href="../../auth/">Auth</a></li>
+
+
+
+<li><a href="../../builder/">Builder</a></li>
+
+
+
+<li><a href="../../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../../error/">Error</a></li>
+
+
+
+<li><a href="../../errors/">Errors</a></li>
+
+
+
+<li><a href="../../execution/">Execution</a></li>
+
+
+
+<li><a href="../../future/">Future</a></li>
+
+
+
+<li><a href="../../host/">Host</a></li>
+
+
+
+<li><a href="../../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../../result/">Result</a></li>
+
+
+
+<li><a href="../../retry/">Retry</a></li>
+
+
+
+<li><a href="../../session/">Session</a></li>
+
+
+
+<li><a href="../../statement/">Statement</a></li>
+
+
+
+<li><a href="../../statements/">Statements</a></li>
+
+
+
+<li class="active">
+  <a href="../">TimeUuid</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li class="active">
+  <a href="./">Generator</a>
+  
+</li>
+
+
+
+  </ul>
+  
+</li>
+
+
+
+<li><a href="../../uuid/">Uuid</a></li>
+
+
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

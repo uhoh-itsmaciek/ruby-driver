@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - QueryError</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li><a href="../../../features/">Features</a></li>
+            <li class="active"><a href="../../">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              
+              
+              <li><a href="../../">Cql</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Errors</a></li>
+              
+              
+              
+              
+              
+              <li class="active">QueryError</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="page-header">
+  <h1>Cql::Errors::QueryError <small>
+  class</small>
+</h1>
+</div>
+<p>This error type represents errors sent by the server, the <code>code</code> attribute
+can be used to find the exact type, and <code>cql</code> contains the request&#8217;s CQL,
+if any. <code>message</code> contains the human readable error message sent by the
+server.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+
+
+<h2>Inherits</h2>
+<div class="superclass"><code><a href="../../error/" title="Cql::Error (class)">Cql::Error</a></code></div>
+
+
+
+
+<h2>Methods</h2>
+<div class="module-methods">
+  
+    <div class="panel panel-default" id="code-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>code</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns error code</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          error code
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="cql-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>cql</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns original CQL used</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          original CQL used
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="details-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>details</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns various error details</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code>Hash</code>{<code>Symbol</code> =&gt; <code>String</code>, <code>Integer</code>}</td>
+        
+        <td class="details">
+          
+          
+          various error details
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+
+<li><a href="../../auth/">Auth</a></li>
+
+
+
+<li><a href="../../builder/">Builder</a></li>
+
+
+
+<li><a href="../../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../../error/">Error</a></li>
+
+
+
+<li class="active">
+  <a href="../">Errors</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="../authentication_error/">AuthenticationError</a></li>
+
+
+
+<li><a href="../client_error/">ClientError</a></li>
+
+
+
+<li><a href="../io_error/">IoError</a></li>
+
+
+
+<li><a href="../no_hosts_available/">NoHostsAvailable</a></li>
+
+
+
+<li class="active">
+  <a href="./">QueryError</a>
+  
+</li>
+
+
+
+  </ul>
+  
+</li>
+
+
+
+<li><a href="../../execution/">Execution</a></li>
+
+
+
+<li><a href="../../future/">Future</a></li>
+
+
+
+<li><a href="../../host/">Host</a></li>
+
+
+
+<li><a href="../../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../../result/">Result</a></li>
+
+
+
+<li><a href="../../retry/">Retry</a></li>
+
+
+
+<li><a href="../../session/">Session</a></li>
+
+
+
+<li><a href="../../statement/">Statement</a></li>
+
+
+
+<li><a href="../../statements/">Statements</a></li>
+
+
+
+<li><a href="../../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../../uuid/">Uuid</a></li>
+
+
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

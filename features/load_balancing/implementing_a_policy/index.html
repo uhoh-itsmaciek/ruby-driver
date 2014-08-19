@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Implementing A Policy</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Features</a></li>
+            <li><a href="../../../api/">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              <li><a href="../../">Features</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Load Balancing</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Implementing A Policy</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="feature-section">
+<h1 id="implementing-custom-load-balancing-policies">Implementing custom load balancing policies</h1>
+<p>To implement a load balancing policy, mix in <code>Cql::LoadBalancing::Policy</code>
+module and provide implementations for its required methods. Currently, load
+balancing policies are required to be thread-safe.</p>
+
+<p>The object returned from the <code>plan</code> method must implement method <code>next</code>
+that returns a <code>Cql::Host</code> instance or raises <code>StopIteration</code>.</p>
+
+<p>This method will be called from multiple threads, but never in parallel and
+<code>Plan</code> doesn&#8217;t have to be thread-safe. However, because it is called across
+threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</p>
+<h2 id="background">Background</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;songs&#8221;</dd>
+</dl>
+<h2 id="a-policy-to-ignore-a-certain-keyspace">A policy to ignore a certain keyspace</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a file named &#8220;ignoring_keyspace_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">IgnoringKeyspacePolicy</span>
+  <span class="kp">include</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="no">Policy</span>
+
+  <span class="k">class</span> <span class="nc">Plan</span>
+    <span class="k">def</span> <span class="nf">next</span>
+      <span class="k">raise</span> <span class="o">::</span><span class="no">StopIteration</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">keyspace_to_ignore</span><span class="p">,</span> <span class="n">original_policy</span><span class="p">)</span>
+    <span class="vi">@keyspace</span> <span class="o">=</span> <span class="n">keyspace_to_ignore</span>
+    <span class="vi">@policy</span>   <span class="o">=</span> <span class="n">original_policy</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@keyspace</span> <span class="o">==</span> <span class="n">keyspace</span>
+      <span class="no">Plan</span><span class="o">.</span><span class="n">new</span>
+    <span class="k">else</span>
+      <span class="vi">@policy</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_found</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_found</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_lost</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_lost</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_up</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_up</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_down</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_down</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<span class="nb">require</span> <span class="s1">'ignoring_keyspace_policy'</span>
+
+<span class="n">policy</span>  <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+            <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="no">IgnoringKeyspacePolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">,</span> <span class="n">policy</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="k">begin</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="s2">"failure"</span>
+<span class="k">rescue</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Errors</span><span class="o">::</span><span class="no">NoHostsAvailable</span>
+  <span class="nb">puts</span> <span class="s2">"success"</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>success</code></pre>
+</dd>
+</dl>
+<h2 id="a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a file named &#8220;blacklist_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">BlackListPolicy</span>
+  <span class="kp">include</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="no">Policy</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">ips_to_ignore</span><span class="p">,</span> <span class="n">original_policy</span><span class="p">)</span>
+    <span class="vi">@ips</span>    <span class="o">=</span> <span class="o">::</span><span class="no">Set</span><span class="o">.</span><span class="n">new</span>
+    <span class="vi">@policy</span> <span class="o">=</span> <span class="n">original_policy</span>
+
+    <span class="n">ips_to_ignore</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">ip</span><span class="o">|</span>
+      <span class="k">case</span> <span class="n">ip</span>
+      <span class="k">when</span> <span class="o">::</span><span class="no">IPAddr</span>
+        <span class="vi">@ips</span> <span class="o">&lt;&lt;</span> <span class="n">ip</span>
+      <span class="k">when</span> <span class="o">::</span><span class="nb">String</span>
+        <span class="vi">@ips</span> <span class="o">&lt;&lt;</span> <span class="o">::</span><span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_found</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_found</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="k">unless</span> <span class="vi">@ips</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">host</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_lost</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_lost</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="k">unless</span> <span class="vi">@ips</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">host</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_up</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_up</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="k">unless</span> <span class="vi">@ips</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">host</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">host_down</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="vi">@policy</span><span class="o">.</span><span class="n">host_down</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="k">unless</span> <span class="vi">@ips</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">host</span><span class="o">.</span><span class="n">ip</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<span class="nb">require</span> <span class="s1">'blacklist_policy'</span>
+
+<span class="n">policy</span>  <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+            <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="no">BlackListPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="s1">'127.0.0.2'</span><span class="p">,</span> <span class="s1">'127.0.0.3'</span><span class="o">]</span><span class="p">,</span> <span class="n">policy</span><span class="p">))</span>
+            <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">host_ips</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ip</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span>
+
+<span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">3</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span>
+
+<span class="nb">puts</span> <span class="s2">"Cluster hosts:"</span>
+<span class="nb">puts</span> <span class="n">host_ips</span>
+<span class="nb">puts</span> <span class="s2">""</span>
+<span class="nb">puts</span> <span class="s2">"Hosts used:"</span>
+<span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">uniq</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>Cluster hosts:
+127.0.0.1
+127.0.0.2
+127.0.0.3
+
+Hosts used:
+127.0.0.1</code></pre>
+</dd>
+</dl>
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+            
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../../prepared_statements/">Prepared Statements</a></li>
+            
+            
+            
+            <li><a href="../../batch_statements/">Batch Statements</a></li>
+            
+            
+            
+            <li><a href="../../security/">Security</a></li>
+            
+            
+            
+            <li><a href="../../debugging/">Debugging</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Load Balancing</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li><a href="../round_robin/">Round Robin</a></li>
+                
+                
+                
+                <li><a href="../datacenter_aware/">Datacenter Aware</a></li>
+                
+                
+                
+                <li><a href="../whitelist/">Whitelist</a></li>
+                
+                
+                
+                <li class="active">
+                  <a href="./">Implementing A Policy</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#a-policy-to-ignore-a-certain-keyspace">A policy to ignore a certain keyspace</a></li>
+<li><a href="#a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts</a></li>
+</ul>
+                </li>
+                
+                
+              </ul>
+            </li>
+            
+            
+            
+            <li><a href="../../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

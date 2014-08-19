@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Datacenter Aware</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Features</a></li>
+            <li><a href="../../../api/">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              <li><a href="../../">Features</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Load Balancing</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Datacenter Aware</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="feature-section">
+<h1 id="datacenter-aware-round-robin-policy">Datacenter-aware Round Robin Policy</h1>
+<p>A specialized Round Robin load balancing policy allows for querying remote
+datacenters only when all local nodes are down. This policy will round robin
+requests across hosts in the local datacenter, falling back to remote
+datacenter if necessary. The name of the local datacenter must be supplied by
+the user.</p>
+
+<p>All known remote hosts will be tried when local nodes are not available.
+However, you can configure the exact number of remote hosts that will be used
+by passing that number when constructing a policy instance.</p>
+
+<p>By default, this policy will not attempt to use remote hosts for local
+consistencies (<code>:local_one</code> or <code>:local_quorum</code>), however, it is possible to
+change that behavior via constructor.</p>
+<h2 id="background">Background</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
+<dt>And </dt>
+<dd>a keyspace &#8220;simplex&#8221;</dd>
+<dt>And </dt>
+<dd>a table &#8220;songs&#8221;</dd>
+</dl>
+<h2 id="requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+              <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">uniq</span>
+
+<span class="nb">puts</span> <span class="n">hosts_used</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>127.0.0.3
+127.0.0.4</code></pre>
+</dd>
+</dl>
+<h2 id="requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+              <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">uniq</span>
+
+<span class="nb">puts</span> <span class="n">hosts_used</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>node 3 is stopped</dd>
+<dt>And </dt>
+<dd>node 4 is stopped</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>127.0.0.1
+127.0.0.2</code></pre>
+</dd>
+</dl>
+<h2 id="requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">datacenter</span>     <span class="o">=</span> <span class="s2">"dc2"</span>
+<span class="n">remotes_to_try</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">policy</span>         <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="n">remotes_to_try</span><span class="p">)</span>
+<span class="n">cluster</span>        <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+                   <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+                   <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">uniq</span>
+
+<span class="nb">puts</span> <span class="s2">"Used </span><span class="si">#{</span><span class="n">hosts_used</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> host, with ip </span><span class="si">#{</span><span class="n">hosts_used</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2">"</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>node 3 is stopped</dd>
+<dt>And </dt>
+<dd>node 4 is stopped</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should match:<pre><code>Used 1 host, with ip 127\.0\.0\.(1|2)</code></pre>
+</dd>
+</dl>
+<h2 id="requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+              <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:local_one</span><span class="p">)</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>node 3 is stopped</dd>
+<dt>And </dt>
+<dd>node 4 is stopped</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>no hosts available, check #errors property for details (Cql::Errors::NoHostsAvailable)</code></pre>
+</dd>
+</dl>
+<h2 id="routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+
+<span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
+<span class="n">use_remote</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">use_remote</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
+              <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+              <span class="o">.</span><span class="n">build</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+
+<span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+  <span class="n">info</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span>
+<span class="k">end</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">uniq</span>
+
+<span class="nb">puts</span> <span class="n">hosts_used</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>node 3 is stopped</dd>
+<dt>And </dt>
+<dd>node 4 is stopped</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>127.0.0.1
+127.0.0.2</code></pre>
+</dd>
+</dl>
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+            
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../../prepared_statements/">Prepared Statements</a></li>
+            
+            
+            
+            <li><a href="../../batch_statements/">Batch Statements</a></li>
+            
+            
+            
+            <li><a href="../../security/">Security</a></li>
+            
+            
+            
+            <li><a href="../../debugging/">Debugging</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Load Balancing</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li><a href="../round_robin/">Round Robin</a></li>
+                
+                
+                
+                <li class="active">
+                  <a href="./">Datacenter Aware</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter</a></li>
+<li><a href="#requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down</a></li>
+<li><a href="#requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters</a></li>
+<li><a href="#requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters</a></li>
+<li><a href="#routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters</a></li>
+</ul>
+                </li>
+                
+                
+                
+                <li><a href="../whitelist/">Whitelist</a></li>
+                
+                
+                
+                <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
+                
+                
+              </ul>
+            </li>
+            
+            
+            
+            <li><a href="../../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

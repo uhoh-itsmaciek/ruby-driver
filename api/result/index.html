@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Result</title>
+
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../">Introduction</a></li>
+            <li><a href="../../features/">Features</a></li>
+            <li class="active"><a href="../">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              
+              
+              
+              
+              <li><a href="../">Cql</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Result</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="page-header">
+  <h1>Cql::Result <small>
+  class</small>
+</h1>
+</div>
+
+
+<h2>Inherits</h2>
+<div class="superclass"><code>Object</code></div>
+
+
+
+<h2>Includes</h2>
+<div class="includes">
+  <ul class="list-inline">
+    
+    <li><code>Enumerable</code></li>
+    
+  </ul>
+</div>
+
+
+<h2>Methods</h2>
+<div class="module-methods">
+  
+    <div class="panel panel-default" id="execution_info-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>execution_info</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Query execution information, such as number of retries and all tried hosts, etc.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../execution/info/" title="Cql::Execution::Info (class)">Cql::Execution::Info</a></code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="empty?-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>empty?</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns whether it has any rows</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Boolean</code></td>
+        
+        <td class="details">
+          
+          
+          whether it has any rows
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="size-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>size</strong></span> 
+    
+  
+  
+  
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="length-instance_method"><strong>length</strong></span></span>
+    </span>
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns rows count</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          rows count
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="each-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>each</strong></span> {|row| &#8230; }
+    
+  
+  
+  
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="rows-instance_method"><strong>rows</strong></span>, <span id="each_row-instance_method"><strong>each_row</strong></span></span>
+    </span>
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns Enumerator if no block given</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>row</var></td>
+        
+        
+        <td class="type"><code>Hash</code></td>
+        
+        <td class="details">
+          
+          
+          current row
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">(<code>Enumerator</code> or <code>self</code>)</td>
+        
+        <td class="details">
+          
+          
+          returns Enumerator if no block given
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="last_page?-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>last_page?</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns whether no more pages are available</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Boolean</code></td>
+        
+        <td class="details">
+          
+          
+          whether no more pages are available
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="next_page-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>next_page</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Loads next page synchronously</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../session/#execute-instance_method" title="Cql::Session#execute (method)">Session#execute</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="next_page_async-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>next_page_async</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Loads next page asynchronously</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">(<code><a href="./" title="Cql::Result (class)">Cql::Result</a></code> or <code>nil</code>)</td>
+        
+        <td class="details">
+          
+          
+          returns <code>nil</code> if last page
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../session/#execute_async-instance_method" title="Cql::Session#execute_async (method)">Session#execute_async</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+
+<li><a href="../auth/">Auth</a></li>
+
+
+
+<li><a href="../builder/">Builder</a></li>
+
+
+
+<li><a href="../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../error/">Error</a></li>
+
+
+
+<li><a href="../errors/">Errors</a></li>
+
+
+
+<li><a href="../execution/">Execution</a></li>
+
+
+
+<li><a href="../future/">Future</a></li>
+
+
+
+<li><a href="../host/">Host</a></li>
+
+
+
+<li><a href="../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../reconnection/">Reconnection</a></li>
+
+
+
+<li class="active">
+  <a href="./">Result</a>
+  
+</li>
+
+
+
+<li><a href="../retry/">Retry</a></li>
+
+
+
+<li><a href="../session/">Session</a></li>
+
+
+
+<li><a href="../statement/">Statement</a></li>
+
+
+
+<li><a href="../statements/">Statements</a></li>
+
+
+
+<li><a href="../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../uuid/">Uuid</a></li>
+
+
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
