@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Debugging</title>
+    <title>Datastax Cassandra Ruby Driver - Reconnection</title>
 
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
@@ -58,18 +58,17 @@
               
               
               
-              <li class="active">Debugging</li>
+              <li class="active">Reconnection</li>
               
               
               
             </ol>
           </nav>
-          <h1 id="debugging">Debugging</h1>
+          <h1 id="reconnection">Reconnection</h1>
+
+<p>Ruby driver will automatically reestablish failed connections to Cassandra nodes. It uses reconnection policy to determine retry intervals for reconnection.</p>
 <h3 id="topics">Topics</h3>
-<ul class="sub-topics">
-<li><a href="execution_info/">Execution Info</a></li>
-<li><a href="request_tracing/">Request Tracing</a></li>
-</ul>
+<ul class="sub-topics"><li><a href="automatic_reconnection/">Automatic Reconnection</a></li></ul>
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
@@ -91,20 +90,7 @@
             
             
             
-            <li class="active">
-              <a href="./">Debugging</a>
-              <ul class="nav nav-pills nav-stacked">
-                
-                
-                <li><a href="execution_info/">Execution Info</a></li>
-                
-                
-                
-                <li><a href="request_tracing/">Request Tracing</a></li>
-                
-                
-              </ul>
-            </li>
+            <li><a href="../debugging/">Debugging</a></li>
             
             
             
@@ -120,7 +106,16 @@
             
             
             
-            <li><a href="../reconnection/">Reconnection</a></li>
+            <li class="active">
+              <a href="./">Reconnection</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li><a href="automatic_reconnection/">Automatic Reconnection</a></li>
+                
+                
+              </ul>
+            </li>
             
             
           </ol>

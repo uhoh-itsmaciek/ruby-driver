@@ -102,37 +102,152 @@
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>read_timeout</strong></span><big>(</big><var>statement</var>, <var>consistency_level</var>, <var>responses_required</var>, <var>responses_received</var>, <var>data_retrieved</var>, <var>retries</var><big>)</big> 
+      <span class="path"><strong>read_timeout</strong></span><big>(</big><var>statement</var>, <var>consistency</var>, <var>required</var>, <var>received</var>, <var>retrieved</var>, <var>retries</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Public: decides wether to retry a read and at what consistency level.</p>
-
-<p>Not that this method may be calld even if required_responses &gt;=
-received responses if data_present is false.</p>
-
-<p>statement          - the original Statement that timed out
-consistency_level  - original ConsistencyLevel
-responses_required - the number of responses required to achieve
-                     requested consistency level
-responses_received - the number of responses received by the time the
-                     query timed out
-data_received      - whether actual data (as opposed to data checksum)
-                     was present in the received responses.
-retries           - the number of retries already performed</p>
-
-<p>Returns a Cql::Policies::Retry::Decision</p>
+    <p>Decides wether to retry a read and at what consistency level.</p>
 
 <dl class="dl-horizontal notes">
+<dt><span class="label label-info">Abstract</span></dt>
+<dd>implementation should be provided by an actual policy
+</dd>
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>this method may be called even if required_responses &gt;= received
+responses if data_present is false.
+</dd>
+
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type"><code><a href="../../statement/" title="Cql::Statement (module)">Cql::Statement</a></code></td>
+        
+        <td class="details">
+          
+          
+          the original statement that timed out
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>consistency</var></td>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          the original consistency level for the
+request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cql::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>required</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of responses required to achieve
+requested consistency level
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>received</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of responses received by the time
+the query timed out
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>retrieved</var></td>
+        
+        
+        <td class="type"><code>Boolean</code></td>
+        
+        <td class="details">
+          
+          
+          whether actual data (as opposed to data
+checksum) was present in the received responses.
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>retries</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of retries already performed
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
-  Raises:
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
@@ -150,10 +265,13 @@ retries           - the number of retries already performed</p>
       <tr>
         
         
-        <td class="type"><code>NotImplemented</code></td>
+        <td class="type"><code>Cql::Policies::Retry::Decision</code></td>
         
         <td class="details">
           
+          
+          a retry decision
+
           
         </td>
       </tr>
@@ -161,6 +279,19 @@ retries           - the number of retries already performed</p>
     </tbody>
   </table>
 </dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#try_again-instance_method" title="Cql::Retry::Policy#try_again (method)">#try_again</a></code></li>
+      
+        <li><code><a href="#reraise-instance_method" title="Cql::Retry::Policy#reraise (method)">#reraise</a></code></li>
+      
+        <li><code><a href="#ignore-instance_method" title="Cql::Retry::Policy#ignore (method)">#ignore</a></code></li>
+      
+    </ul>
+  </dd>
 
 </dl>
   </div>
@@ -171,34 +302,146 @@ retries           - the number of retries already performed</p>
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>write_timeout</strong></span><big>(</big><var>statement</var>, <var>consistency_level</var>, <var>write_type</var>, <var>acks_required</var>, <var>acks_received</var>, <var>retries</var><big>)</big> 
+      <span class="path"><strong>write_timeout</strong></span><big>(</big><var>statement</var>, <var>consistency</var>, <var>type</var>, <var>required</var>, <var>received</var>, <var>retries</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Public: decides wether to retry a write and at what consistency level.</p>
-
-<p>statement          - the original Statement that timed out
-consistency_level  - original ConsistencyLevel
-write_type         - One of :simple, :batch, :unlogged_batch, :counter
-                     :batch_log or :cas
-acks_required      - the number of acks required to achieve requested
-                     consistency level
-acks_received      - the number of acks received by the time the query
-                     timed out
-retries           - the number of retries already performed</p>
-
-<p>Returns a Cql::Policies::Retry::Decision</p>
+    <p>Decides wether to retry a write and at what consistency level.</p>
 
 <dl class="dl-horizontal notes">
+<dt><span class="label label-info">Abstract</span></dt>
+<dd>implementation should be provided by an actual policy
+</dd>
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type"><code><a href="../../statement/" title="Cql::Statement (module)">Cql::Statement</a></code></td>
+        
+        <td class="details">
+          
+          
+          the original statement that timed out
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>consistency</var></td>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          the original consistency level for the
+request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cql::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>type</var></td>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          One of <code>:simple</code>, <code>:batch</code>, <code>:unlogged_batch</code>,
+<code>:counter</code> or <code>:batch_log</code>
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>required</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of acks required to achieve
+requested consistency level
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>received</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of acks received by the time the
+query timed out
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>retries</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of retries already performed
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
-  Raises:
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
@@ -216,10 +459,13 @@ retries           - the number of retries already performed</p>
       <tr>
         
         
-        <td class="type"><code>NotImplemented</code></td>
+        <td class="type"><code>Cql::Policies::Retry::Decision</code></td>
         
         <td class="details">
           
+          
+          a retry decision
+
           
         </td>
       </tr>
@@ -227,6 +473,19 @@ retries           - the number of retries already performed</p>
     </tbody>
   </table>
 </dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#try_again-instance_method" title="Cql::Retry::Policy#try_again (method)">#try_again</a></code></li>
+      
+        <li><code><a href="#reraise-instance_method" title="Cql::Retry::Policy#reraise (method)">#reraise</a></code></li>
+      
+        <li><code><a href="#ignore-instance_method" title="Cql::Retry::Policy#ignore (method)">#ignore</a></code></li>
+      
+    </ul>
+  </dd>
 
 </dl>
   </div>
@@ -237,33 +496,130 @@ retries           - the number of retries already performed</p>
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>unavailable</strong></span><big>(</big><var>statement</var>, <var>consistency_level</var>, <var>replicas_required</var>, <var>replicas_alive</var>, <var>retries</var><big>)</big> 
+      <span class="path"><strong>unavailable</strong></span><big>(</big><var>statement</var>, <var>consistency</var>, <var>required</var>, <var>alive</var>, <var>retries</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Public: decides wether to retry and at what consistency level on an
-        Unavailable exception.</p>
-
-<p>statement          - the original Statement that timed out
-consistency_level  - original ConsistencyLevel
-replicas_required  - the number of replicas required to achieve
-                     requested consistency level
-replicas_alive     - the number of replicas received by the time the
-                     query timed out
-retries           - the number of retries already performed</p>
-
-<p>Returns a Cql::Policies::Retry::Decision</p>
+    <p>Decides wether to retry and at what consistency level on an Unavailable
+exception.</p>
 
 <dl class="dl-horizontal notes">
+<dt><span class="label label-info">Abstract</span></dt>
+<dd>implementation should be provided by an actual policy
+</dd>
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type"><code><a href="../../statement/" title="Cql::Statement (module)">Cql::Statement</a></code></td>
+        
+        <td class="details">
+          
+          
+          the original Statement that timed out
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>consistency</var></td>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          the original consistency level for the
+request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cql::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>required</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of replicas required to achieve
+requested consistency level
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>alive</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of replicas received by the time the
+query timed out
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>retries</var></td>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of retries already performed
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
-  Raises:
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
@@ -281,10 +637,13 @@ retries           - the number of retries already performed</p>
       <tr>
         
         
-        <td class="type"><code>NotImplemented</code></td>
+        <td class="type"><code>Cql::Policies::Retry::Decision</code></td>
         
         <td class="details">
           
+          
+          a retry decision
+
           
         </td>
       </tr>
@@ -292,6 +651,19 @@ retries           - the number of retries already performed</p>
     </tbody>
   </table>
 </dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#try_again-instance_method" title="Cql::Retry::Policy#try_again (method)">#try_again</a></code></li>
+      
+        <li><code><a href="#reraise-instance_method" title="Cql::Retry::Policy#reraise (method)">#reraise</a></code></li>
+      
+        <li><code><a href="#ignore-instance_method" title="Cql::Retry::Policy#ignore (method)">#ignore</a></code></li>
+      
+    </ul>
+  </dd>
 
 </dl>
   </div>
@@ -302,14 +674,93 @@ retries           - the number of retries already performed</p>
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>try_again</strong></span><big>(</big><var>consistency_level</var><big>)</big> 
+      <span class="path"><strong>try_again</strong></span><big>(</big><var>consistency</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
+    <p>Returns a decision that signals retry at a given consistency</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        <td class="name"><var>consistency</var></td>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          consistency level for the retry, one of
+<code><a href="../../#CONSISTENCIES-constant" title="Cql::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Cql::Policies::Retry::Decision</code></td>
+        
+        <td class="details">
+          
+          
+          tell driver to retry
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -325,7 +776,49 @@ retries           - the number of retries already performed</p>
   
   </div>
   <div class="panel-body method-body">
+    <p>Returns a decision that signals to driver to reraise original error to
+the application</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        
+        <td class="type"><code>Cql::Policies::Retry::Decision</code></td>
+        
+        <td class="details">
+          
+          
+          tell driver to reraise
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -341,7 +834,49 @@ retries           - the number of retries already performed</p>
   
   </div>
   <div class="panel-body method-body">
+    <p>Returns a decision that signals to driver to ignore the error</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        
+        <td class="type"><code>Cql::Policies::Retry::Decision</code></td>
+        
+        <td class="details">
+          
+          
+          tell driver to ignore the error
+and return an empty result to the application
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -353,10 +888,6 @@ retries           - the number of retries already performed</p>
             
 
 <li><a href="../../auth/">Auth</a></li>
-
-
-
-<li><a href="../../builder/">Builder</a></li>
 
 
 

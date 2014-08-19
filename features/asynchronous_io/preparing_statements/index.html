@@ -86,7 +86,7 @@ This method returns a <code>Cql::Future&lt;Cql::Statements::Prepared&gt;</code> 
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span><span class="o">.</span><span class="n">build</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 
 <span class="c1"># prepare 2 statements in parallel</span>
@@ -173,6 +173,10 @@ Playlist 2cc9ccb7-6221-4ccb-8387-f22b6a1b354d has 2 songs</code></pre>
             
             
             <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../../reconnection/">Reconnection</a></li>
             
             
           </ol>

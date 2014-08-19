@@ -58,6 +58,10 @@
               
               
               
+              <li><a href="../">Reconnection</a></li>
+              
+              
+              
               
               
               <li class="active">Automatic Reconnection</li>
@@ -67,7 +71,7 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="automatically-reconnect">Automatically reconnect</h1>
+<h1 id="automatic-reconnection">Automatic reconnection</h1>
 <p>Ruby driver automatically reestablishes failed connections to Cassandra
 cluster. It will use a reconnection policy to determine retry intervals.</p>
 <h2 id="background">Background</h2>
@@ -108,10 +112,10 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 
 <span class="n">interval</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># reconnect every 2 seconds</span>
 <span class="n">policy</span>   <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Reconnection</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:Constant</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
-            <span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">))</span>
-            <span class="o">.</span><span class="n">with_reconnection_policy</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">build</span>
+<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+             <span class="ss">listeners</span><span class="p">:</span> <span class="o">[</span><span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">)</span><span class="o">]</span><span class="p">,</span>
+             <span class="n">reconnection_policy</span><span class="p">:</span> <span class="n">policy</span>
+           <span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span>
 
 <span class="vg">$stdout</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"=== START ==="</span><span class="p">)</span>
@@ -201,6 +205,25 @@ Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1
             
             
             <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="../">Reconnection</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li class="active">
+                  <a href="./">Automatic Reconnection</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#driver-reconnects-when-all-hosts-are-down">Driver reconnects when all hosts are down</a></li>
+</ul>
+                </li>
+                
+                
+              </ul>
+            </li>
             
             
           </ol>

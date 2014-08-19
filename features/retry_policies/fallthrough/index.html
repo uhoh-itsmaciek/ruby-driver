@@ -82,10 +82,7 @@
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
-             <span class="o">.</span><span class="n">with_retry_policy</span><span class="p">(</span><span class="ss">Cql</span><span class="p">:</span><span class="ss">:Retry</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:Fallthrough</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
-             <span class="o">.</span><span class="n">build</span>
-
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">retry_policy</span><span class="p">:</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Retry</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:Fallthrough</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
@@ -155,6 +152,10 @@
             
             
             <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../../reconnection/">Reconnection</a></li>
             
             
           </ol>

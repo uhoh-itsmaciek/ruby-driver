@@ -138,10 +138,8 @@ threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 <span class="nb">require</span> <span class="s1">'ignoring_keyspace_policy'</span>
 
-<span class="n">policy</span>  <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
-            <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="no">IgnoringKeyspacePolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">,</span> <span class="n">policy</span><span class="p">))</span>
-            <span class="o">.</span><span class="n">build</span>
+<span class="n">policy</span>  <span class="o">=</span> <span class="no">IgnoringKeyspacePolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">,</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
@@ -208,10 +206,8 @@ threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 <span class="nb">require</span> <span class="s1">'blacklist_policy'</span>
 
-<span class="n">policy</span>  <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
-            <span class="o">.</span><span class="n">with_load_balancing_policy</span><span class="p">(</span><span class="no">BlackListPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="s1">'127.0.0.2'</span><span class="p">,</span> <span class="s1">'127.0.0.3'</span><span class="o">]</span><span class="p">,</span> <span class="n">policy</span><span class="p">))</span>
-            <span class="o">.</span><span class="n">build</span>
+<span class="n">policy</span>  <span class="o">=</span> <span class="no">BlackListPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="s1">'127.0.0.2'</span><span class="p">,</span> <span class="s1">'127.0.0.3'</span><span class="o">]</span><span class="p">,</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">host_ips</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ip</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span>
@@ -303,6 +299,10 @@ Hosts used:
             
             
             <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../../reconnection/">Reconnection</a></li>
             
             
           </ol>

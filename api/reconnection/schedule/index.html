@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Provider</title>
+    <title>Datastax Cassandra Ruby Driver - Schedule</title>
 
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
@@ -60,57 +60,24 @@
               
               
               
-              <li><a href="../">Auth</a></li>
+              <li><a href="../">Reconnection</a></li>
               
               
               
               
               
-              <li class="active">Provider</li>
+              <li class="active">Schedule</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cql::Auth::Provider <small> <span class="label label-default">abstract</span>
+  <h1>Cql::Reconnection::Schedule <small>
   class</small>
 </h1>
 </div>
-<p>An auth provider is a factory for <code><a href="../authenticator/" title="Cql::Auth::Authenticator (class)">Authenticator</a></code> instances
-(or objects matching that interface). Its <code><a href="#create_authenticator-instance_method" title="Cql::Auth::Provider#create_authenticator (method)">#create_authenticator</a></code> will be
-called once for each connection that requires authentication.</p>
 
-<p>If the authentication requires keeping state, keep that in the
-authenticator instances, not in the auth provider.</p>
-
-<dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>Auth providers given to <code>Builder#with_auth_provider</code> don&#8217;t
-need to be subclasses of this class, but need to implement the same
-methods. This class exists only for documentation purposes.
-</dd>
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>Creating an authenticator must absolutely not block, or the whole
-connection process will block.
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-
-  <dt class="tag-title">See Also:</dt>
-  <dd class="tag-content">
-    <ul class="see">
-      
-        <li><code><a href="../providers/" title="Cql::Auth::Providers (module)">Providers</a></code></li>
-      
-    </ul>
-  </dd>
-
-</dl>
 
 <h2>Inherits</h2>
 <div class="superclass"><code>Object</code></div>
@@ -121,70 +88,24 @@ connection process will block.
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="create_authenticator-instance_method">
+    <div class="panel panel-default" id="next-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>create_authenticator</strong></span><big>(</big><var>authentication_class</var>, <var>protocol_version</var><big>)</big> 
+      <span class="path"><strong>next</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Create a new authenticator object. This method will be called once per
-connection that requires authentication. The auth provider can create
-different authenticators for different authentication classes, or return
-nil if it does not support the authentication class.</p>
+    <p>Returns the next reconnection interval in seconds</p>
 
 <dl class="dl-horizontal notes">
 
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
-
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
-  Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>authentication_class</var></td>
-        
-        
-        <td class="type"><code>String</code></td>
-        
-        <td class="details">
-          
-          
-          the authentication class used by
-the server.
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
+  
 <dt class="tag-title">
   Returns:
 </dt>
@@ -204,14 +125,12 @@ the server.
       <tr>
         
         
-        <td class="type">(<code>Cql::Client::Authenticator</code> or <code>nil</code>)</td>
+        <td class="type"><code>Numeric</code></td>
         
         <td class="details">
           
           
-          an object with an interface
-matching <code>Client::Authenticator</code> or nil if the authentication
-class is not supported.
+          the next reconnection interval in seconds
 
           
         </td>
@@ -232,30 +151,7 @@ class is not supported.
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
 
-<li class="active">
-  <a href="../">Auth</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
-
-<li><a href="../authenticator/">Authenticator</a></li>
-
-
-
-<li class="active">
-  <a href="./">Provider</a>
-  
-</li>
-
-
-
-<li><a href="../providers/">Providers</a></li>
-
-
-
-  </ul>
-  
-</li>
+<li><a href="../../auth/">Auth</a></li>
 
 
 
@@ -287,7 +183,30 @@ class is not supported.
 
 
 
-<li><a href="../../reconnection/">Reconnection</a></li>
+<li class="active">
+  <a href="../">Reconnection</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="../policies/">Policies</a></li>
+
+
+
+<li><a href="../policy/">Policy</a></li>
+
+
+
+<li class="active">
+  <a href="./">Schedule</a>
+  
+</li>
+
+
+
+  </ul>
+  
+</li>
 
 
 

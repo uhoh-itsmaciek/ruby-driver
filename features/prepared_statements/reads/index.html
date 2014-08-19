@@ -85,9 +85,7 @@ represent a dynamic value in a statement.</p>
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">cluster</span>
-            <span class="o">.</span><span class="n">with_contact_points</span><span class="p">(</span><span class="s2">"127.0.0.1"</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">build</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
 
 <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
@@ -163,6 +161,10 @@ selected 3 row(s)</code></pre>
             
             
             <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../../reconnection/">Reconnection</a></li>
             
             
           </ol>
