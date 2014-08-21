@@ -82,9 +82,9 @@ execute it.</p>
 <h2 id="a-batch-of-simple-statements-is-executed">a batch of simple statements is executed</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 
 <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
@@ -140,9 +140,9 @@ songs contain 3 rows</code></pre>
 <h2 id="a-batch-of-simple-statements-with-parameters-is-executed">a batch of simple statements with parameters is executed</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 
 <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
@@ -154,21 +154,21 @@ songs contain 3 rows</code></pre>
 
 <span class="n">batch</span>   <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
             <span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"INSERT INTO songs (id, title, album, artist, tags) VALUES (?, ?, ?, ?, ?)"</span><span class="p">,</span>
-                  <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
+                  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
                   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
                   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
                   <span class="s1">'Joséphine Baker'</span><span class="p">,</span>
                   <span class="no">Set</span><span class="o">[</span><span class="s1">'jazz'</span><span class="p">,</span> <span class="s1">'2013'</span><span class="o">]</span>
             <span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"INSERT INTO songs (id, title, album, artist, tags) VALUES (?, ?, ?, ?, ?)"</span><span class="p">,</span>
-                  <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
+                  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
                   <span class="s1">'Die Mösch'</span><span class="p">,</span>
                   <span class="s1">'In Gold'</span><span class="p">,</span>
                   <span class="s1">'Willi Ostermann'</span><span class="p">,</span>
                   <span class="no">Set</span><span class="o">[</span><span class="s1">'kölsch'</span><span class="p">,</span> <span class="s1">'1996'</span><span class="p">,</span> <span class="s1">'birds'</span><span class="o">]</span>
             <span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"INSERT INTO songs (id, title, album, artist, tags) VALUES (?, ?, ?, ?, ?)"</span><span class="p">,</span>
-                  <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">),</span>
+                  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">),</span>
                   <span class="s1">'Memo From Turner'</span><span class="p">,</span>
                   <span class="s1">'Performance'</span><span class="p">,</span>
                   <span class="s1">'Mick Jager'</span><span class="p">,</span>
@@ -195,9 +195,9 @@ songs contain 3 rows</code></pre>
 <h2 id="a-prepared-statement-is-executed-in-a-batch">a prepared statement is executed in a batch</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 
 <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
@@ -210,21 +210,21 @@ songs contain 3 rows</code></pre>
 <span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO songs (id, title, album, artist, tags) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
 <span class="n">batch</span>   <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">b</span><span class="o">|</span>
             <span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span>
-                  <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
+                  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
                   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
                   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
                   <span class="s1">'Joséphine Baker'</span><span class="p">,</span>
                   <span class="no">Set</span><span class="o">[</span><span class="s1">'jazz'</span><span class="p">,</span> <span class="s1">'2013'</span><span class="o">]</span>
             <span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span>
-                  <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
+                  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
                   <span class="s1">'Die Mösch'</span><span class="p">,</span>
                   <span class="s1">'In Gold'</span><span class="p">,</span>
                   <span class="s1">'Willi Ostermann'</span><span class="p">,</span>
                   <span class="no">Set</span><span class="o">[</span><span class="s1">'kölsch'</span><span class="p">,</span> <span class="s1">'1996'</span><span class="p">,</span> <span class="s1">'birds'</span><span class="o">]</span>
             <span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span>
-                  <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">),</span>
+                  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">),</span>
                   <span class="s1">'Memo From Turner'</span><span class="p">,</span>
                   <span class="s1">'Performance'</span><span class="p">,</span>
                   <span class="s1">'Mick Jager'</span><span class="p">,</span>

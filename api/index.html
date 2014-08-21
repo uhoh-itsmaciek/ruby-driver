@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Cql</title>
+    <title>Datastax Cassandra Ruby Driver - Cassandra</title>
 
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -54,17 +54,21 @@
               
               
               
-              <li class="active">Cql</li>
+              <li class="active">Cassandra</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cql <small>
+  <h1>Cassandra <small>
   module</small>
 </h1>
 </div>
+
+<dl class="dl-horizontal notes">
+
+</dl>
 
 
 
@@ -76,21 +80,21 @@
 <div class="child-modules">
   <ul class="list-inline">
     
-    <li><code><a href="auth/" title="Cql::Auth (module)">Auth</a></code></li>
+    <li><code><a href="auth/" title="Cassandra::Auth (module)">Auth</a></code></li>
     
-    <li><code><a href="errors/" title="Cql::Errors (module)">Errors</a></code></li>
+    <li><code><a href="errors/" title="Cassandra::Errors (module)">Errors</a></code></li>
     
-    <li><code><a href="execution/" title="Cql::Execution (module)">Execution</a></code></li>
+    <li><code><a href="execution/" title="Cassandra::Execution (module)">Execution</a></code></li>
     
-    <li><code><a href="load_balancing/" title="Cql::LoadBalancing (module)">LoadBalancing</a></code></li>
+    <li><code><a href="load_balancing/" title="Cassandra::LoadBalancing (module)">LoadBalancing</a></code></li>
     
-    <li><code><a href="reconnection/" title="Cql::Reconnection (module)">Reconnection</a></code></li>
+    <li><code><a href="reconnection/" title="Cassandra::Reconnection (module)">Reconnection</a></code></li>
     
-    <li><code><a href="retry/" title="Cql::Retry (module)">Retry</a></code></li>
+    <li><code><a href="retry/" title="Cassandra::Retry (module)">Retry</a></code></li>
     
-    <li><code><a href="statement/" title="Cql::Statement (module)">Statement</a></code></li>
+    <li><code><a href="statement/" title="Cassandra::Statement (module)">Statement</a></code></li>
     
-    <li><code><a href="statements/" title="Cql::Statements (module)">Statements</a></code></li>
+    <li><code><a href="statements/" title="Cassandra::Statements (module)">Statements</a></code></li>
     
   </ul>
 </div>
@@ -100,21 +104,21 @@
 <div class="child-classes">
   <ul class="list-inline">
     
-    <li><code><a href="cluster/" title="Cql::Cluster (class)">Cluster</a></code></li>
+    <li><code><a href="cluster/" title="Cassandra::Cluster (class)">Cluster</a></code></li>
     
-    <li><code><a href="error/" title="Cql::Error (class)">Error</a></code></li>
+    <li><code><a href="error/" title="Cassandra::Error (class)">Error</a></code></li>
     
-    <li><code><a href="future/" title="Cql::Future (class)">Future</a></code></li>
+    <li><code><a href="future/" title="Cassandra::Future (class)">Future</a></code></li>
     
-    <li><code><a href="host/" title="Cql::Host (class)">Host</a></code></li>
+    <li><code><a href="host/" title="Cassandra::Host (class)">Host</a></code></li>
     
-    <li><code><a href="result/" title="Cql::Result (class)">Result</a></code></li>
+    <li><code><a href="result/" title="Cassandra::Result (class)">Result</a></code></li>
     
-    <li><code><a href="session/" title="Cql::Session (class)">Session</a></code></li>
+    <li><code><a href="session/" title="Cassandra::Session (class)">Session</a></code></li>
     
-    <li><code><a href="time_uuid/" title="Cql::TimeUuid (class)">TimeUuid</a></code></li>
+    <li><code><a href="time_uuid/" title="Cassandra::TimeUuid (class)">TimeUuid</a></code></li>
     
-    <li><code><a href="uuid/" title="Cql::Uuid (class)">Uuid</a></code></li>
+    <li><code><a href="uuid/" title="Cassandra::Uuid (class)">Uuid</a></code></li>
     
   </ul>
 </div>
@@ -139,7 +143,7 @@
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="session/#execute_async-instance_method" title="Cql::Session#execute_async (method)">Session#execute_async</a></code></li>
+        <li><code><a href="session/#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">Session#execute_async</a></code></li>
       
     </ul>
   </dd>
@@ -168,7 +172,7 @@
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="session/#execute_async-instance_method" title="Cql::Session#execute_async (method)">Cql::Session#execute_async</a></code></li>
+        <li><code><a href="session/#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">Cassandra::Session#execute_async</a></code></li>
       
     </ul>
   </dd>
@@ -205,7 +209,7 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Creates a <code><a href="cluster/" title="Cql::Cluster (class)">Cluster</a></code> instance</p>
+    <p>Creates a <code><a href="cluster/" title="Cassandra::Cluster (class)">Cluster</a></code> instance</p>
 
 <dl class="dl-horizontal notes">
 
@@ -220,14 +224,14 @@
     <dt class="example-title">Connecting to localhost
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 </code></pre></dd>
   
     
-    <dt class="example-title">Configuring <code><a href="cluster/" title="Cql::Cluster (class)">Cluster</a></code>
+    <dt class="example-title">Configuring <code><a href="cluster/" title="Cassandra::Cluster (class)">Cluster</a></code>
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
             <span class="ss">credentials</span><span class="p">:</span> <span class="p">{</span>
               <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="n">username</span><span class="p">,</span>
               <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="n">password</span>
@@ -335,7 +339,7 @@ list is successful.
         
         <tr>
           <td class="name"><var>:auth_provider</var></td>
-          <td class="type"><code><a href="auth/provider/" title="Cql::Auth::Provider (class)">Cql::Auth::Provider</a></code></td>
+          <td class="type"><code><a href="auth/provider/" title="Cassandra::Auth::Provider (class)">Cassandra::Auth::Provider</a></code></td>
           <td class="details">
             <span class="default">
               
@@ -346,7 +350,7 @@ list is successful.
             
               auth provider.
 Note that if you have specified <code>:credentials</code>, then a
-<code><a href="auth/providers/plain_text/" title="Cql::Auth::Providers::PlainText (class)">Cql::Auth::Providers::PlainText</a></code> will be used automatically
+<code><a href="auth/providers/plain_text/" title="Cassandra::Auth::Providers::PlainText (class)">Cassandra::Auth::Providers::PlainText</a></code> will be used automatically
 
             
           </td>
@@ -409,12 +413,12 @@ standard library or any object responding to standard log methods
         
         <tr>
           <td class="name"><var>:load_balancing_policy</var></td>
-          <td class="type"><code><a href="load_balancing/policy/" title="Cql::LoadBalancing::Policy (module)">Cql::LoadBalancing::Policy</a></code></td>
+          <td class="type"><code><a href="load_balancing/policy/" title="Cassandra::LoadBalancing::Policy (module)">Cassandra::LoadBalancing::Policy</a></code></td>
           <td class="details">
             <span class="default">
               
                 default:
-                <code>Cql::LoadBalancing::Policies::RoundRobin</code>
+                <code>Cassandra::LoadBalancing::Policies::RoundRobin</code>
               
             </span>
             
@@ -427,17 +431,17 @@ policy</a>.
         
         <tr>
           <td class="name"><var>:reconnection_policy</var></td>
-          <td class="type"><code><a href="reconnection/policy/" title="Cql::Reconnection::Policy (module)">Cql::Reconnection::Policy</a></code></td>
+          <td class="type"><code><a href="reconnection/policy/" title="Cassandra::Reconnection::Policy (module)">Cassandra::Reconnection::Policy</a></code></td>
           <td class="details">
             <span class="default">
               
                 default:
-                <code>Cql::Reconnection::Policies::Exponential</code>
+                <code>Cassandra::Reconnection::Policies::Exponential</code>
               
             </span>
             
               a reconnection policy to use.
-Note that default <code><a href="reconnection/policies/exponential/" title="Cql::Reconnection::Policies::Exponential (class)">Cql::Reconnection::Policies::Exponential</a></code> is configured
+Note that default <code><a href="reconnection/policies/exponential/" title="Cassandra::Reconnection::Policies::Exponential (class)">Cassandra::Reconnection::Policies::Exponential</a></code> is configured
 with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
 
             
@@ -446,7 +450,7 @@ with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
         
         <tr>
           <td class="name"><var>:retry_policy</var></td>
-          <td class="type"><code><a href="retry/policy/" title="Cql::Retry::Policy (module)">Cql::Retry::Policy</a></code></td>
+          <td class="type"><code><a href="retry/policy/" title="Cassandra::Retry::Policy (module)">Cassandra::Retry::Policy</a></code></td>
           <td class="details">
             <span class="default">
               
@@ -464,7 +468,7 @@ with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
         <tr>
           <td class="name"><var>:listeners</var></td>
           <td class="type">
-<code>Array</code>&lt;<code>Cql::Cluster::Listener</code>&gt;</td>
+<code>Array</code>&lt;<code>Cassandra::Cluster::Listener</code>&gt;</td>
           <td class="details">
             <span class="default">
               
@@ -505,7 +509,7 @@ load_balancing policy is automatically registered with the cluster.
       <tr>
         
         
-        <td class="type"><code><a href="cluster/" title="Cql::Cluster (class)">Cql::Cluster</a></code></td>
+        <td class="type"><code><a href="cluster/" title="Cassandra::Cluster (class)">Cassandra::Cluster</a></code></td>
         
         <td class="details">
           

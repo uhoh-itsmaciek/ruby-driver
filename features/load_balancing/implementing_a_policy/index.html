@@ -72,12 +72,12 @@
           </nav>
           <div class="feature-section">
 <h1 id="implementing-custom-load-balancing-policies">Implementing custom load balancing policies</h1>
-<p>To implement a load balancing policy, mix in <code>Cql::LoadBalancing::Policy</code>
+<p>To implement a load balancing policy, mix in <code>Cassandra::LoadBalancing::Policy</code>
 module and provide implementations for its required methods. Currently, load
 balancing policies are required to be thread-safe.</p>
 
 <p>The object returned from the <code>plan</code> method must implement method <code>next</code>
-that returns a <code>Cql::Host</code> instance or raises <code>StopIteration</code>.</p>
+that returns a <code>Cassandra::Host</code> instance or raises <code>StopIteration</code>.</p>
 
 <p>This method will be called from multiple threads, but never in parallel and
 <code>Plan</code> doesn’t have to be thread-safe. However, because it is called across
@@ -91,7 +91,7 @@ threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</
 <dl class="steps">
 <dt>Given </dt>
 <dd>a file named &#8220;ignoring_keyspace_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">IgnoringKeyspacePolicy</span>
-  <span class="kp">include</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policy</span>
+  <span class="kp">include</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policy</span>
 
   <span class="k">class</span> <span class="nc">Plan</span>
     <span class="k">def</span> <span class="nf">next</span>
@@ -135,17 +135,17 @@ threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</
 </code></pre>
 </dd>
 <dt>And </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 <span class="nb">require</span> <span class="s1">'ignoring_keyspace_policy'</span>
 
-<span class="n">policy</span>  <span class="o">=</span> <span class="no">IgnoringKeyspacePolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">,</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>  <span class="o">=</span> <span class="no">IgnoringKeyspacePolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">,</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"failure"</span>
-<span class="k">rescue</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">NoHostsAvailable</span>
+<span class="k">rescue</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">NoHostsAvailable</span>
   <span class="nb">puts</span> <span class="s2">"success"</span>
 <span class="k">end</span>
 </code></pre>
@@ -160,7 +160,7 @@ threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</
 <dl class="steps">
 <dt>Given </dt>
 <dd>a file named &#8220;blacklist_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">BlackListPolicy</span>
-  <span class="kp">include</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policy</span>
+  <span class="kp">include</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policy</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">ips_to_ignore</span><span class="p">,</span> <span class="n">original_policy</span><span class="p">)</span>
     <span class="vi">@ips</span>    <span class="o">=</span> <span class="o">::</span><span class="no">Set</span><span class="o">.</span><span class="n">new</span>
@@ -203,11 +203,11 @@ threads, an <code>Enumerator</code> <strong>cannot</strong> be used as a Plan.</
 </code></pre>
 </dd>
 <dt>And </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 <span class="nb">require</span> <span class="s1">'blacklist_policy'</span>
 
-<span class="n">policy</span>  <span class="o">=</span> <span class="no">BlackListPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="s1">'127.0.0.2'</span><span class="p">,</span> <span class="s1">'127.0.0.3'</span><span class="o">]</span><span class="p">,</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>  <span class="o">=</span> <span class="no">BlackListPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="s1">'127.0.0.2'</span><span class="p">,</span> <span class="s1">'127.0.0.3'</span><span class="o">]</span><span class="p">,</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">host_ips</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ip</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span>

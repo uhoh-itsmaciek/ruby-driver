@@ -97,11 +97,11 @@ change that behavior via constructor.</p>
 <h2 id="requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
@@ -122,11 +122,11 @@ change that behavior via constructor.</p>
 <h2 id="requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
@@ -151,12 +151,12 @@ change that behavior via constructor.</p>
 <h2 id="requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">datacenter</span>     <span class="o">=</span> <span class="s2">"dc2"</span>
 <span class="n">remotes_to_try</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">policy</span>         <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="n">remotes_to_try</span><span class="p">)</span>
-<span class="n">cluster</span>        <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>         <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="n">remotes_to_try</span><span class="p">)</span>
+<span class="n">cluster</span>        <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>        <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
@@ -180,11 +180,11 @@ change that behavior via constructor.</p>
 <h2 id="requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:local_one</span><span class="p">)</span>
@@ -197,18 +197,18 @@ change that behavior via constructor.</p>
 <dt>When </dt>
 <dd>it is executed</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>no hosts available, check #errors property for details (Cql::Errors::NoHostsAvailable)</code></pre>
+<dd>its output should contain:<pre><code>no hosts available, check #errors property for details (Cassandra::Errors::NoHostsAvailable)</code></pre>
 </dd>
 </dl>
 <h2 id="routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
 <span class="n">use_remote</span> <span class="o">=</span> <span class="kp">true</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">use_remote</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">use_remote</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>

@@ -72,8 +72,8 @@
           </nav>
           <div class="feature-section">
 <h1 id="executing-queries-asynchronously">Executing queries asynchronously</h1>
-<p>Session objects support asynchronous statement execution using <code>Cql::Session#execute_async</code> method.
-This method returns a <code>Cql::Future&lt;Cql::Result&gt;</code>.</p>
+<p>Session objects support asynchronous statement execution using <code>Cassandra::Session#execute_async</code> method.
+This method returns a <code>Cassandra::Future&lt;Cassandra::Result&gt;</code>.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
@@ -82,9 +82,9 @@ This method returns a <code>Cql::Future&lt;Cql::Result&gt;</code>.</p>
 <h2 id="listerning-for-future">Listerning for future</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="n">future</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span>
 
@@ -110,9 +110,9 @@ Mick Jager: Memo From Turner / Performance</code></pre>
 <h2 id="running-queries-in-parallel">Running queries in parallel</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="n">count</span>   <span class="o">=</span> <span class="mi">10</span>
 

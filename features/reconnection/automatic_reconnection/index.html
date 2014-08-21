@@ -107,12 +107,12 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 </code></pre>
 </dd>
 <dt>And </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 <span class="nb">require</span> <span class="s1">'printing_listener'</span>
 
 <span class="n">interval</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># reconnect every 2 seconds</span>
-<span class="n">policy</span>   <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Constant</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+<span class="n">policy</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Constant</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
              <span class="ss">listeners</span><span class="p">:</span> <span class="o">[</span><span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">)</span><span class="o">]</span><span class="p">,</span>
              <span class="ss">reconnection_policy</span><span class="p">:</span> <span class="n">policy</span>
            <span class="p">)</span>
@@ -164,7 +164,7 @@ Host 127.0.0.2 is up
 Host 127.0.0.1 is down
 Host 127.0.0.3 is down
 Host 127.0.0.2 is down
-Query "SELECT * FROM simplex.songs" failed with Cql::Errors::NoHostsAvailable: no hosts available, check #errors property for details
+Query "SELECT * FROM simplex.songs" failed with Cassandra::Errors::NoHostsAvailable: no hosts available, check #errors property for details
 Host 127.0.0.1 is up
 Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1
 === STOP ===</code></pre>

@@ -79,15 +79,15 @@ authentication to cassandra cluster.</p>
 <dt>Given </dt>
 <dd>a running cassandra cluster with authentication enabled</dd>
 <dt>And </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">credentials</span><span class="p">:</span> <span class="p">{</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">credentials</span><span class="p">:</span> <span class="p">{</span>
                 <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'USERNAME'</span><span class="o">]</span><span class="p">,</span>
                 <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'PASSWORD'</span><span class="o">]</span>
               <span class="p">})</span>
   <span class="nb">puts</span> <span class="s2">"authentication successful"</span>
-<span class="k">rescue</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">AuthenticationError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+<span class="k">rescue</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">AuthenticationError</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span>
   <span class="nb">puts</span> <span class="s2">"authentication failed"</span>
 <span class="k">else</span>

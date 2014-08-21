@@ -54,7 +54,7 @@
               
               
               
-              <li><a href="../">Cql</a></li>
+              <li><a href="../">Cassandra</a></li>
               
               
               
@@ -67,7 +67,7 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cql::Session <small>
+  <h1>Cassandra::Session <small>
   class</small>
 </h1>
 </div>
@@ -127,7 +127,7 @@
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cql::Statements::Simple (class)">Cql::Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cql::Statements::Bound (class)">Cql::Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cql::Statements::Prepared (class)">Cql::Statements::Prepared</a></code>)</td>
+        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Cassandra::Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Cassandra::Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Cassandra::Statements::Prepared</a></code>)</td>
         
         <td class="details">
           
@@ -210,7 +210,7 @@ statement
             </span>
             
               consistency level for the
-request, one of <code><a href="../#CONSISTENCIES-constant" title="Cql::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+request, one of <code><a href="../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
             
           </td>
@@ -228,8 +228,8 @@ request, one of <code><a href="../#CONSISTENCIES-constant" title="Cql::CONSISTEN
             </span>
             
               size of results page, you
-can page through results using <code><a href="../result/#next_page-instance_method" title="Cql::Result#next_page (method)">Result#next_page</a></code> or
-<code><a href="../result/#next_page_async-instance_method" title="Cql::Result#next_page_async (method)">Result#next_page_async</a></code>
+can page through results using <code><a href="../result/#next_page-instance_method" title="Cassandra::Result#next_page (method)">Result#next_page</a></code> or
+<code><a href="../result/#next_page_async-instance_method" title="Cassandra::Result#next_page_async (method)">Result#next_page_async</a></code>
 
             
           </td>
@@ -284,7 +284,7 @@ of seconds after which to time out the request if it hasn&#8217;t completed
             
               this option is
 relevant for conditional updates and specifies a serial consistency to
-be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SERIAL_CONSISTENCIES (constant)">Cql::SERIAL_CONSISTENCIES</a></code>
+be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">Cassandra::SERIAL_CONSISTENCIES</a></code>
 
             
           </td>
@@ -315,7 +315,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
         
         
         <td class="type">
-<code><a href="../future/" title="Cql::Future (class)">Cql::Future</a></code>&lt;<code><a href="../result/" title="Cql::Result (class)">Cql::Result</a></code>&gt;</td>
+<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="../result/" title="Cassandra::Result (class)">Cassandra::Result</a></code>&gt;</td>
         
         <td class="details">
           
@@ -343,7 +343,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
   
   </div>
   <div class="panel-body method-body">
-    <p>A blocking wrapper around <code><a href="#execute_async-instance_method" title="Cql::Session#execute_async (method)">#execute_async</a></code></p>
+    <p>A blocking wrapper around <code><a href="#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">#execute_async</a></code></p>
 
 <dl class="dl-horizontal notes">
 
@@ -369,7 +369,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
       <tr>
         
         
-        <td class="type"><code><a href="../result/" title="Cql::Result (class)">Cql::Result</a></code></td>
+        <td class="type"><code><a href="../result/" title="Cassandra::Result (class)">Cassandra::Result</a></code></td>
         
         <td class="details">
           
@@ -402,7 +402,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
       <tr>
         
         
-        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cql::Errors::NoHostsAvailable (class)">Cql::Errors::NoHostsAvailable</a></code></td>
+        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cassandra::Errors::NoHostsAvailable (class)">Cassandra::Errors::NoHostsAvailable</a></code></td>
         
         <td class="details">
           
@@ -416,7 +416,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
       <tr>
         
         
-        <td class="type"><code><a href="../errors/query_error/" title="Cql::Errors::QueryError (class)">Cql::Errors::QueryError</a></code></td>
+        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Cassandra::Errors::QueryError</a></code></td>
         
         <td class="details">
           
@@ -435,9 +435,9 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="#execute_async-instance_method" title="Cql::Session#execute_async (method)">#execute_async</a></code></li>
+        <li><code><a href="#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">#execute_async</a></code></li>
       
-        <li><code><a href="../future/#get-instance_method" title="Cql::Future#get (method)">Future#get</a></code></li>
+        <li><code><a href="../future/#get-instance_method" title="Cassandra::Future#get (method)">Future#get</a></code></li>
       
     </ul>
   </dd>
@@ -494,7 +494,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cql::SE
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a new <code><a href="../statements/batch/" title="Cql::Statements::Batch (class)">Cql::Statements::Batch</a></code> instance and optionally yields it to a
+    <p>Returns a new <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Cassandra::Statements::Batch</a></code> instance and optionally yields it to a
 given block</p>
 
 <dl class="dl-horizontal notes">
@@ -525,7 +525,7 @@ given block</p>
         <td class="name"><var>batch</var></td>
         
         
-        <td class="type"><code><a href="../statements/batch/" title="Cql::Statements::Batch (class)">Statements::Batch</a></code></td>
+        <td class="type"><code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code></td>
         
         <td class="details">
           
@@ -558,7 +558,7 @@ given block</p>
       <tr>
         
         
-        <td class="type"><code><a href="../statements/batch/" title="Cql::Statements::Batch (class)">Statements::Batch</a></code></td>
+        <td class="type"><code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code></td>
         
         <td class="details">
           

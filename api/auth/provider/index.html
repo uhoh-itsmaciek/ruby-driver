@@ -54,7 +54,7 @@
               
               
               
-              <li><a href="../../">Cql</a></li>
+              <li><a href="../../">Cassandra</a></li>
               
               
               
@@ -73,12 +73,12 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cql::Auth::Provider <small> <span class="label label-default">abstract</span>
+  <h1>Cassandra::Auth::Provider <small> <span class="label label-default">abstract</span>
   class</small>
 </h1>
 </div>
-<p>An auth provider is a factory for <code><a href="../authenticator/" title="Cql::Auth::Authenticator (class)">Authenticator</a></code> instances
-(or objects matching that interface). Its <code><a href="#create_authenticator-instance_method" title="Cql::Auth::Provider#create_authenticator (method)">#create_authenticator</a></code> will be
+<p>An auth provider is a factory for <code><a href="../authenticator/" title="Cassandra::Auth::Authenticator (class)">Authenticator</a></code> instances
+(or objects matching that interface). Its <code><a href="#create_authenticator-instance_method" title="Cassandra::Auth::Provider#create_authenticator (method)">#create_authenticator</a></code> will be
 called once for each connection that requires authentication.</p>
 
 <p>If the authentication requires keeping state, keep that in the
@@ -105,7 +105,7 @@ connection process will block.
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../providers/" title="Cql::Auth::Providers (module)">Providers</a></code></li>
+        <li><code><a href="../providers/" title="Cassandra::Auth::Providers (module)">Providers</a></code></li>
       
     </ul>
   </dd>
@@ -204,7 +204,7 @@ the server.
       <tr>
         
         
-        <td class="type">(<code>Cql::Client::Authenticator</code> or <code>nil</code>)</td>
+        <td class="type">(<code>Cassandra::Client::Authenticator</code> or <code>nil</code>)</td>
         
         <td class="details">
           

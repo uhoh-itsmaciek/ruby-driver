@@ -72,8 +72,8 @@
           </nav>
           <div class="feature-section">
 <h1 id="preparing-statements-asynchronously">Preparing statements asynchronously</h1>
-<p>Session objects can be used to prepare a statement asynchronously using <code>Cql::Session#prepare_async</code> method.
-This method returns a <code>Cql::Future&lt;Cql::Statements::Prepared&gt;</code> instance.</p>
+<p>Session objects can be used to prepare a statement asynchronously using <code>Cassandra::Session#prepare_async</code> method.
+This method returns a <code>Cassandra::Future&lt;Cassandra::Statements::Prepared&gt;</code> instance.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
@@ -84,9 +84,9 @@ This method returns a <code>Cql::Future&lt;Cql::Statements::Prepared&gt;</code> 
 <h2 id="preparing-statements-in-parallel">Preparing statements in parallel</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 
 <span class="c1"># prepare 2 statements in parallel</span>
@@ -98,12 +98,12 @@ This method returns a <code>Cql::Future&lt;Cql::Statements::Prepared&gt;</code> 
 <span class="n">select_playlist</span> <span class="o">=</span> <span class="n">select_playlist_future</span><span class="o">.</span><span class="n">get</span>
 
 <span class="c1"># execute prepared statements</span>
-<span class="n">song_id</span>  <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">)</span>
+<span class="n">song_id</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">)</span>
 <span class="n">song</span>     <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select_song</span><span class="p">,</span> <span class="n">song_id</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
 <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">song</span><span class="o">[</span><span class="s2">"artist"</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">song</span><span class="o">[</span><span class="s2">"title"</span><span class="o">]</span><span class="si">}</span><span class="s2"> / </span><span class="si">#{</span><span class="n">song</span><span class="o">[</span><span class="s2">"album"</span><span class="o">]</span><span class="si">}</span><span class="s2"> has id </span><span class="si">#{</span><span class="n">song_id</span><span class="si">}</span><span class="s2">"</span>
 
-<span class="n">playlist_id</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'2cc9ccb7-6221-4ccb-8387-f22b6a1b354d'</span><span class="p">)</span>
+<span class="n">playlist_id</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'2cc9ccb7-6221-4ccb-8387-f22b6a1b354d'</span><span class="p">)</span>
 <span class="n">playlist</span>    <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select_playlist</span><span class="p">,</span> <span class="n">playlist_id</span><span class="p">)</span>
 
 <span class="nb">puts</span> <span class="s2">"Playlist </span><span class="si">#{</span><span class="n">playlist_id</span><span class="si">}</span><span class="s2"> has </span><span class="si">#{</span><span class="n">playlist</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> songs"</span>

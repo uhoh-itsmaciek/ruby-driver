@@ -79,7 +79,7 @@
 <li>register a listener to be notified when a result is available.</li>
 </ul>
 
-<p>When describing different asynchronous method results, we will use a <code>Cql::Future&lt;Type&gt;</code> notation to signal the type of the result of the future. For example, <code>Cql::Future&lt;Cql::Result&gt;</code> is a future that returns an instance of <code>Cql::Result</code> when calling its <code>get</code> method.</p>
+<p>When describing different asynchronous method results, we will use a <code>Cassandra::Future&lt;Type&gt;</code> notation to signal the type of the result of the future. For example, <code>Cassandra::Future&lt;Cassandra::Result&gt;</code> is a future that returns an instance of <code>Cassandra::Result</code> when calling its <code>get</code> method.</p>
 
 <h3 id="example-getting-a-result">Example: getting a result</h3>
 <pre class="highlight"><code class="ruby"><span class="n">future</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>

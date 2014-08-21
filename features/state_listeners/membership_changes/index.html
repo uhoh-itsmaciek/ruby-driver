@@ -104,10 +104,10 @@ they will be notifies on cluster membership changes.</p>
 </dd>
 <dt>And </dt>
 <dd>the following example running in the background:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'printing_listener'</span>
-<span class="nb">require</span> <span class="s1">'cql'</span>
+<span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">listener</span> <span class="o">=</span> <span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">)</span>
-<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 
 <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
