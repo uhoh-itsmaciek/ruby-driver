@@ -82,13 +82,13 @@
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">retry_policy</span><span class="p">:</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Retry</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:Fallthrough</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">retry_policy</span><span class="p">:</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Retry</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Fallthrough</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM songs'</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"failed"</span>
-<span class="k">rescue</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Errors</span><span class="o">::</span><span class="no">QueryError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+<span class="k">rescue</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">QueryError</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"success"</span>
 <span class="k">end</span>
 </code></pre>

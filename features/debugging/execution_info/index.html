@@ -115,7 +115,7 @@ number of retries: 0</code></pre>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a file named &#8220;retrying_at_a_given_consistency_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">RetryingAtAGivenConsistencyPolicy</span>
-  <span class="kp">include</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Retry</span><span class="o">::</span><span class="no">Policy</span>
+  <span class="kp">include</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Retry</span><span class="o">::</span><span class="no">Policy</span>
 
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">consistency_to_use</span><span class="p">)</span>
     <span class="vi">@consistency_to_use</span> <span class="o">=</span> <span class="n">consistency_to_use</span>
@@ -142,7 +142,7 @@ number of retries: 0</code></pre>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 <span class="nb">require</span> <span class="s1">'retrying_at_a_given_consistency_policy'</span>
 
-<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">retry_policy</span><span class="p">:</span> <span class="no">RetryingAtAGivenConsistencyPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:one</span><span class="p">))</span>
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">retry_policy</span><span class="p">:</span> <span class="no">RetryingAtAGivenConsistencyPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:one</span><span class="p">))</span>
 <span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:all</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
 

@@ -100,8 +100,8 @@ change that behavior via constructor.</p>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
@@ -125,8 +125,8 @@ change that behavior via constructor.</p>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
@@ -155,8 +155,8 @@ change that behavior via constructor.</p>
 
 <span class="n">datacenter</span>     <span class="o">=</span> <span class="s2">"dc2"</span>
 <span class="n">remotes_to_try</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">policy</span>         <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="n">remotes_to_try</span><span class="p">)</span>
-<span class="n">cluster</span>        <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>         <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="n">remotes_to_try</span><span class="p">)</span>
+<span class="n">cluster</span>        <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>        <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>
@@ -183,8 +183,8 @@ change that behavior via constructor.</p>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cql'</span>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:local_one</span><span class="p">)</span>
@@ -207,8 +207,8 @@ change that behavior via constructor.</p>
 
 <span class="n">datacenter</span> <span class="o">=</span> <span class="s2">"dc2"</span>
 <span class="n">use_remote</span> <span class="o">=</span> <span class="kp">true</span>
-<span class="n">policy</span>     <span class="o">=</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:LoadBalancing</span><span class="o">::</span><span class="ss">Policies</span><span class="p">:</span><span class="ss">:DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">use_remote</span><span class="p">)</span>
-<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
+<span class="n">policy</span>     <span class="o">=</span> <span class="no">Cql</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">datacenter</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">use_remote</span><span class="p">)</span>
+<span class="n">cluster</span>    <span class="o">=</span> <span class="no">Cql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">load_balancing_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">hosts_used</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span>

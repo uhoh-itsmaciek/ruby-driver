@@ -112,12 +112,12 @@ listener to be notified whenever the execution is complete.</p>
   
   </div>
   <div class="panel-body method-body">
-    <p>Wait for value or error</p>
+    <p>Returns future value or raises future error</p>
 
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>This method blocks until a future is ready
+<dd>This method blocks until a future is resolved
 </dd>
 
 
@@ -148,7 +148,7 @@ listener to be notified whenever the execution is complete.</p>
         <td class="details">
           
           
-          value
+          value used to resolve this future if any
 
           
         </td>
@@ -181,8 +181,68 @@ listener to be notified whenever the execution is complete.</p>
         <td class="details">
           
           
-          error
+          error used to resolve this future if any
 
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="join-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>join</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Block until the future has been resolved</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method won&#8217;t raise any errors or return anything but the
+future itself
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
           
         </td>
       </tr>
@@ -286,6 +346,39 @@ listener to be notified whenever the execution is complete.</p>
     </tbody>
   </table>
 </dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
 
 </dl>
   </div>
@@ -375,6 +468,39 @@ listener to be notified whenever the execution is complete.</p>
         
         <td class="details">
           
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
           
         </td>
       </tr>

@@ -87,7 +87,7 @@ authentication to cassandra cluster.</p>
                 <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'PASSWORD'</span><span class="o">]</span>
               <span class="p">})</span>
   <span class="nb">puts</span> <span class="s2">"authentication successful"</span>
-<span class="k">rescue</span> <span class="ss">Cql</span><span class="p">:</span><span class="ss">:Errors</span><span class="o">::</span><span class="no">AuthenticationError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+<span class="k">rescue</span> <span class="no">Cql</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">AuthenticationError</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span>
   <span class="nb">puts</span> <span class="s2">"authentication failed"</span>
 <span class="k">else</span>
