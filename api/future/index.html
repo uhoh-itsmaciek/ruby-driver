@@ -105,29 +105,61 @@ listener to be notified whenever the execution is complete.</p>
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="get-instance_method">
+    <div class="panel panel-default" id="value-class_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>get</strong></span> 
+      <em>self.</em><span class="path"><strong>value</strong></span><big>(</big><var>value</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns future value or raises future error</p>
+    <p>Returns a future resolved to a given value</p>
 
 <dl class="dl-horizontal notes">
 
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method blocks until a future is resolved
-</dd>
-
-
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>value</var></td>
+        
+        
+        <td class="type"><code>Object</code></td>
+        
+        <td class="details">
+          
+          
+          value for the future
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -147,45 +179,12 @@ listener to be notified whenever the execution is complete.</p>
       <tr>
         
         
-        <td class="type"><code>Object</code></td>
+        <td class="type"><code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code></td>
         
         <td class="details">
           
           
-          value used to resolve this future if any
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-<dt class="tag-title">
-  Raises:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>Exception</code></td>
-        
-        <td class="details">
-          
-          
-          error used to resolve this future if any
+          a future
 
           
         </td>
@@ -200,30 +199,61 @@ listener to be notified whenever the execution is complete.</p>
 </div>
 
   
-    <div class="panel panel-default" id="join-instance_method">
+    <div class="panel panel-default" id="error-class_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>join</strong></span> 
+      <em>self.</em><span class="path"><strong>error</strong></span><big>(</big><var>error</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Block until the future has been resolved</p>
+    <p>Returns a future resolved to a given error</p>
 
 <dl class="dl-horizontal notes">
 
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method won&#8217;t raise any errors or return anything but the
-future itself
-</dd>
-
-
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>error</var></td>
+        
+        
+        <td class="type"><code>Exception</code></td>
+        
+        <td class="details">
+          
+          
+          error for the future
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -243,10 +273,13 @@ future itself
       <tr>
         
         
-        <td class="type"><code>self</code></td>
+        <td class="type"><code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code></td>
         
         <td class="details">
           
+          
+          a future
+
           
         </td>
       </tr>
@@ -254,6 +287,215 @@ future itself
     </tbody>
   </table>
 </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="all-class_method">
+  <div class="panel-heading method-header">
+  
+    
+      <em>self.</em><span class="path"><strong>all</strong></span><big>(</big><var>*futures</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a future that resolves with values of all futures</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+  <dt class="tag-title">Overloads:</dt>
+  <dd class="tag-content">
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <em>self.</em><span class="path"><strong>all</strong></span>(*futures) 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Returns a combined future</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>*futures</var></td>
+        
+        
+        <td class="type"><code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code></td>
+        
+        <td class="details">
+          
+          
+          futures to combine
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code>Array</code>&lt;<code>Object</code>&gt;&gt;</td>
+        
+        <td class="details">
+          
+          
+          a combined future
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+        </div>
+      </div>
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <em>self.</em><span class="path"><strong>all</strong></span>(futures) 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Returns a combined future</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>futures</var></td>
+        
+        
+        <td class="type">
+<code>Enumerable</code>&lt;<code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          list of futures to
+combine
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code>Array</code>&lt;<code>Object</code>&gt;&gt;</td>
+        
+        <td class="details">
+          
+          
+          a combined future
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+        </div>
+      </div>
+    
+  </dd>
+
 
 </dl>
   </div>
@@ -271,12 +513,14 @@ future itself
   
   </div>
   <div class="panel-body method-body">
-    <p>Run block when promise is fulfilled</p>
+    <p>Run block when future resolves to a value</p>
 
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>The block can be called synchronously from current thread if the future has already been resolved, or, asynchronously, from background thread upon resolution.
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
 </dd>
 
 
@@ -389,6 +633,165 @@ future itself
 </div>
 
   
+    <div class="panel panel-default" id="join-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>join</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Block until the future has been resolved</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method blocks until a future is resolved
+</dd>
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method won&#8217;t raise any errors or return anything but the
+future itself
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="get-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>get</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns future value or raises future error</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method blocks until a future is resolved
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Object</code></td>
+        
+        <td class="details">
+          
+          
+          value used to resolve this future if any
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Exception</code></td>
+        
+        <td class="details">
+          
+          
+          error used to resolve this future if any
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
     <div class="panel panel-default" id="on_failure-instance_method">
   <div class="panel-heading method-header">
   
@@ -400,12 +803,14 @@ future itself
   
   </div>
   <div class="panel-body method-body">
-    <p>Run block when promise is broken</p>
+    <p>Run block when future resolves to error</p>
 
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>The block can be called synchronously from current thread if the future has already been resolved, or, asynchronously, from background thread upon resolution.
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
 </dd>
 
 
@@ -518,6 +923,155 @@ future itself
 </div>
 
   
+    <div class="panel panel-default" id="on_complete-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>on_complete</strong></span> {|error, value| &#8230; }
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Run block when future resolves. The block will always be called with 2
+  arguments - error and value. In case a future resolves to an error, the
+  error argument will be non-nil.</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>error</var></td>
+        
+        
+        <td class="type">(<code>Exception</code> or <code>nil</code>)</td>
+        
+        <td class="details">
+          
+          
+          an error or nil
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>value</var></td>
+        
+        
+        <td class="type">(<code>Object</code> or <code>nil</code>)</td>
+        
+        <td class="details">
+          
+          
+          a value or nil
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
     <div class="panel panel-default" id="add_listener-instance_method">
   <div class="panel-heading method-header">
   
@@ -529,12 +1083,19 @@ future itself
   
   </div>
   <div class="panel-body method-body">
-    <p>Add promise listener</p>
+    <p>Add future listener</p>
 
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>The listener can be notified synchronously, from current thread, if the future has already been resolved, or, asynchronously, from background thread upon resolution.
+<dd>The listener can be notified synchronously, from current thread, if
+the future has already been resolved, or, asynchronously, from
+background thread upon resolution.
+</dd>
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>that provided listener doesn&#8217;t have to extend
+<code><a href="listener/" title="Cassandra::Future::Listener (class)">Listener</a></code>, only conform to the same interface
 </dd>
 
 
@@ -568,7 +1129,8 @@ future itself
         <td class="details">
           
           
-          an object that responds to <code>#success</code> and <code>#failure</code>
+          an object that responds to
+<code>#success</code> and <code>#failure</code>
 
           
         </td>
@@ -601,6 +1163,315 @@ future itself
         
         <td class="details">
           
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="then-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>then</strong></span> {|value| &#8230; }
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new future that will resolve to the result of the block</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">Examples:</dt>
+<dd class="tag-content">
+  <dl class="examples">
+  
+    
+    <dt class="example-title">Block returns a value
+</dt>
+    
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
+<span class="n">future_user</span>  <span class="o">=</span> <span class="n">future_users</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">users</span><span class="o">|</span> <span class="n">users</span><span class="o">.</span><span class="n">first</span><span class="p">}</span>
+</code></pre></dd>
+  
+    
+    <dt class="example-title">Block returns a future
+</dt>
+    
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">)</span>
+<span class="n">future_users</span>     <span class="o">=</span> <span class="n">future_statement</span><span class="o">.</span><span class="n">flat_map</span> <span class="k">do</span> <span class="o">|</span><span class="n">statement</span><span class="o">|</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></dd>
+  
+  </dl>
+</dd>
+
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>value</var></td>
+        
+        
+        <td class="type"><code>Object</code></td>
+        
+        <td class="details">
+          
+          
+          a value
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code></td>
+        
+        <td class="details">
+          
+          
+          a new future
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="fallback-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>fallback</strong></span> {|value| &#8230; }
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new future that will resolve to the result of the future
+returned from the block.</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">Examples:</dt>
+<dd class="tag-content">
+  <dl class="examples">
+  
+    
+    <dt class="example-title">Recovering from errors
+</dt>
+    
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
+<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">error</span><span class="o">|</span> <span class="s2">"Execution failed with </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span>
+</code></pre></dd>
+  
+  </dl>
+</dd>
+
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>value</var></td>
+        
+        
+        <td class="type"><code>Object</code></td>
+        
+        <td class="details">
+          
+          
+          a value
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code></td>
+        
+        <td class="details">
+          
+          
+          a new future
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
           
         </td>
       </tr>
