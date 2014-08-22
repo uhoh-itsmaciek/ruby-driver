@@ -9,10 +9,10 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Authenticator</title>
+    <title>Datastax Cassandra Ruby Driver - Listener</title>
 
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="../../../">Introduction</a></li>
-            <li><a href="../../../features/">Features</a></li>
-            <li class="active"><a href="../../">API docs</a></li>
+            <li><a href="../../">Introduction</a></li>
+            <li><a href="../../features/">Features</a></li>
+            <li class="active"><a href="../">API docs</a></li>
           </ul>
         </div>
       </div>
@@ -50,7 +50,7 @@
               
               
               
-              <li><a href="../../../">Introduction</a></li>
+              <li><a href="../../">Introduction</a></li>
               
               
               
@@ -58,57 +58,36 @@
               
               
               
-              <li><a href="../../">Cassandra</a></li>
+              <li><a href="../">Cassandra</a></li>
               
               
               
               
               
-              <li><a href="../">Auth</a></li>
-              
-              
-              
-              
-              
-              <li class="active">Authenticator</li>
+              <li class="active">Listener</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Auth::Authenticator <small>
+  <h1>Cassandra::Listener <small>
   class</small>
 </h1>
 </div>
-<p>An authenticator handles the authentication challenge/response cycles of
-a single connection. It can be stateful, but it must not for any reason
-block. If any of the method calls block, the whole connection process
-will be blocked.</p>
+<p>Cassandra state listener.</p>
 
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>Authenticators created by auth providers don&#8217;t need to be subclasses
-of this class, but need to implement the same methods. This class exists
-only for documentation purposes.
+<dd>Actual state listener implementations don&#8217;t need to inherit from this
+class as long as they conform to its interface. This class exists solely
+for documentation purposes
 </dd>
 
 
 </dl>
-<dl class="tags">
-  
 
-  <dt class="tag-title">See Also:</dt>
-  <dd class="tag-content">
-    <ul class="see">
-      
-        <li><code><a href="../provider/" title="Cassandra::Auth::Provider (class)">Provider</a></code></li>
-      
-    </ul>
-  </dd>
-
-</dl>
 
 <h2>Inherits</h2>
 <div class="superclass"><code>Object</code></div>
@@ -119,189 +98,22 @@ only for documentation purposes.
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="initial_response-instance_method">
+    <div class="panel panel-default" id="host_up-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>initial_response</strong></span> 
+      <span class="path"><strong>host_up</strong></span><big>(</big><var>host</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>This method must return the initial authentication token to be sent to
-the server.</p>
+    <p>This method is called whenever a host is considered to be up, whether
+  by Cassandra&#8217;s gossip exchange or when the driver has successfully
+  established a connection to it.</p>
 
 <dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>String</code></td>
-        
-        <td class="details">
-          
-          
-          the initial authentication token
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="challenge_response-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>challenge_response</strong></span><big>(</big><var>token</var><big>)</big> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>If the authentication requires multiple challenge/response cycles this
-method will be called when a challenge is returned by the server. A
-response token must be created and will be sent back to the server.</p>
-
-<dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
-
-</dl>
-<dl class="tags">
-  <dt class="tag-title">
-  Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>token</var></td>
-        
-        
-        <td class="type"><code>String</code></td>
-        
-        <td class="details">
-          
-          
-          a challenge token sent by the server
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>String</code></td>
-        
-        <td class="details">
-          
-          
-          the authentication token to send back to the server
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="authentication_successful-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>authentication_successful</strong></span><big>(</big><var>token</var><big>)</big> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Called when the authentication is successful.</p>
-
-<dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
 <dt><span class="label label-default">Void</span></dt>
 <dd>Return value of this method is undefined.</dd>
 
@@ -327,15 +139,210 @@ response token must be created and will be sent back to the server.</p>
     
       <tr>
         
-        <td class="name"><var>token</var></td>
+        <td class="name"><var>host</var></td>
         
         
-        <td class="type"><code>String</code></td>
+        <td class="type"><code><a href="../host/" title="Cassandra::Host (class)">Cassandra::Host</a></code></td>
         
         <td class="details">
           
           
-          a token sent by the server
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_down-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_down</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>This method is called whenever a host is considered to be down, whether
+  by Cassandra&#8217;s gossip exchange or when the driver failed to establish
+  any connections to it.</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-default">Void</span></dt>
+<dd>Return value of this method is undefined.</dd>
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../host/" title="Cassandra::Host (class)">Cassandra::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_found-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_found</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>This method is called whenever a host is discovered by the driver,
+  whether because it is a completely new node or if its
+  <code><a href="../host/#datacenter-instance_method" title="Cassandra::Host#datacenter (method)">Host#datacenter</a></code> or <code><a href="../host/#rack-instance_method" title="Cassandra::Host#rack (method)">Host#rack</a></code> have changed.</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-default">Void</span></dt>
+<dd>Return value of this method is undefined.</dd>
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../host/" title="Cassandra::Host (class)">Cassandra::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="host_lost-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>host_lost</strong></span><big>(</big><var>host</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>This method is called whenever a host leaves the cluster, whether
+  because it is completely gone or if its <code><a href="../host/#datacenter-instance_method" title="Cassandra::Host#datacenter (method)">Host#datacenter</a></code> or
+  <code><a href="../host/#rack-instance_method" title="Cassandra::Host#rack (method)">Host#rack</a></code> have changed.</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-default">Void</span></dt>
+<dd>Return value of this method is undefined.</dd>
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>host</var></td>
+        
+        
+        <td class="type"><code><a href="../host/" title="Cassandra::Host (class)">Cassandra::Host</a></code></td>
+        
+        <td class="details">
+          
+          
+          a host instance
 
           
         </td>
@@ -357,94 +364,74 @@ response token must be created and will be sent back to the server.</p>
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
 
-<li class="active">
-  <a href="../">Auth</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
+<li><a href="../auth/">Auth</a></li>
+
+
+
+<li><a href="../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../error/">Error</a></li>
+
+
+
+<li><a href="../errors/">Errors</a></li>
+
+
+
+<li><a href="../execution/">Execution</a></li>
+
+
+
+<li><a href="../future/">Future</a></li>
+
+
+
+<li><a href="../host/">Host</a></li>
+
+
 
 <li class="active">
-  <a href="./">Authenticator</a>
+  <a href="./">Listener</a>
   
 </li>
 
 
 
-<li><a href="../provider/">Provider</a></li>
+<li><a href="../load_balancing/">LoadBalancing</a></li>
 
 
 
-<li><a href="../providers/">Providers</a></li>
+<li><a href="../reconnection/">Reconnection</a></li>
 
 
 
-  </ul>
-  
-</li>
+<li><a href="../result/">Result</a></li>
 
 
 
-<li><a href="../../cluster/">Cluster</a></li>
+<li><a href="../retry/">Retry</a></li>
 
 
 
-<li><a href="../../error/">Error</a></li>
+<li><a href="../session/">Session</a></li>
 
 
 
-<li><a href="../../errors/">Errors</a></li>
+<li><a href="../statement/">Statement</a></li>
 
 
 
-<li><a href="../../execution/">Execution</a></li>
+<li><a href="../statements/">Statements</a></li>
 
 
 
-<li><a href="../../future/">Future</a></li>
+<li><a href="../time_uuid/">TimeUuid</a></li>
 
 
 
-<li><a href="../../host/">Host</a></li>
-
-
-
-<li><a href="../../listener/">Listener</a></li>
-
-
-
-<li><a href="../../load_balancing/">LoadBalancing</a></li>
-
-
-
-<li><a href="../../reconnection/">Reconnection</a></li>
-
-
-
-<li><a href="../../result/">Result</a></li>
-
-
-
-<li><a href="../../retry/">Retry</a></li>
-
-
-
-<li><a href="../../session/">Session</a></li>
-
-
-
-<li><a href="../../statement/">Statement</a></li>
-
-
-
-<li><a href="../../statements/">Statements</a></li>
-
-
-
-<li><a href="../../time_uuid/">TimeUuid</a></li>
-
-
-
-<li><a href="../../uuid/">Uuid</a></li>
+<li><a href="../uuid/">Uuid</a></li>
 
 
 

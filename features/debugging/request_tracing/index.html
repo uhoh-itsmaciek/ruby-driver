@@ -121,7 +121,6 @@
 <span class="nb">puts</span> <span class="s2">"coordinator: </span><span class="si">#{</span><span class="n">trace</span><span class="o">.</span><span class="n">coordinator</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"started at: </span><span class="si">#{</span><span class="n">trace</span><span class="o">.</span><span class="n">started_at</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"total events: </span><span class="si">#{</span><span class="n">trace</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"parameters: </span><span class="si">#{</span><span class="n">trace</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"request: </span><span class="si">#{</span><span class="n">trace</span><span class="o">.</span><span class="n">request</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
@@ -137,8 +136,7 @@
 <dd>its output should match:<pre><code>total events: \d+</code></pre>
 </dd>
 <dt>And </dt>
-<dd>its output should contain:<pre><code>parameters: {"query"=&gt;"SELECT * FROM songs"}
-request: Execute CQL3 query</code></pre>
+<dd>its output should contain:<pre><code>request: Execute CQL3 query</code></pre>
 </dd>
 </dl>
 </div>
