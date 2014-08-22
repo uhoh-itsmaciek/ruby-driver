@@ -50,6 +50,10 @@
               
               
               
+              <li><a href="../../">Introduction</a></li>
+              
+              
+              
               
               
               
@@ -422,7 +426,7 @@
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>next_page</strong></span> 
+      <span class="path"><strong>next_page</strong></span><big>(</big><var>options</var> = nil<big>)</big> 
     
   
   
@@ -435,40 +439,47 @@
 
 </dl>
 <dl class="tags">
-  
-
-  <dt class="tag-title">See Also:</dt>
-  <dd class="tag-content">
-    <ul class="see">
-      
-        <li><code><a href="../session/#execute-instance_method" title="Cassandra::Session#execute (method)">Session#execute</a></code></li>
-      
-    </ul>
-  </dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="next_page_async-instance_method">
-  <div class="panel-heading method-header">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
-      <span class="path"><strong>next_page_async</strong></span> 
+      <tr>
+        
+        <td class="name"><var>options</var></td>
+        
+        
+        <td class="type"><code>Hash</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          additional options, just like the ones for
+<code><a href="../session/#execute-instance_method" title="Cassandra::Session#execute (method)">Session#execute</a></code>
+
+          
+        </td>
+      </tr>
     
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Loads next page asynchronously</p>
+    </tbody>
+  </table>
+</dd>
 
-<dl class="dl-horizontal notes">
-
-</dl>
-<dl class="tags">
-  
 <dt class="tag-title">
   Returns:
 </dt>
@@ -507,7 +518,115 @@
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../session/#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">Session#execute_async</a></code></li>
+        <li><code><a href="../session/#execute-instance_method" title="Cassandra::Session#execute (method)">Session#execute</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="next_page_async-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>next_page_async</strong></span><big>(</big><var>options</var> = nil<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Loads next page asynchronously</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>options</var></td>
+        
+        
+        <td class="type"><code>Hash</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          additional options, just like the ones for
+<code><a href="../session/#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">Session#execute_async</a></code>
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="./" title="Cassandra::Result (class)">Cassandra::Result</a></code>, <code>nil</code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          <code>nil</code> if last
+page
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../session/#execute-instance_method" title="Cassandra::Session#execute (method)">Session#execute</a></code></li>
       
     </ul>
   </dd>

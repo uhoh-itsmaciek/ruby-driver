@@ -50,6 +50,10 @@
               
               
               
+              <li><a href="../">Introduction</a></li>
+              
+              
+              
               
               
               
@@ -477,9 +481,62 @@ with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
               
             </span>
             
-              initial
-listeners. A list of initial cluster state listeners. Note that a
+              initial listeners. A list of initial cluster state listeners. Note that a
 load_balancing policy is automatically registered with the cluster.
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:consistency</var></td>
+          <td class="type"><code>Symbol</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>:one</code>
+              
+            </span>
+            
+              default consistency to use for
+all requests. Must be one of <code><a href="#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:trace</var></td>
+          <td class="type"><code>Boolean</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>false</code>
+              
+            </span>
+            
+              whether or not to trace all
+requests by default
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:page_size</var></td>
+          <td class="type"><code>Integer</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>nil</code>
+              
+            </span>
+            
+              default page size for all select
+queries
 
             
           </td>
