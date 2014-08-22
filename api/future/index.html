@@ -1187,7 +1187,9 @@ background thread upon resolution.
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a new future that will resolve to the result of the block</p>
+    <p>Returns a new future that will resolve to the result of the block.
+Besides regular values, block can return other futures, which will be
+transparently unwrapped before resolving the future from this method.</p>
 
 <dl class="dl-horizontal notes">
 
@@ -1210,7 +1212,7 @@ thread upon resolution.
 </dt>
     
     <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
-<span class="n">future_user</span>  <span class="o">=</span> <span class="n">future_users</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span><span class="o">|</span><span class="n">users</span><span class="o">|</span> <span class="n">users</span><span class="o">.</span><span class="n">first</span><span class="p">}</span>
+<span class="n">future_user</span>  <span class="o">=</span> <span class="n">future_users</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span><span class="o">|</span><span class="n">users</span><span class="o">|</span> <span class="n">users</span><span class="o">.</span><span class="n">first</span><span class="p">}</span>
 </code></pre></dd>
   
     
@@ -1218,9 +1220,7 @@ thread upon resolution.
 </dt>
     
     <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">)</span>
-<span class="n">future_users</span>     <span class="o">=</span> <span class="n">future_statement</span><span class="o">.</span><span class="n">flat_map</span> <span class="k">do</span> <span class="o">|</span><span class="n">statement</span><span class="o">|</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
-<span class="k">end</span>
+<span class="n">future_users</span>     <span class="o">=</span> <span class="n">future_statement</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span><span class="o">|</span><span class="n">statement</span><span class="o">|</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)}</span>
 </code></pre></dd>
   
   </dl>
@@ -1255,6 +1255,40 @@ thread upon resolution.
           
           
           a value
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Yield Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">(<code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code> or <code>Object</code>)</td>
+        
+        <td class="details">
+          
+          
+          a future or a value to be
+wrapped in a future
 
           
         </td>
@@ -1346,8 +1380,10 @@ thread upon resolution.
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a new future that will resolve to the result of the future
-returned from the block.</p>
+    <p>Returns a new future that will resolve to the result of the block in case
+of an error. Besides regular values, block can return other futures,
+which will be transparently unwrapped before resolving the future from
+this method.</p>
 
 <dl class="dl-horizontal notes">
 
@@ -1371,6 +1407,14 @@ thread upon resolution.
     
     <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
 <span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">error</span><span class="o">|</span> <span class="s2">"Execution failed with </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span>
+</code></pre></dd>
+  
+    
+    <dt class="example-title">Executing something else on error
+</dt>
+    
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
+<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">session</span><span class="o">.</span><span class="n">.execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM another-table'</span><span class="p">)}</span>
 </code></pre></dd>
   
   </dl>
@@ -1405,6 +1449,40 @@ thread upon resolution.
           
           
           a value
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Yield Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">(<code><a href="./" title="Cassandra::Future (class)">Cassandra::Future</a></code> or <code>Object</code>)</td>
+        
+        <td class="details">
+          
+          
+          a future or a value to be
+wrapped in a future
 
           
         </td>
