@@ -86,6 +86,8 @@
     
     <li><code><a href="auth/" title="Cassandra::Auth (module)">Auth</a></code></li>
     
+    <li><code><a href="compression/" title="Cassandra::Compression (module)">Compression</a></code></li>
+    
     <li><code><a href="errors/" title="Cassandra::Errors (module)">Errors</a></code></li>
     
     <li><code><a href="execution/" title="Cassandra::Execution (module)">Execution</a></code></li>
@@ -318,7 +320,24 @@
               a list of
 initial addresses. Note that the entire cluster members will be
 discovered automatically once a connection to any hosts from the original
-list is successful.
+list is successful
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:port</var></td>
+          <td class="type"><code>Integer</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>9042</code>
+              
+            </span>
+            
+              cassandra native protocol port.
 
             
           </td>
@@ -344,25 +363,6 @@ list is successful.
         </tr>
         
         <tr>
-          <td class="name"><var>:auth_provider</var></td>
-          <td class="type"><code><a href="auth/provider/" title="Cassandra::Auth::Provider (class)">Cassandra::Auth::Provider</a></code></td>
-          <td class="details">
-            <span class="default">
-              
-                default:
-                <code>none</code>
-              
-            </span>
-            
-              auth provider.
-Note that if you have specified <code>:credentials</code>, then a
-<code><a href="auth/providers/plain_text/" title="Cassandra::Auth::Providers::PlainText (class)">Cassandra::Auth::Providers::PlainText</a></code> will be used automatically
-
-            
-          </td>
-        </tr>
-        
-        <tr>
           <td class="name"><var>:compression</var></td>
           <td class="type"><code>Symbol</code></td>
           <td class="details">
@@ -375,7 +375,61 @@ Note that if you have specified <code>:credentials</code>, then a
             
               compression to use. Must be
 either <code>:snappy</code> or <code>:lz4</code>. Also note, that in order for compression to
-work, you must install &#8216;snappy&#8217; or &#8216;lz4-ruby&#8217; gems.
+work, you must install &#8216;snappy&#8217; or &#8216;lz4-ruby&#8217; gems
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:load_balancing_policy</var></td>
+          <td class="type"><code><a href="load_balancing/policy/" title="Cassandra::LoadBalancing::Policy (module)">Cassandra::LoadBalancing::Policy</a></code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>Cassandra::LoadBalancing::Policies::RoundRobin</code>
+              
+            </span>
+            
+              <a href="../features/load_balancing">a load balancing
+policy</a>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:reconnection_policy</var></td>
+          <td class="type"><code><a href="reconnection/policy/" title="Cassandra::Reconnection::Policy (module)">Cassandra::Reconnection::Policy</a></code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>Cassandra::Reconnection::Policies::Exponential</code>
+              
+            </span>
+            
+              a reconnection policy to
+use. Note that default <code><a href="reconnection/policies/exponential/" title="Cassandra::Reconnection::Policies::Exponential (class)">Cassandra::Reconnection::Policies::Exponential</a></code> is configured
+with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:retry_policy</var></td>
+          <td class="type"><code><a href="retry/policy/" title="Cassandra::Retry::Policy (module)">Cassandra::Retry::Policy</a></code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>Retry::Policies::Default</code>
+              
+            </span>
+            
+              a retry policy
 
             
           </td>
@@ -395,77 +449,6 @@ work, you must install &#8216;snappy&#8217; or &#8216;lz4-ruby&#8217; gems.
               logger. a <code>Logger</code> instance from the
 standard library or any object responding to standard log methods
 (<code>#debug</code>, <code>#info</code>, <code>#warn</code>, <code>#error</code> and <code>#fatal</code>)
-
-            
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="name"><var>:port</var></td>
-          <td class="type"><code>Integer</code></td>
-          <td class="details">
-            <span class="default">
-              
-                default:
-                <code>9042</code>
-              
-            </span>
-            
-              cassandra native protocol port.
-
-            
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="name"><var>:load_balancing_policy</var></td>
-          <td class="type"><code><a href="load_balancing/policy/" title="Cassandra::LoadBalancing::Policy (module)">Cassandra::LoadBalancing::Policy</a></code></td>
-          <td class="details">
-            <span class="default">
-              
-                default:
-                <code>Cassandra::LoadBalancing::Policies::RoundRobin</code>
-              
-            </span>
-            
-              <a href="../features/load_balancing">a load balancing
-policy</a>.
-
-            
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="name"><var>:reconnection_policy</var></td>
-          <td class="type"><code><a href="reconnection/policy/" title="Cassandra::Reconnection::Policy (module)">Cassandra::Reconnection::Policy</a></code></td>
-          <td class="details">
-            <span class="default">
-              
-                default:
-                <code>Cassandra::Reconnection::Policies::Exponential</code>
-              
-            </span>
-            
-              a reconnection policy to use.
-Note that default <code><a href="reconnection/policies/exponential/" title="Cassandra::Reconnection::Policies::Exponential (class)">Cassandra::Reconnection::Policies::Exponential</a></code> is configured
-with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
-
-            
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="name"><var>:retry_policy</var></td>
-          <td class="type"><code><a href="retry/policy/" title="Cassandra::Retry::Policy (module)">Cassandra::Retry::Policy</a></code></td>
-          <td class="details">
-            <span class="default">
-              
-                default:
-                <code>Retry::Policies::Default</code>
-              
-            </span>
-            
-              a retry policy
 
             
           </td>
@@ -544,6 +527,44 @@ queries
           </td>
         </tr>
         
+        <tr>
+          <td class="name"><var>:auth_provider</var></td>
+          <td class="type"><code><a href="auth/provider/" title="Cassandra::Auth::Provider (class)">Cassandra::Auth::Provider</a></code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>none</code>
+              
+            </span>
+            
+              auth
+provider. Note that if you have specified <code>:credentials</code>, then a
+<code><a href="auth/providers/plain_text/" title="Cassandra::Auth::Providers::PlainText (class)">Cassandra::Auth::Providers::PlainText</a></code> will be used automatically
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:compressor</var></td>
+          <td class="type"><code>Cassandra::Compressor</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>none</code>
+              
+            </span>
+            
+              compressor. Note
+that if you have specified <code>:compression</code>, an appropriate compressor will
+automatically be provided
+
+            
+          </td>
+        </tr>
+        
         </tbody>
       </table>
     </dd>
@@ -599,6 +620,10 @@ queries
 
 
 <li><a href="cluster/">Cluster</a></li>
+
+
+
+<li><a href="compression/">Compression</a></li>
 
 
 

@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - PlainText</title>
+    <title>Datastax Cassandra Ruby Driver - Snappy</title>
 
     <link href="../../../../css/style.css" rel="stylesheet">
     <link href="../../../../css/pygments.css" rel="stylesheet">
@@ -64,37 +64,43 @@
               
               
               
-              <li><a href="../../">Auth</a></li>
+              <li><a href="../../">Compression</a></li>
               
               
               
               
               
-              <li><a href="../">Providers</a></li>
+              <li><a href="../">Compressors</a></li>
               
               
               
               
               
-              <li class="active">PlainText</li>
+              <li class="active">Snappy</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Auth::Providers::PlainText <small>
+  <h1>Cassandra::Compression::Compressors::Snappy <small>
   class</small>
 </h1>
 </div>
-<p>Auth provider used for Cassandra&#8217;s built in authentication.</p>
+<p>A compressor that uses the Snappy compression library.</p>
 
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>No need to instantiate this class manually, use <code>:credentials</code>
-option of <code><a href="../../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> method and one will be created
-automatically for you.
+<dd>This compressor requires the
+<a href="http://rubygems.org/gems/snappy">snappy</a> gem (v0.0.10 or later for
+JRuby support).
+</dd>
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>No need to instantiate this class manually, use <code>compression:
+:snappy</code> option when calling <code><a href="../../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> and one will be
+created automatically for you.
 </dd>
 
 
@@ -102,7 +108,7 @@ automatically for you.
 
 
 <h2>Inherits</h2>
-<div class="superclass"><code><a href="../../provider/" title="Cassandra::Auth::Provider (class)">Cassandra::Auth::Provider</a></code></div>
+<div class="superclass"><code><a href="../../compressor/" title="Cassandra::Compression::Compressor (class)">Cassandra::Compression::Compressor</a></code></div>
 
 
 
@@ -114,14 +120,14 @@ automatically for you.
   <div class="panel-heading method-header">
   
     
-      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>username</var>, <var>password</var><big>)</big> 
+      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>min_size</var> = 64<big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a new instance of PlainText</p>
+    <p>Returns a new instance of Snappy</p>
 
 <dl class="dl-horizontal notes">
 
@@ -147,31 +153,18 @@ automatically for you.
     
       <tr>
         
-        <td class="name"><var>username</var></td>
+        <td class="name"><var>min_size</var></td>
         
         
-        <td class="type"><code>String</code></td>
-        
-        <td class="details">
-          
-          
-          username to use for authentication to Cassandra
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
-        <td class="name"><var>password</var></td>
-        
-        
-        <td class="type"><code>String</code></td>
+        <td class="type"><code>Integer</code></td>
         
         <td class="details">
           
+            <em class="default">(defaults to: <code>64</code>)</em>
           
-          password to use for authentication to Cassandra
+          
+          (64) Don&#8217;t compress frames smaller than
+this size (see <code><a href="#compress%3F-instance_method" title="Cassandra::Compression::Compressors::Snappy#compress? (method)">#compress?</a></code>).
 
           
         </td>
@@ -187,61 +180,24 @@ automatically for you.
 </div>
 
   
-    <div class="panel panel-default" id="create_authenticator-instance_method">
+    <div class="panel panel-default" id="algorithm-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>create_authenticator</strong></span><big>(</big><var>authentication_class</var><big>)</big> 
+      <span class="path"><strong>algorithm</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a PlainText Authenticator only if <code>org.apache.cassandra.auth.PasswordAuthenticator</code> is given.</p>
+    <p>Returns <code>'snappy'</code></p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
-  Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>authentication_class</var></td>
-        
-        
-        <td class="type"><code>String</code></td>
-        
-        <td class="details">
-          
-          
-          must equal to <code>org.apache.cassandra.auth.PasswordAuthenticator</code>
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
+  
 <dt class="tag-title">
   Returns:
 </dt>
@@ -261,26 +217,12 @@ automatically for you.
       <tr>
         
         
-        <td class="type"><code><a href="../../authenticator/" title="Cassandra::Auth::Authenticator (class)">Cassandra::Auth::Authenticator</a></code></td>
+        <td class="type"><code>String</code></td>
         
         <td class="details">
           
           
-          when <code>authentication_class == "org.apache.cassandra.auth.PasswordAuthenticator"</code>
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
-        
-        <td class="type"><code>nil</code></td>
-        
-        <td class="details">
-          
-          
-          for all other values of <code>authentication_class</code>
+          <code>'snappy'</code>
 
           
         </td>
@@ -295,48 +237,145 @@ automatically for you.
 </div>
 
   
+    <div class="panel panel-default" id="compress?-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>compress?</strong></span><big>(</big><var>str</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns will return false for frames smaller than the
+<code>min_size</code> given to the constructor.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">(<code>true</code> or <code>false</code>)</td>
+        
+        <td class="details">
+          
+          
+          will return false for frames smaller than the
+<code>min_size</code> given to the constructor.
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../compressor/#compress%3F-instance_method" title="Cassandra::Compression::Compressor#compress? (method)">Cassandra::Compression::Compressor#compress?</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="compress-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>compress</strong></span><big>(</big><var>str</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../compressor/#compress-instance_method" title="Cassandra::Compression::Compressor#compress (method)">Cassandra::Compression::Compressor#compress</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="decompress-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>decompress</strong></span><big>(</big><var>str</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../compressor/#decompress-instance_method" title="Cassandra::Compression::Compressor#decompress (method)">Cassandra::Compression::Compressor#decompress</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+  </div>
+</div>
+
+  
 </div>
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
 
-<li class="active">
-  <a href="../../">Auth</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
-
-<li><a href="../../authenticator/">Authenticator</a></li>
-
-
-
-<li><a href="../../provider/">Provider</a></li>
-
-
-
-<li class="active">
-  <a href="../">Providers</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
-
-<li class="active">
-  <a href="./">PlainText</a>
-  
-</li>
-
-
-
-  </ul>
-  
-</li>
-
-
-
-  </ul>
-  
-</li>
+<li><a href="../../../auth/">Auth</a></li>
 
 
 
@@ -344,7 +383,42 @@ automatically for you.
 
 
 
-<li><a href="../../../compression/">Compression</a></li>
+<li class="active">
+  <a href="../../">Compression</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="../../compressor/">Compressor</a></li>
+
+
+
+<li class="active">
+  <a href="../">Compressors</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="../lz4/">Lz4</a></li>
+
+
+
+<li class="active">
+  <a href="./">Snappy</a>
+  
+</li>
+
+
+
+  </ul>
+  
+</li>
+
+
+
+  </ul>
+  
+</li>
 
 
 

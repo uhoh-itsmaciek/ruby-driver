@@ -58,7 +58,19 @@
           </nav>
           <h1 id="datastax-ruby-driver-for-apache-cassandra">Datastax Ruby Driver for Apache Cassandra</h1>
 
-<p>A Ruby client driver for Apache Cassandra. This driver works exclusively with the Cassandra Query Language v3 (CQL3) and Cassandra’s native protocol. Cassandra versions 1.2 and 2.0 are supported as well as Ruby 1.9.3, 2.0, JRuby 1.7 and Rubinius 2.1.</p>
+<p>A Ruby client driver for Apache Cassandra. It has built-in support for:</p>
+
+<ul>
+<li>one-off, <a href="features/prepared_statements/">prepared</a> and <a href="features/batch_statements/">batch statements</a>
+</li>
+<li><a href="features/asynchronous_io/">asynchronous execution</a></li>
+<li>automatic peer discovery and cluster metadata</li>
+<li>
+<a href="features/load_balancing/">diverse load-balancing</a>, <a href="features/retry_policies/">retry</a> and reconnection policies, <a href="features/load_balancing/implementing_a_policy/">with ability to write your own</a>
+</li>
+</ul>
+
+<p>This driver works exclusively with the Cassandra Query Language v3 (CQL3) and Cassandra’s native protocol. Cassandra versions 1.2 and 2.0 are supported as well as Ruby 1.9.3, 2.0, JRuby 1.7 and Rubinius 2.1.</p>
 
 <p>This driver is based on <a href="https://github.com/iconara/cql-rb">the cql-rb gem</a> by <a href="https://github.com/iconara">Theo Hultberg</a>.</p>
 

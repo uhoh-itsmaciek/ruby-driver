@@ -9,10 +9,10 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Reconnection</title>
+    <title>Datastax Cassandra Ruby Driver - Compressors</title>
 
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li><a href="../../features/">Features</a></li>
-            <li class="active"><a href="../">API docs</a></li>
+            <li><a href="../../../">Introduction</a></li>
+            <li><a href="../../../features/">Features</a></li>
+            <li class="active"><a href="../../">API docs</a></li>
           </ul>
         </div>
       </div>
@@ -50,7 +50,7 @@
               
               
               
-              <li><a href="../../">Introduction</a></li>
+              <li><a href="../../../">Introduction</a></li>
               
               
               
@@ -58,20 +58,26 @@
               
               
               
-              <li><a href="../">Cassandra</a></li>
+              <li><a href="../../">Cassandra</a></li>
               
               
               
               
               
-              <li class="active">Reconnection</li>
+              <li><a href="../">Compression</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Compressors</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Reconnection <small>
+  <h1>Cassandra::Compression::Compressors <small>
   module</small>
 </h1>
 </div>
@@ -82,23 +88,14 @@
 
 
 
-<h2>Modules</h2>
-<div class="child-modules">
-  <ul class="list-inline">
-    
-    <li><code><a href="policies/" title="Cassandra::Reconnection::Policies (module)">Policies</a></code></li>
-    
-    <li><code><a href="policy/" title="Cassandra::Reconnection::Policy (module)">Policy</a></code></li>
-    
-  </ul>
-</div>
-
 
 <h2>Classes</h2>
 <div class="child-classes">
   <ul class="list-inline">
     
-    <li><code><a href="schedule/" title="Cassandra::Reconnection::Schedule (class)">Schedule</a></code></li>
+    <li><code><a href="lz4/" title="Cassandra::Compression::Compressors::Lz4 (class)">Lz4</a></code></li>
+    
+    <li><code><a href="snappy/" title="Cassandra::Compression::Compressors::Snappy (class)">Snappy</a></code></li>
     
   </ul>
 </div>
@@ -109,61 +106,35 @@
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
 
-<li><a href="../auth/">Auth</a></li>
+<li><a href="../../auth/">Auth</a></li>
 
 
 
-<li><a href="../cluster/">Cluster</a></li>
-
-
-
-<li><a href="../compression/">Compression</a></li>
-
-
-
-<li><a href="../error/">Error</a></li>
-
-
-
-<li><a href="../errors/">Errors</a></li>
-
-
-
-<li><a href="../execution/">Execution</a></li>
-
-
-
-<li><a href="../future/">Future</a></li>
-
-
-
-<li><a href="../host/">Host</a></li>
-
-
-
-<li><a href="../listener/">Listener</a></li>
-
-
-
-<li><a href="../load_balancing/">LoadBalancing</a></li>
+<li><a href="../../cluster/">Cluster</a></li>
 
 
 
 <li class="active">
-  <a href="./">Reconnection</a>
+  <a href="../">Compression</a>
   
   <ul class="nav nav-pills nav-stacked">
     
 
-<li><a href="policies/">Policies</a></li>
+<li><a href="../compressor/">Compressor</a></li>
 
 
 
-<li><a href="policy/">Policy</a></li>
+<li class="active">
+  <a href="./">Compressors</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="lz4/">Lz4</a></li>
 
 
 
-<li><a href="schedule/">Schedule</a></li>
+<li><a href="snappy/">Snappy</a></li>
 
 
 
@@ -173,31 +144,69 @@
 
 
 
-<li><a href="../result/">Result</a></li>
+  </ul>
+  
+</li>
 
 
 
-<li><a href="../retry/">Retry</a></li>
+<li><a href="../../error/">Error</a></li>
 
 
 
-<li><a href="../session/">Session</a></li>
+<li><a href="../../errors/">Errors</a></li>
 
 
 
-<li><a href="../statement/">Statement</a></li>
+<li><a href="../../execution/">Execution</a></li>
 
 
 
-<li><a href="../statements/">Statements</a></li>
+<li><a href="../../future/">Future</a></li>
 
 
 
-<li><a href="../time_uuid/">TimeUuid</a></li>
+<li><a href="../../host/">Host</a></li>
 
 
 
-<li><a href="../uuid/">Uuid</a></li>
+<li><a href="../../listener/">Listener</a></li>
+
+
+
+<li><a href="../../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../../result/">Result</a></li>
+
+
+
+<li><a href="../../retry/">Retry</a></li>
+
+
+
+<li><a href="../../session/">Session</a></li>
+
+
+
+<li><a href="../../statement/">Statement</a></li>
+
+
+
+<li><a href="../../statements/">Statements</a></li>
+
+
+
+<li><a href="../../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../../uuid/">Uuid</a></li>
 
 
 

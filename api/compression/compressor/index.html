@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Batch</title>
+    <title>Datastax Cassandra Ruby Driver - Compressor</title>
 
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
@@ -64,78 +64,133 @@
               
               
               
-              <li><a href="../">Statements</a></li>
+              <li><a href="../">Compression</a></li>
               
               
               
               
               
-              <li class="active">Batch</li>
+              <li class="active">Compressor</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Statements::Batch <small>
+  <h1>Cassandra::Compression::Compressor <small>
   class</small>
 </h1>
 </div>
-<p>Batch statement groups several <code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code>. There are several types of Batch statements available:</p>
 
 <dl class="dl-horizontal notes">
 
-</dl>
-<dl class="tags">
-  
+<dt><span class="label label-primary">Note</span></dt>
+<dd>Compressors given to <code><a href="../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> as the <code>:compressor</code>
+option don&#8217;t need to be subclasses of this class, but need to implement
+the same methods. This class exists only for documentation purposes.
+</dd>
 
-  <dt class="tag-title">See Also:</dt>
-  <dd class="tag-content">
-    <ul class="see">
-      
-        <li><code><a href="../../session/#batch-instance_method" title="Cassandra::Session#batch (method)">Cassandra::Session#batch</a></code></li>
-      
-        <li><code><a href="../../session/#logged_batch-instance_method" title="Cassandra::Session#logged_batch (method)">Cassandra::Session#logged_batch</a></code></li>
-      
-        <li><code><a href="../../session/#unlogged_batch-instance_method" title="Cassandra::Session#unlogged_batch (method)">Cassandra::Session#unlogged_batch</a></code></li>
-      
-        <li><code><a href="../../session/#counter_batch-instance_method" title="Cassandra::Session#counter_batch (method)">Cassandra::Session#counter_batch</a></code></li>
-      
-    </ul>
-  </dd>
 
 </dl>
+
 
 <h2>Inherits</h2>
 <div class="superclass"><code>Object</code></div>
 
 
 
-<h2>Includes</h2>
-<div class="includes">
+
+<h2>Direct Known Subclasses</h2>
+<div class="subclasses">
   <ul class="list-inline">
     
-    <li><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></li>
+    <li><code><a href="../compressors/lz4/" title="Cassandra::Compression::Compressors::Lz4 (class)">Cassandra::Compression::Compressors::Lz4</a></code></li>
+    
+    <li><code><a href="../compressors/snappy/" title="Cassandra::Compression::Compressors::Snappy (class)">Cassandra::Compression::Compressors::Snappy</a></code></li>
     
   </ul>
 </div>
-
-
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="add-instance_method">
+    <div class="panel panel-default" id="algorithm-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>add</strong></span><big>(</big><var>statement</var>, <var>*args</var><big>)</big> 
+      <span class="path"><strong>algorithm</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Adds a statement to this batch</p>
+    <p>Returns the name of the algorithm this compressor supports,
+e.g. &#8220;snappy&#8221; or &#8220;lz4&#8221;.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="compress?-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>compress?</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Before compressing a frame the compressor will be asked if it wants
+to compress it or not. One reason it could say no is if the frame is
+small enough that compression would be unlikely to decrease its size.</p>
+
+<p>If your operations consist mostly of small prepared statement
+executions it might not be useful to compress the frames being sent
+<em>to</em> Cassandra, but enabling compression can still be useful on the
+frames coming <em>from</em> Cassandra. Making this method always return
+false disables request compression, but will still make the client
+tell Cassandra that it supports compressed frames.</p>
+
+<p>The bytes given to <code><a href="#compress%3F-instance_method" title="Cassandra::Compression::Compressor#compress? (method)">#compress?</a></code> are the same as to <code><a href="#compress-instance_method" title="Cassandra::Compression::Compressor#compress (method)">#compress</a></code></p>
 
 <dl class="dl-horizontal notes">
 
@@ -161,33 +216,15 @@
     
       <tr>
         
-        <td class="name"><var>statement</var></td>
+        <td class="name"><var>frame</var></td>
         
         
-        <td class="type">(<code>String</code>, <code><a href="../simple/" title="Cassandra::Statements::Simple (class)">Cassandra::Statements::Simple</a></code>, <code><a href="../prepared/" title="Cassandra::Statements::Prepared (class)">Cassandra::Statements::Prepared</a></code> or <code><a href="../bound/" title="Cassandra::Statements::Bound (class)">Cassandra::Statements::Bound</a></code>)</td>
-        
-        <td class="details">
-          
-          
-          statement to add
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
-        <td class="name"><var>args</var></td>
-        
-        
-        <td class="type">*<code>Object</code>
-</td>
+        <td class="type"><code>String</code></td>
         
         <td class="details">
           
           
-          arguments to paramterized query or prepared
-statement
+          the bytes of the frame to be compressed
 
           
         </td>
@@ -216,7 +253,7 @@ statement
       <tr>
         
         
-        <td class="type"><code>self</code></td>
+        <td class="type">(<code>true</code> or <code>false</code>)</td>
         
         <td class="details">
           
@@ -233,24 +270,61 @@ statement
 </div>
 
   
-    <div class="panel panel-default" id="cql-instance_method">
+    <div class="panel panel-default" id="compress-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>cql</strong></span> 
+      <span class="path"><strong>compress</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>A batch statement doesn&#8217;t really have any cql of its own as it is composed of multiple different statements</p>
+    <p>Compresses the raw bytes of a frame.</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>frame</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          the bytes of the frame to be compressed
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -270,12 +344,12 @@ statement
       <tr>
         
         
-        <td class="type"><code>nil</code></td>
+        <td class="type"><code>String</code></td>
         
         <td class="details">
           
           
-          nothing
+          the compressed frame
 
           
         </td>
@@ -290,24 +364,62 @@ statement
 </div>
 
   
-    <div class="panel panel-default" id="type-instance_method">
+    <div class="panel panel-default" id="decompress-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>type</strong></span> 
+      <span class="path"><strong>decompress</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns one of <code>:logged</code>, <code>:unlogged</code> or <code>:counter</code></p>
+    <p>Decompresses the raw bytes of a compressed frame.</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>compressed_frame</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          the bytes of the compressed
+frame to be uncompressed
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -327,13 +439,10 @@ statement
       <tr>
         
         
-        <td class="type"><code>Symbol</code></td>
+        <td class="type"><code>String</code></td>
         
         <td class="details">
           
-          
-          one of <code>:logged</code>, <code>:unlogged</code> or <code>:counter</code>
-
           
         </td>
       </tr>
@@ -361,7 +470,26 @@ statement
 
 
 
-<li><a href="../../compression/">Compression</a></li>
+<li class="active">
+  <a href="../">Compression</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li class="active">
+  <a href="./">Compressor</a>
+  
+</li>
+
+
+
+<li><a href="../compressors/">Compressors</a></li>
+
+
+
+  </ul>
+  
+</li>
 
 
 
@@ -413,38 +541,7 @@ statement
 
 
 
-<li class="active">
-  <a href="../">Statements</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
-
-<li class="active">
-  <a href="./">Batch</a>
-  
-</li>
-
-
-
-<li><a href="../bound/">Bound</a></li>
-
-
-
-<li><a href="../prepared/">Prepared</a></li>
-
-
-
-<li><a href="../simple/">Simple</a></li>
-
-
-
-<li><a href="../void/">Void</a></li>
-
-
-
-  </ul>
-  
-</li>
+<li><a href="../../statements/">Statements</a></li>
 
 
 
