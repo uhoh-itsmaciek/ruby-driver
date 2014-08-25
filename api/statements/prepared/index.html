@@ -101,30 +101,6 @@
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="initialize-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>cql</var>, <var>params_metadata</var>, <var>result_metadata</var>, <var>execution_info</var><big>)</big> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns a new instance of Prepared</p>
-
-<dl class="dl-horizontal notes">
-
-</dl>
-<dl class="tags">
-  
-
-</dl>
-  </div>
-</div>
-
-  
     <div class="panel panel-default" id="cql-instance_method">
   <div class="panel-heading method-header">
   
@@ -136,54 +112,48 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns the value of attribute cql</p>
+    <p>Returns original cql used to prepare this statement</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
-
-  </div>
-</div>
-
+<dl class="tags">
   
-    <div class="panel panel-default" id="params_metadata-instance_method">
-  <div class="panel-heading method-header">
-  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
-      <span class="path"><strong>params_metadata</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns the value of attribute params_metadata</p>
+      <tr>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          original cql used to prepare this statement
 
-<dl class="dl-horizontal notes">
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
 
 </dl>
-
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="result_metadata-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>result_metadata</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns the value of attribute result_metadata</p>
-
-<dl class="dl-horizontal notes">
-
-</dl>
-
   </div>
 </div>
 
@@ -199,12 +169,48 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns the value of attribute execution_info</p>
+    <p>Returns execution info for PREPARE request</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../../execution/info/" title="Cassandra::Execution::Info (class)">Cassandra::Execution::Info</a></code></td>
+        
+        <td class="details">
+          
+          
+          execution info for PREPARE request
 
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -220,12 +226,86 @@
   
   </div>
   <div class="panel-body method-body">
-    
+    <p>Creates a statement bound with specific arguments</p>
+
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>args</var></td>
+        
+        
+        <td class="type">*<code>Object</code>
+</td>
+        
+        <td class="details">
+          
+          
+          arguments to bind, must contain the same number
+of parameters as the number of positional arguments (<code>?</code>) in the
+original cql passed to <code><a href="../../session/#prepare-instance_method" title="Cassandra::Session#prepare (method)">Cassandra::Session#prepare</a></code>
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../bound/" title="Cassandra::Statements::Bound (class)">Cassandra::Statements::Bound</a></code></td>
+        
+        <td class="details">
+          
+          
+          bound statement
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
 <dt class="tag-title">
   Raises:
 </dt>

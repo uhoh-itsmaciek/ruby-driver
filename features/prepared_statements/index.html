@@ -68,12 +68,99 @@
               
             </ol>
           </nav>
-          <h1 id="prepared-statements">Prepared Statements</h1>
-<h3 id="topics">Topics</h3>
-<ul class="sub-topics">
-<li><a href="reads/">Reads</a></li>
-<li><a href="writes/">Writes</a></li>
-</ul>
+          <div class="feature-section">
+<h1 id="prepared-statements">Prepared statements</h1>
+<p>Prepared statements are used to prepare a write query only once and execute
+it multiple times with different values. A bind variable marker <code>?</code> is used
+to represent a dynamic value in a statement.</p>
+<h2 id="an-insert-statement-is-prepared">an INSERT statement is prepared</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and an empty table &#8220;playlists&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+            <span class="s2">"INSERT INTO playlists (id, song_id, title, artist, album) "</span> <span class="p">\</span>
+            <span class="s2">"VALUES (62c36092-82a1-3a00-93d1-46196ee77204, ?, ?, ?, ?)"</span>
+          <span class="p">)</span>
+<span class="n">songs</span>   <span class="o">=</span> <span class="o">[</span>
+  <span class="p">{</span>
+    <span class="ss">:id</span>     <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
+    <span class="ss">:title</span>  <span class="o">=&gt;</span> <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
+    <span class="ss">:album</span>  <span class="o">=&gt;</span> <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
+    <span class="ss">:artist</span> <span class="o">=&gt;</span> <span class="s1">'Joséphine Baker'</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="ss">:id</span>     <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
+    <span class="ss">:title</span>  <span class="o">=&gt;</span> <span class="s1">'Die Mösch'</span><span class="p">,</span>
+    <span class="ss">:album</span>  <span class="o">=&gt;</span> <span class="s1">'In Gold'</span><span class="p">,</span>
+    <span class="ss">:artist</span> <span class="o">=&gt;</span> <span class="s1">'Willi Ostermann'</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="ss">:id</span>     <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">),</span>
+    <span class="ss">:title</span>  <span class="o">=&gt;</span> <span class="s1">'Memo From Turner'</span><span class="p">,</span>
+    <span class="ss">:album</span>  <span class="o">=&gt;</span> <span class="s1">'Performance'</span><span class="p">,</span>
+    <span class="ss">:artist</span> <span class="o">=&gt;</span> <span class="s1">'Mick Jager'</span>
+  <span class="p">},</span>
+<span class="o">]</span>
+
+<span class="n">songs</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">song</span><span class="o">|</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="n">song</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">,</span> <span class="n">song</span><span class="o">[</span><span class="ss">:title</span><span class="o">]</span><span class="p">,</span> <span class="n">song</span><span class="o">[</span><span class="ss">:artist</span><span class="o">]</span><span class="p">,</span> <span class="n">song</span><span class="o">[</span><span class="ss">:album</span><span class="o">]</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM playlists"</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+  <span class="vg">$stderr</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"artist"</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"title"</span><span class="o">]</span><span class="si">}</span><span class="s2"> / </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"album"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>Joséphine Baker: La Petite Tonkinoise / Bye Bye Blackbird</code></pre>
+</dd>
+<dt>And </dt>
+<dd>its output should contain:<pre><code>Willi Ostermann: Die Mösch / In Gold</code></pre>
+</dd>
+<dt>And </dt>
+<dd>its output should contain:<pre><code>Mick Jager: Memo From Turner / Performance</code></pre>
+</dd>
+</dl>
+<h2 id="a-select-statement-with-parameterized-limit-is-prepared">a SELECT statement with parameterized LIMIT is prepared</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;playlists&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="nb">select</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM playlists LIMIT ?"</span><span class="p">)</span>
+<span class="n">limits</span>  <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span>
+
+<span class="n">limits</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">limit</span><span class="o">|</span>
+  <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="s2">"selected </span><span class="si">#{</span><span class="n">rows</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> row(s)"</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>selected 1 row(s)
+selected 2 row(s)
+selected 3 row(s)</code></pre>
+</dd>
+</dl>
+</div>
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
@@ -86,14 +173,6 @@
             <li class="active">
               <a href="./">Prepared Statements</a>
               <ul class="nav nav-pills nav-stacked">
-                
-                
-                <li><a href="reads/">Reads</a></li>
-                
-                
-                
-                <li><a href="writes/">Writes</a></li>
-                
                 
               </ul>
             </li>
