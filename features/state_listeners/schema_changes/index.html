@@ -75,9 +75,13 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="keyspace-change-detection">keyspace change detection</h1>
-<p>Cluster object allows registering state listeners. It then gurantees that
-they will be notifies on keyspace changes.</p>
+<h1 id="schema-change-detection">Schema change detection</h1>
+<p>A state listener registered with Cluster object will be notified of schema changes.</p>
+
+<p>There are three types of changes – <code>keyspace_created</code>, <code>keyspace_changed</code> and
+<code>keyspace_dropped</code>. All will be communicated to a state listener using its
+accordingly named methods with a <a href="../../../api/keyspace">Keyspace</a> instance as an
+argument.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
@@ -88,16 +92,16 @@ they will be notifies on keyspace changes.</p>
     <span class="vi">@out</span> <span class="o">=</span> <span class="n">io</span>
   <span class="k">end</span>
 
-  <span class="k">def</span> <span class="nf">keyspace_created</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Schema created keyspace=</span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> table=</span><span class="si">#{</span><span class="n">table</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">keyspace_created</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
+    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> created"</span><span class="p">)</span>
   <span class="k">end</span>
 
-  <span class="k">def</span> <span class="nf">keyspace_updated</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Schema updated keyspace=</span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> table=</span><span class="si">#{</span><span class="n">table</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">keyspace_changed</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
+    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> changed"</span><span class="p">)</span>
   <span class="k">end</span>
 
-  <span class="k">def</span> <span class="nf">keyspace_dropped</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
-    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Schema dropped keyspace=</span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> table=</span><span class="si">#{</span><span class="n">table</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">keyspace_dropped</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
+    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> dropped"</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
@@ -117,15 +121,58 @@ they will be notifies on keyspace changes.</p>
 </code></pre>
 </dd>
 </dl>
-<h2 id="a-new-keyspace-is-created-and-then-dropped">a new keyspace is created and then dropped</h2>
+<h2 id="listening-for-keyspace-creation">Listening for keyspace creation</h2>
 <dl class="steps">
-<dt>When </dt>
-<dd>keyspace &#8220;new_keyspace&#8221; is created</dd>
+<dt>Given </dt>
+<dd>no keyspace &#8220;new_keyspace&#8221;</dd>
 <dt>And </dt>
-<dd>keyspace &#8220;new_keyspace&#8221; is dropped</dd>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE KEYSPACE new_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3}"</span><span class="p">)</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
 <dt>Then </dt>
-<dd>background output should contain:<pre><code>Schema created keyspace="new_keyspace" table=""
-Schema dropped keyspace="new_keyspace" table=""</code></pre>
+<dd>background output should contain:<pre><code>Keyspace "new_keyspace" created</code></pre>
+</dd>
+</dl>
+<h2 id="listening-for-keyspace-drop">Listening for keyspace drop</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a keyspace &#8220;new_keyspace&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP KEYSPACE new_keyspace"</span><span class="p">)</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>background output should contain:<pre><code>Keyspace "new_keyspace" dropped</code></pre>
+</dd>
+</dl>
+<h2 id="listening-for-keyspace-changes">Listening for keyspace changes</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a keyspace &#8220;new_keyspace&#8221;</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_keyspace.new_table (id timeuuid PRIMARY KEY)"</span><span class="p">)</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>background output should contain:<pre><code>Keyspace "new_keyspace" changed</code></pre>
 </dd>
 </dl>
 </div>
@@ -175,7 +222,9 @@ Schema dropped keyspace="new_keyspace" table=""</code></pre>
                   <a href="./">Schema Changes</a>
                   <ul class="nav nav-pills nav-stacked">
 <li><a href="#background">Background</a></li>
-<li><a href="#a-new-keyspace-is-created-and-then-dropped">a new keyspace is created and then dropped</a></li>
+<li><a href="#listening-for-keyspace-creation">Listening for keyspace creation</a></li>
+<li><a href="#listening-for-keyspace-drop">Listening for keyspace drop</a></li>
+<li><a href="#listening-for-keyspace-changes">Listening for keyspace changes</a></li>
 </ul>
                 </li>
                 

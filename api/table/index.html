@@ -9,10 +9,10 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Info</title>
+    <title>Datastax Cassandra Ruby Driver - Table</title>
 
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="../../../">Introduction</a></li>
-            <li><a href="../../../features/">Features</a></li>
-            <li class="active"><a href="../../">API docs</a></li>
+            <li><a href="../../">Introduction</a></li>
+            <li><a href="../../features/">Features</a></li>
+            <li class="active"><a href="../">API docs</a></li>
           </ul>
         </div>
       </div>
@@ -50,7 +50,7 @@
               
               
               
-              <li><a href="../../../">Introduction</a></li>
+              <li><a href="../../">Introduction</a></li>
               
               
               
@@ -58,29 +58,28 @@
               
               
               
-              <li><a href="../../">Cassandra</a></li>
+              <li><a href="../">Cassandra</a></li>
               
               
               
               
               
-              <li><a href="../">Execution</a></li>
-              
-              
-              
-              
-              
-              <li class="active">Info</li>
+              <li class="active">Table</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Execution::Info <small>
+  <h1>Cassandra::Table <small>
   class</small>
 </h1>
 </div>
+<p>Represents a cassandra table</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
 
 
 <h2>Inherits</h2>
@@ -92,18 +91,18 @@
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="keyspace-instance_method">
+    <div class="panel panel-default" id="name-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>keyspace</strong></span> 
+      <span class="path"><strong>name</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns keyspace used for the query</p>
+    <p>Returns table name</p>
 
 <dl class="dl-horizontal notes">
 
@@ -134,7 +133,7 @@
         <td class="details">
           
           
-          keyspace used for the query
+          table name
 
           
         </td>
@@ -149,24 +148,61 @@
 </div>
 
   
-    <div class="panel panel-default" id="statement-instance_method">
+    <div class="panel panel-default" id="has_column?-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>statement</strong></span> 
+      <span class="path"><strong>has_column?</strong></span><big>(</big><var>name</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns original statement</p>
+    <p>Returns whether this table has a given column</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>name</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          column name
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -186,12 +222,12 @@
       <tr>
         
         
-        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></td>
+        <td class="type"><code>Boolean</code></td>
         
         <td class="details">
           
           
-          original statement
+          whether this table has a given column
 
           
         </td>
@@ -206,24 +242,61 @@
 </div>
 
   
-    <div class="panel panel-default" id="options-instance_method">
+    <div class="panel panel-default" id="column-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>options</strong></span> 
+      <span class="path"><strong>column</strong></span><big>(</big><var>name</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns original execution options</p>
+    <p>Returns a column or nil</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>name</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          column name
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -243,12 +316,12 @@
       <tr>
         
         
-        <td class="type"><code><a href="../options/" title="Cassandra::Execution::Options (class)">Cassandra::Execution::Options</a></code></td>
+        <td class="type">(<code><a href="../column/" title="Cassandra::Column (class)">Cassandra::Column</a></code> or <code>nil</code>)</td>
         
         <td class="details">
           
           
-          original execution options
+          a column or nil
 
           
         </td>
@@ -263,18 +336,127 @@
 </div>
 
   
-    <div class="panel panel-default" id="hosts-instance_method">
+    <div class="panel panel-default" id="each_column-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>hosts</strong></span> 
+      <span class="path"><strong>each_column</strong></span><big>(</big><var>&amp;block</var><big>)</big> 
     
   
   
   
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="columns-instance_method"><strong>columns</strong></span></span>
+    </span>
+  
   </div>
   <div class="panel-body method-body">
-    <p>Returns a list of attempted hosts</p>
+    <p>Yield or enumerate each column defined in this table</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+  <dt class="tag-title">Overloads:</dt>
+  <dd class="tag-content">
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>each_column</strong></span> {|column| &#8230; }
+        </div>
+        <div class="panel-body overload-body">
+          <p>Returns a list of columns</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>column</var></td>
+        
+        
+        <td class="type"><code><a href="../column/" title="Cassandra::Column (class)">Cassandra::Column</a></code></td>
+        
+        <td class="details">
+          
+          
+          current column
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code>Array</code>&lt;<code><a href="../column/" title="Cassandra::Column (class)">Cassandra::Column</a></code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          a list of columns
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+        </div>
+      </div>
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>each_column</strong></span> 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Returns an enumerator</p>
 
 <dl class="dl-horizontal notes">
 
@@ -301,12 +483,12 @@
         
         
         <td class="type">
-<code>Array</code>&lt;<code><a href="../../host/" title="Cassandra::Host (class)">Cassandra::Host</a></code>&gt;</td>
+<code>Enumerator</code>&lt;<code><a href="../column/" title="Cassandra::Column (class)">Cassandra::Column</a></code>&gt;</td>
         
         <td class="details">
           
           
-          a list of attempted hosts
+          an enumerator
 
           
         </td>
@@ -317,22 +499,29 @@
 </dd>
 
 </dl>
+        </div>
+      </div>
+    
+  </dd>
+
+
+</dl>
   </div>
 </div>
 
   
-    <div class="panel panel-default" id="consistency-instance_method">
+    <div class="panel panel-default" id="to_cql-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>consistency</strong></span> 
+      <span class="path"><strong>to_cql</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Actual consistency used, it can differ from consistency in <code><a href="#options-instance_method" title="Cassandra::Execution::Info#options (method)">#options</a></code> if a retry policy modified it.</p>
+    <p>Returns a cql representation of this table</p>
 
 <dl class="dl-horizontal notes">
 
@@ -358,12 +547,12 @@
       <tr>
         
         
-        <td class="type"><code>Symbol</code></td>
+        <td class="type"><code>String</code></td>
         
         <td class="details">
           
           
-          one of <code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+          a cql representation of this table
 
           
         </td>
@@ -378,18 +567,22 @@
 </div>
 
   
-    <div class="panel panel-default" id="retries-instance_method">
+    <div class="panel panel-default" id="eql?-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>retries</strong></span> 
+      <span class="path"><strong>eql?</strong></span><big>(</big><var>other</var><big>)</big> 
     
   
   
   
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="==-instance_method"><strong>==</strong></span></span>
+    </span>
+  
   </div>
   <div class="panel-body method-body">
-    <p>Returns number of retries</p>
+    <p>Returns whether this table is equal to the other</p>
 
 <dl class="dl-horizontal notes">
 
@@ -415,69 +608,12 @@
       <tr>
         
         
-        <td class="type"><code>Integer</code></td>
+        <td class="type"><code>Boolean</code></td>
         
         <td class="details">
           
           
-          number of retries
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="trace-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>trace</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns <code><a href="../trace/" title="Cassandra::Execution::Trace (class)">Trace</a></code> if <code>trace: true</code> was passed to <code><a href="../../session/#execute-instance_method" title="Cassandra::Session#execute (method)">Session#execute</a></code> or <code><a href="../../session/#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">Session#execute_async</a></code></p>
-
-<dl class="dl-horizontal notes">
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type">(<code><a href="../trace/" title="Cassandra::Execution::Trace (class)">Cassandra::Execution::Trace</a></code> or <code>nil</code>)</td>
-        
-        <td class="details">
-          
-          
-          a Trace if it has been enabled for request
+          whether this table is equal to the other
 
           
         </td>
@@ -498,110 +634,90 @@
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
 
-<li><a href="../../auth/">Auth</a></li>
+<li><a href="../auth/">Auth</a></li>
 
 
 
-<li><a href="../../cluster/">Cluster</a></li>
+<li><a href="../cluster/">Cluster</a></li>
 
 
 
-<li><a href="../../column/">Column</a></li>
+<li><a href="../column/">Column</a></li>
 
 
 
-<li><a href="../../compression/">Compression</a></li>
+<li><a href="../compression/">Compression</a></li>
 
 
 
-<li><a href="../../error/">Error</a></li>
+<li><a href="../error/">Error</a></li>
 
 
 
-<li><a href="../../errors/">Errors</a></li>
+<li><a href="../errors/">Errors</a></li>
+
+
+
+<li><a href="../execution/">Execution</a></li>
+
+
+
+<li><a href="../future/">Future</a></li>
+
+
+
+<li><a href="../host/">Host</a></li>
+
+
+
+<li><a href="../keyspace/">Keyspace</a></li>
+
+
+
+<li><a href="../listener/">Listener</a></li>
+
+
+
+<li><a href="../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../result/">Result</a></li>
+
+
+
+<li><a href="../retry/">Retry</a></li>
+
+
+
+<li><a href="../session/">Session</a></li>
+
+
+
+<li><a href="../statement/">Statement</a></li>
+
+
+
+<li><a href="../statements/">Statements</a></li>
 
 
 
 <li class="active">
-  <a href="../">Execution</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
-
-<li class="active">
-  <a href="./">Info</a>
+  <a href="./">Table</a>
   
 </li>
 
 
 
-<li><a href="../options/">Options</a></li>
+<li><a href="../time_uuid/">TimeUuid</a></li>
 
 
 
-<li><a href="../trace/">Trace</a></li>
-
-
-
-  </ul>
-  
-</li>
-
-
-
-<li><a href="../../future/">Future</a></li>
-
-
-
-<li><a href="../../host/">Host</a></li>
-
-
-
-<li><a href="../../keyspace/">Keyspace</a></li>
-
-
-
-<li><a href="../../listener/">Listener</a></li>
-
-
-
-<li><a href="../../load_balancing/">LoadBalancing</a></li>
-
-
-
-<li><a href="../../reconnection/">Reconnection</a></li>
-
-
-
-<li><a href="../../result/">Result</a></li>
-
-
-
-<li><a href="../../retry/">Retry</a></li>
-
-
-
-<li><a href="../../session/">Session</a></li>
-
-
-
-<li><a href="../../statement/">Statement</a></li>
-
-
-
-<li><a href="../../statements/">Statements</a></li>
-
-
-
-<li><a href="../../table/">Table</a></li>
-
-
-
-<li><a href="../../time_uuid/">TimeUuid</a></li>
-
-
-
-<li><a href="../../uuid/">Uuid</a></li>
+<li><a href="../uuid/">Uuid</a></li>
 
 
 

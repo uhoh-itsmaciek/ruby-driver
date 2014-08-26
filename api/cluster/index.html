@@ -75,7 +75,29 @@
   class</small>
 </h1>
 </div>
+<p>Cluster represents a cassandra cluster. It serves as a <code><a href="../session/" title="Cassandra::Session (class)">Session</a></code>
+factory and a collection of metadata.</p>
 
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#connect-instance_method" title="Cassandra::Cluster#connect (method)">Creating a new session</a></code></li>
+      
+        <li><code><a href="#each_host-instance_method" title="Cassandra::Cluster#each_host (method)">Getting all peers in the cluster</a></code></li>
+      
+        <li><code><a href="#each_keyspace-instance_method" title="Cassandra::Cluster#each_keyspace (method)">Getting all existing keyspaces</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
 
 <h2>Inherits</h2>
 <div class="superclass"><code>Object</code></div>
@@ -457,41 +479,83 @@
 </div>
 
   
-    <div class="panel panel-default" id="register-instance_method">
+    <div class="panel panel-default" id="each_keyspace-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>register</strong></span><big>(</big><var>listener</var><big>)</big> 
+      <span class="path"><strong>each_keyspace</strong></span> 
     
   
   
+  
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="keyspaces-instance_method"><strong>keyspaces</strong></span></span>
+    </span>
   
   </div>
   <div class="panel-body method-body">
-    
-  </div>
-</div>
+    <p>Yield or enumerate each keyspace defined in this cluster</p>
 
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
   
-    <div class="panel panel-default" id="connect_async-instance_method">
-  <div class="panel-heading method-header">
-  
+  <dt class="tag-title">Overloads:</dt>
+  <dd class="tag-content">
     
-      <span class="path"><strong>connect_async</strong></span><big>(</big><var>keyspace</var> = nil<big>)</big> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>each_keyspace</strong></span> {|keyspace| &#8230; }
+        </div>
+        <div class="panel-body overload-body">
+          <p>Returns a list of keyspaces</p>
+
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
   
 <dt class="tag-title">
-  Raises:
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>keyspace</var></td>
+        
+        
+        <td class="type"><code><a href="../keyspace/" title="Cassandra::Keyspace (class)">Cassandra::Keyspace</a></code></td>
+        
+        <td class="details">
+          
+          
+          current keyspace
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
@@ -509,10 +573,451 @@
       <tr>
         
         
-        <td class="type"><code>::ArgumentError</code></td>
+        <td class="type">
+<code>Array</code>&lt;<code><a href="../keyspace/" title="Cassandra::Keyspace (class)">Cassandra::Keyspace</a></code>&gt;</td>
         
         <td class="details">
           
+          
+          a list of keyspaces
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+        </div>
+      </div>
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>each_keyspace</strong></span> 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Returns an enumerator</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code>Enumerator</code>&lt;<code><a href="../keyspace/" title="Cassandra::Keyspace (class)">Cassandra::Keyspace</a></code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          an enumerator
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+        </div>
+      </div>
+    
+  </dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="keyspace-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>keyspace</strong></span><big>(</big><var>name</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Find a keyspace by name</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>name</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          keyspace name
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">(<code><a href="../keyspace/" title="Cassandra::Keyspace (class)">Cassandra::Keyspace</a></code> or <code>nil</code>)</td>
+        
+        <td class="details">
+          
+          
+          keyspace or nil
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="has_keyspace?-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>has_keyspace?</strong></span><big>(</big><var>name</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Determine if a keyspace by a given name exists</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>name</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          keyspace name
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Boolean</code></td>
+        
+        <td class="details">
+          
+          
+          true or false
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="register-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>register</strong></span><big>(</big><var>listener</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Register a cluster state listener. State listeners receive notifications
+about topology and schema changes</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>listener</var></td>
+        
+        
+        <td class="type"><code><a href="../listener/" title="Cassandra::Listener (class)">Cassandra::Listener</a></code></td>
+        
+        <td class="details">
+          
+          
+          cluster state listener
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="connect_async-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>connect_async</strong></span><big>(</big><var>keyspace</var> = nil<big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Asynchronously create a new session, optionally scoped to a keyspace</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>keyspace</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          optional keyspace to scope session to
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type">
+<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="../session/" title="Cassandra::Session (class)">Cassandra::Session</a></code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          a future new session that
+can prepare and execute statements
+
           
         </td>
       </tr>
@@ -537,7 +1042,130 @@
   
   </div>
   <div class="panel-body method-body">
+    <p>Synchronously create a new session, optionally scoped to a keyspace</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        <td class="name"><var>keyspace</var></td>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          optional keyspace to scope session to
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../session/" title="Cassandra::Session (class)">Cassandra::Session</a></code></td>
+        
+        <td class="details">
+          
+          
+          a new session that can prepare and execute
+statements
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if keyspace is not a String
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#connect_async-instance_method" title="Cassandra::Cluster#connect_async (method)">#connect_async</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
   </div>
 </div>
 
@@ -553,7 +1181,50 @@
   
   </div>
   <div class="panel-body method-body">
+    <p>Asynchronously closes all sessions managed by this cluster</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        
+        <td class="type">
+<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="./" title="Cassandra::Cluster (class)">Cassandra::Cluster</a></code>&gt;</td>
+        
+        <td class="details">
+          
+          
+          a future that resolves to
+self once closed
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -569,7 +1240,57 @@
   
   </div>
   <div class="panel-body method-body">
+    <p>Synchronously closes all sessions managed by this cluster</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+          this cluster
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="#close_async-instance_method" title="Cassandra::Cluster#close_async (method)">#close_async</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
   </div>
 </div>
 
@@ -585,7 +1306,48 @@
   
   </div>
   <div class="panel-body method-body">
+    <p>Returns a CLI-friendly cluster representation</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          a CLI-friendly cluster representation
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -604,6 +1366,10 @@
   <a href="./">Cluster</a>
   
 </li>
+
+
+
+<li><a href="../column/">Column</a></li>
 
 
 
@@ -628,6 +1394,10 @@
 
 
 <li><a href="../host/">Host</a></li>
+
+
+
+<li><a href="../keyspace/">Keyspace</a></li>
 
 
 
@@ -660,6 +1430,10 @@
 
 
 <li><a href="../statements/">Statements</a></li>
+
+
+
+<li><a href="../table/">Table</a></li>
 
 
 

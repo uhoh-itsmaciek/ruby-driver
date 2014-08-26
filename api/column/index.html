@@ -9,10 +9,10 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Authenticator</title>
+    <title>Datastax Cassandra Ruby Driver - Column</title>
 
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="../../../">Introduction</a></li>
-            <li><a href="../../../features/">Features</a></li>
-            <li class="active"><a href="../../">API docs</a></li>
+            <li><a href="../../">Introduction</a></li>
+            <li><a href="../../features/">Features</a></li>
+            <li class="active"><a href="../">API docs</a></li>
           </ul>
         </div>
       </div>
@@ -50,7 +50,7 @@
               
               
               
-              <li><a href="../../../">Introduction</a></li>
+              <li><a href="../../">Introduction</a></li>
               
               
               
@@ -58,59 +58,29 @@
               
               
               
-              <li><a href="../../">Cassandra</a></li>
+              <li><a href="../">Cassandra</a></li>
               
               
               
               
               
-              <li><a href="../">Auth</a></li>
-              
-              
-              
-              
-              
-              <li class="active">Authenticator</li>
+              <li class="active">Column</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Auth::Authenticator <small>
+  <h1>Cassandra::Column <small>
   class</small>
 </h1>
 </div>
-<p>An authenticator handles the authentication challenge/response cycles of
-a single connection. It can be stateful, but it must not for any reason
-block. If any of the method calls block, the whole connection process
-will be blocked.</p>
+<p>Represents a cassandra column</p>
 
 <dl class="dl-horizontal notes">
 
-<dt><span class="label label-primary">Note</span></dt>
-<dd>Authenticators created by auth providers don&#8217;t need to be subclasses
-of this class, but need to implement the same methods. This class exists
-only for documentation purposes.
-</dd>
-
-
 </dl>
-<dl class="tags">
-  
 
-  <dt class="tag-title">See Also:</dt>
-  <dd class="tag-content">
-    <ul class="see">
-      
-        <li><a href="https://github.com/apache/cassandra/blob/trunk/doc/native_protocol_v2.spec#L257-L273" target="_parent" title="Cassandra native protocol v2 SASL authentication">Cassandra native protocol v2 SASL authentication</a></li>
-      
-        <li><code><a href="../provider/" title="Cassandra::Auth::Provider (class)">Provider</a></code></li>
-      
-    </ul>
-  </dd>
-
-</dl>
 
 <h2>Inherits</h2>
 <div class="superclass"><code>Object</code></div>
@@ -121,26 +91,20 @@ only for documentation purposes.
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="initial_response-instance_method">
+    <div class="panel panel-default" id="name-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>initial_response</strong></span> 
+      <span class="path"><strong>name</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>This method must return the initial authentication token to be sent to
-the server.</p>
+    <p>Returns column name</p>
 
 <dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
 
 </dl>
 <dl class="tags">
@@ -169,7 +133,7 @@ the server.</p>
         <td class="details">
           
           
-          the initial authentication token
+          column name
 
           
         </td>
@@ -184,39 +148,31 @@ the server.</p>
 </div>
 
   
-    <div class="panel panel-default" id="challenge_response-instance_method">
+    <div class="panel panel-default" id="order-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>challenge_response</strong></span><big>(</big><var>token</var><big>)</big> 
+      <span class="path"><strong>order</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>If the authentication requires multiple challenge/response cycles this
-method will be called when a challenge is returned by the server. A
-response token must be created and will be sent back to the server.</p>
+    <p>Returns column order (<code>:asc</code> or <code>:desc</code>)</p>
 
 <dl class="dl-horizontal notes">
 
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
-
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
-  Parameters:
+  
+<dt class="tag-title">
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
     <thead>
       <tr>
-        
-        <th class="name">Name</th>
         
         
         <th class="type">Type</th>
@@ -228,15 +184,13 @@ response token must be created and will be sent back to the server.</p>
     
       <tr>
         
-        <td class="name"><var>token</var></td>
         
-        
-        <td class="type"><code>String</code></td>
+        <td class="type"><code>Symbol</code></td>
         
         <td class="details">
           
           
-          a challenge token sent by the server
+          column order (<code>:asc</code> or <code>:desc</code>)
 
           
         </td>
@@ -246,6 +200,86 @@ response token must be created and will be sent back to the server.</p>
   </table>
 </dd>
 
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="static?-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>static?</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns whether the column is static</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Boolean</code></td>
+        
+        <td class="details">
+          
+          
+          whether the column is static
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="to_cql-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>to_cql</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a cql representation of this column</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
 <dt class="tag-title">
   Returns:
 </dt>
@@ -270,7 +304,7 @@ response token must be created and will be sent back to the server.</p>
         <td class="details">
           
           
-          the authentication token to send back to the server
+          a cql representation of this column
 
           
         </td>
@@ -285,39 +319,35 @@ response token must be created and will be sent back to the server.</p>
 </div>
 
   
-    <div class="panel panel-default" id="authentication_successful-instance_method">
+    <div class="panel panel-default" id="eql?-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>authentication_successful</strong></span><big>(</big><var>token</var><big>)</big> 
+      <span class="path"><strong>eql?</strong></span><big>(</big><var>other</var><big>)</big> 
     
   
   
   
+    <span class="aliases">Aliased as:
+    <span class="names"><span id="==-instance_method"><strong>==</strong></span></span>
+    </span>
+  
   </div>
   <div class="panel-body method-body">
-    <p>Called when the authentication is successful.</p>
+    <p>Returns whether this column is equal to the other</p>
 
 <dl class="dl-horizontal notes">
 
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method must absolutely not block.
-</dd>
-
-<dt><span class="label label-default">Void</span></dt>
-<dd>Return value of this method is ignored.</dd>
-
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
-  Parameters:
+  
+<dt class="tag-title">
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
     <thead>
       <tr>
-        
-        <th class="name">Name</th>
         
         
         <th class="type">Type</th>
@@ -329,15 +359,13 @@ response token must be created and will be sent back to the server.</p>
     
       <tr>
         
-        <td class="name"><var>token</var></td>
         
-        
-        <td class="type"><code>String</code></td>
+        <td class="type"><code>Boolean</code></td>
         
         <td class="details">
           
           
-          a token sent by the server
+          whether this column is equal to the other
 
           
         </td>
@@ -346,7 +374,6 @@ response token must be created and will be sent back to the server.</p>
     </tbody>
   </table>
 </dd>
-
 
 </dl>
   </div>
@@ -359,110 +386,90 @@ response token must be created and will be sent back to the server.</p>
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
 
-<li class="active">
-  <a href="../">Auth</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
+<li><a href="../auth/">Auth</a></li>
+
+
+
+<li><a href="../cluster/">Cluster</a></li>
+
+
 
 <li class="active">
-  <a href="./">Authenticator</a>
+  <a href="./">Column</a>
   
 </li>
 
 
 
-<li><a href="../provider/">Provider</a></li>
+<li><a href="../compression/">Compression</a></li>
 
 
 
-<li><a href="../providers/">Providers</a></li>
+<li><a href="../error/">Error</a></li>
 
 
 
-  </ul>
-  
-</li>
+<li><a href="../errors/">Errors</a></li>
 
 
 
-<li><a href="../../cluster/">Cluster</a></li>
+<li><a href="../execution/">Execution</a></li>
 
 
 
-<li><a href="../../column/">Column</a></li>
+<li><a href="../future/">Future</a></li>
 
 
 
-<li><a href="../../compression/">Compression</a></li>
+<li><a href="../host/">Host</a></li>
 
 
 
-<li><a href="../../error/">Error</a></li>
+<li><a href="../keyspace/">Keyspace</a></li>
 
 
 
-<li><a href="../../errors/">Errors</a></li>
+<li><a href="../listener/">Listener</a></li>
 
 
 
-<li><a href="../../execution/">Execution</a></li>
+<li><a href="../load_balancing/">LoadBalancing</a></li>
 
 
 
-<li><a href="../../future/">Future</a></li>
+<li><a href="../reconnection/">Reconnection</a></li>
 
 
 
-<li><a href="../../host/">Host</a></li>
+<li><a href="../result/">Result</a></li>
 
 
 
-<li><a href="../../keyspace/">Keyspace</a></li>
+<li><a href="../retry/">Retry</a></li>
 
 
 
-<li><a href="../../listener/">Listener</a></li>
+<li><a href="../session/">Session</a></li>
 
 
 
-<li><a href="../../load_balancing/">LoadBalancing</a></li>
+<li><a href="../statement/">Statement</a></li>
 
 
 
-<li><a href="../../reconnection/">Reconnection</a></li>
+<li><a href="../statements/">Statements</a></li>
 
 
 
-<li><a href="../../result/">Result</a></li>
+<li><a href="../table/">Table</a></li>
 
 
 
-<li><a href="../../retry/">Retry</a></li>
+<li><a href="../time_uuid/">TimeUuid</a></li>
 
 
 
-<li><a href="../../session/">Session</a></li>
-
-
-
-<li><a href="../../statement/">Statement</a></li>
-
-
-
-<li><a href="../../statements/">Statements</a></li>
-
-
-
-<li><a href="../../table/">Table</a></li>
-
-
-
-<li><a href="../../time_uuid/">TimeUuid</a></li>
-
-
-
-<li><a href="../../uuid/">Uuid</a></li>
+<li><a href="../uuid/">Uuid</a></li>
 
 
 
