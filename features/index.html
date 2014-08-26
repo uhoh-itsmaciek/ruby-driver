@@ -71,7 +71,7 @@
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 
-<span class="n">cluster</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span>
+<span class="n">cluster</span><span class="o">.</span><span class="n">each_hosts</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span>
   <span class="nb">puts</span> <span class="s2">"Host </span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">ip</span><span class="si">}</span><span class="s2">: id=</span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> datacenter=</span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">datacenter</span><span class="si">}</span><span class="s2"> rack=</span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">rack</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 </code></pre>
