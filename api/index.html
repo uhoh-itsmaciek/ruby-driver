@@ -240,10 +240,8 @@
 </dt>
     
     <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="ss">credentials</span><span class="p">:</span> <span class="p">{</span>
-              <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="n">username</span><span class="p">,</span>
-              <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="n">password</span>
-            <span class="p">},</span>
+            <span class="ss">username</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+            <span class="ss">password</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span>
             <span class="ss">hosts</span><span class="p">:</span> <span class="o">[</span><span class="s1">'10.0.1.1'</span><span class="p">,</span> <span class="s1">'10.0.1.2'</span><span class="p">,</span> <span class="s1">'10.0.1.3'</span><span class="o">]</span>
           <span class="p">)</span>
 </code></pre></dd>
@@ -318,7 +316,7 @@
             </span>
             
               a list of
-initial addresses. Note that the entire cluster members will be
+initial addresses. Note that the entire list of cluster members will be
 discovered automatically once a connection to any hosts from the original
 list is successful
 
@@ -337,16 +335,15 @@ list is successful
               
             </span>
             
-              cassandra native protocol port.
+              cassandra native protocol port
 
             
           </td>
         </tr>
         
         <tr>
-          <td class="name"><var>:credentials</var></td>
-          <td class="type">
-<code>Hash</code>{<code>Symbol</code> =&gt; <code>String</code>}</td>
+          <td class="name"><var>:username</var></td>
+          <td class="type"><code>String</code></td>
           <td class="details">
             <span class="default">
               
@@ -355,8 +352,26 @@ list is successful
               
             </span>
             
-              hash with
-<code>:username</code> and <code>:password</code> keys
+              username to use for
+authentication to cassandra. Note that you must also specify <code>:password</code>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:password</var></td>
+          <td class="type"><code>String</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>none</code>
+              
+            </span>
+            
+              password to use for
+authentication to cassandra. Note that you must also specify <code>:username</code>
 
             
           </td>
@@ -383,17 +398,13 @@ work, you must install &#8216;snappy&#8217; or &#8216;lz4-ruby&#8217; gems
         
         <tr>
           <td class="name"><var>:load_balancing_policy</var></td>
-          <td class="type"><code><a href="load_balancing/policy/" title="Cassandra::LoadBalancing::Policy (module)">Cassandra::LoadBalancing::Policy</a></code></td>
+          <td class="type"><code><a href="load_balancing/policy/" title="Cassandra::LoadBalancing::Policy (class)">Cassandra::LoadBalancing::Policy</a></code></td>
           <td class="details">
             <span class="default">
               
-                default:
-                <code>Cassandra::LoadBalancing::Policies::RoundRobin</code>
-              
             </span>
             
-              <a href="../features/load_balancing">a load balancing
-policy</a>
+              default: <code><a href="load_balancing/policies/round_robin/" title="Cassandra::LoadBalancing::Policies::RoundRobin (class)">Cassandra::LoadBalancing::Policies::RoundRobin</a></code>
 
             
           </td>
@@ -401,18 +412,15 @@ policy</a>
         
         <tr>
           <td class="name"><var>:reconnection_policy</var></td>
-          <td class="type"><code><a href="reconnection/policy/" title="Cassandra::Reconnection::Policy (module)">Cassandra::Reconnection::Policy</a></code></td>
+          <td class="type"><code><a href="reconnection/policy/" title="Cassandra::Reconnection::Policy (class)">Cassandra::Reconnection::Policy</a></code></td>
           <td class="details">
             <span class="default">
               
-                default:
-                <code>Cassandra::Reconnection::Policies::Exponential</code>
-              
             </span>
             
-              a reconnection policy to
-use. Note that default <code><a href="reconnection/policies/exponential/" title="Cassandra::Reconnection::Policies::Exponential (class)">Cassandra::Reconnection::Policies::Exponential</a></code> is configured
-with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
+              default: <code><a href="reconnection/policies/exponential/" title="Cassandra::Reconnection::Policies::Exponential (class)">Cassandra::Reconnection::Policies::Exponential</a></code>. Note that the
+default policy is configured with
+<code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
 
             
           </td>
@@ -424,12 +432,10 @@ with <code>Reconnection::Policies::Exponential.new(0.5, 30, 2)</code>
           <td class="details">
             <span class="default">
               
-                default:
-                <code>Retry::Policies::Default</code>
-              
             </span>
             
-              a retry policy
+              default:
+<code><a href="retry/policies/default/" title="Cassandra::Retry::Policies::Default (class)">Cassandra::Retry::Policies::Default</a></code>
 
             
           </td>
@@ -480,12 +486,12 @@ load_balancing policy is automatically registered with the cluster.
             <span class="default">
               
                 default:
-                <code>:one</code>
+                <code>:quorum</code>
               
             </span>
             
-              default consistency to use for
-all requests. Must be one of <code><a href="#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+              default consistency to use
+for all requests. Must be one of <code><a href="#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
             
           </td>
@@ -528,6 +534,24 @@ queries
         </tr>
         
         <tr>
+          <td class="name"><var>:credentials</var></td>
+          <td class="type">
+<code>Hash</code>{<code>String</code> =&gt; <code>String</code>}</td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>none</code>
+              
+            </span>
+            
+              a hash of credentials - to be used with <a href="https://github.com/apache/cassandra/blob/trunk/doc/native_protocol_v1.spec#L238-L250">credentials authentication in cassandra 1.2</a>. Note that if you specified <code>:username</code> and <code>:password</code> options, those credentials are configured automatically
+
+            
+          </td>
+        </tr>
+        
+        <tr>
           <td class="name"><var>:auth_provider</var></td>
           <td class="type"><code><a href="auth/provider/" title="Cassandra::Auth::Provider (class)">Cassandra::Auth::Provider</a></code></td>
           <td class="details">
@@ -538,9 +562,7 @@ queries
               
             </span>
             
-              auth
-provider. Note that if you have specified <code>:credentials</code>, then a
-<code><a href="auth/providers/plain_text/" title="Cassandra::Auth::Providers::PlainText (class)">Cassandra::Auth::Providers::PlainText</a></code> will be used automatically
+              a custom auth provider to be used with <a href="https://github.com/apache/cassandra/blob/trunk/doc/native_protocol_v2.spec#L257-L273">SASL authentication in cassandra 2.0</a>. Note that if you have specified <code>:username</code> and <code>:password</code>, then a <code><a href="auth/providers/password/" title="Cassandra::Auth::Providers::Password (class)">Cassandra::Auth::Providers::Password</a></code> will be used automatically
 
             
           </td>
@@ -557,9 +579,9 @@ provider. Note that if you have specified <code>:credentials</code>, then a
               
             </span>
             
-              compressor. Note
-that if you have specified <code>:compression</code>, an appropriate compressor will
-automatically be provided
+              a custom
+compressor. Note that if you have specified <code>:compression</code>, an
+appropriate compressor will be provided automatically
 
             
           </td>

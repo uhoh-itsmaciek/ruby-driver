@@ -78,16 +78,32 @@
           </nav>
           <div class="page-header">
   <h1>Cassandra::Reconnection::Policy <small>
-  module</small>
+  class</small>
 </h1>
 </div>
+<p>A reconnection policy</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>actual reconnection policies supplied as <code>:reconnection_policy</code>
+option to <code><a href="../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> don&#8217;t need to inherit this class, only
+implement its methods. This class exists for documentation purposes
+only.
+</dd>
+
+
+</dl>
+
+
+<h2>Inherits</h2>
+<div class="superclass"><code>Object</code></div>
 
 
 
 
-
-<h2>Mixed into</h2>
-<div class="included">
+<h2>Direct Known Subclasses</h2>
+<div class="subclasses">
   <ul class="list-inline">
     
     <li><code><a href="../policies/constant/" title="Cassandra::Reconnection::Policies::Constant (class)">Cassandra::Reconnection::Policies::Constant</a></code></li>
@@ -96,7 +112,6 @@
     
   </ul>
 </div>
-
 <h2>Methods</h2>
 <div class="module-methods">
   

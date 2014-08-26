@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - PlainText</title>
+    <title>Datastax Cassandra Ruby Driver - Password</title>
 
     <link href="../../../../css/style.css" rel="stylesheet">
     <link href="../../../../css/pygments.css" rel="stylesheet">
@@ -76,14 +76,14 @@
               
               
               
-              <li class="active">PlainText</li>
+              <li class="active">Password</li>
               
               
               
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Auth::Providers::PlainText <small>
+  <h1>Cassandra::Auth::Providers::Password <small>
   class</small>
 </h1>
 </div>
@@ -92,9 +92,9 @@
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>No need to instantiate this class manually, use <code>:credentials</code>
-option of <code><a href="../../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> method and one will be created
-automatically for you.
+<dd>No need to instantiate this class manually, use <code>:username</code> and
+<code>:password</code> options when calling <code><a href="../../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> and one will be
+created automatically for you.
 </dd>
 
 
@@ -121,7 +121,7 @@ automatically for you.
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a new instance of PlainText</p>
+    <p>Returns a new instance of Password</p>
 
 <dl class="dl-horizontal notes">
 
@@ -198,7 +198,7 @@ automatically for you.
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a PlainText Authenticator only if <code>org.apache.cassandra.auth.PasswordAuthenticator</code> is given.</p>
+    <p>Returns a Password Authenticator only if <code>org.apache.cassandra.auth.PasswordAuthenticator</code> is given.</p>
 
 <dl class="dl-horizontal notes">
 
@@ -322,7 +322,7 @@ automatically for you.
     
 
 <li class="active">
-  <a href="./">PlainText</a>
+  <a href="./">Password</a>
   
 </li>
 

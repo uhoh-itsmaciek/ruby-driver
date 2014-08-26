@@ -92,7 +92,7 @@
 <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
 <span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:one</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
 
 <span class="nb">puts</span> <span class="s2">"coordinator: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"keyspace: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">keyspace</span><span class="si">}</span><span class="s2">"</span>

@@ -87,21 +87,18 @@
   class</small>
 </h1>
 </div>
+<p>A reconnection policy that returns a constant exponentially growing
+reconnection interval up to a given maximum</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
 
 
 <h2>Inherits</h2>
-<div class="superclass"><code>Object</code></div>
+<div class="superclass"><code><a href="../../policy/" title="Cassandra::Reconnection::Policy (class)">Cassandra::Reconnection::Policy</a></code></div>
 
 
-
-<h2>Includes</h2>
-<div class="includes">
-  <ul class="list-inline">
-    
-    <li><code><a href="../../policy/" title="Cassandra::Reconnection::Policy (module)">Cassandra::Reconnection::Policy</a></code></li>
-    
-  </ul>
-</div>
 
 
 <h2>Methods</h2>
@@ -125,6 +122,100 @@
 </dl>
 <dl class="tags">
   
+<dt class="tag-title">Examples:</dt>
+<dd class="tag-content">
+  <dl class="examples">
+  
+    
+    <dt class="example-title">Using this policy
+</dt>
+    
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">policy</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Exponential</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">schedule</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">schedule</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 0.5</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 1.0</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 2.0</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 4.0</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 8.0</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 10.0</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 10.0</span>
+<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 10.0</span>
+</code></pre></dd>
+  
+  </dl>
+</dd>
+<dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>start</var></td>
+        
+        
+        <td class="type"><code>Numeric</code></td>
+        
+        <td class="details">
+          
+          
+          beginning interval
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>max</var></td>
+        
+        
+        <td class="type"><code>Numeric</code></td>
+        
+        <td class="details">
+          
+          
+          maximum reconnection interval
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>exponent</var></td>
+        
+        
+        <td class="type"><code>Numeric</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>2</code>)</em>
+          
+          
+          (2) interval exponent to use
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
 
 </dl>
   </div>
@@ -142,7 +233,50 @@
   
   </div>
   <div class="panel-body method-body">
+    <p>Returns an exponential
+reconnection schedule</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
     
+      <tr>
+        
+        
+        <td class="type"><code><a href="../../schedule/" title="Cassandra::Reconnection::Schedule (class)">Cassandra::Reconnection::Schedule</a></code></td>
+        
+        <td class="details">
+          
+          
+          an exponential
+reconnection schedule
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 

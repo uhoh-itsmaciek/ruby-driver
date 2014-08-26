@@ -136,8 +136,7 @@
         <td class="details">
           
           
-          statement to
-execute
+          statement to execute
 
           
         </td>
@@ -208,13 +207,10 @@ statement
           <td class="details">
             <span class="default">
               
-                default:
-                <code>:one</code>
-              
             </span>
             
-              consistency level for the
-request, one of <code><a href="../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+              consistency level for the request.
+Must be one of <code><a href="../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
             
           </td>
@@ -226,13 +222,10 @@ request, one of <code><a href="../#CONSISTENCIES-constant" title="Cassandra::CON
           <td class="details">
             <span class="default">
               
-                default:
-                <code>50000</code>
-              
             </span>
             
-              size of results page, you
-can page through results using <code><a href="../result/#next_page-instance_method" title="Cassandra::Result#next_page (method)">Result#next_page</a></code> or
+              size of results page. You can page
+through results using <code><a href="../result/#next_page-instance_method" title="Cassandra::Result#next_page (method)">Result#next_page</a></code> or
 <code><a href="../result/#next_page_async-instance_method" title="Cassandra::Result#next_page_async (method)">Result#next_page_async</a></code>
 
             
@@ -268,8 +261,8 @@ tracing
               
             </span>
             
-              if specified, it is a number
-of seconds after which to time out the request if it hasn&#8217;t completed
+              if specified, it is a number of
+seconds after which to time out the request if it hasn&#8217;t completed
 
             
           </td>
@@ -286,7 +279,7 @@ of seconds after which to time out the request if it hasn&#8217;t completed
               
             </span>
             
-              this option is
+              this option is only
 relevant for conditional updates and specifies a serial consistency to
 be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">Cassandra::SERIAL_CONSISTENCIES</a></code>
 
@@ -330,6 +323,15 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
     </tbody>
   </table>
 </dd>
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../#connect-class_method" title="Cassandra.connect (method)">for description of options that can be specified on the cluster-level as well as default values chosen.</a></code></li>
+      
+    </ul>
+  </dd>
 
 </dl>
   </div>

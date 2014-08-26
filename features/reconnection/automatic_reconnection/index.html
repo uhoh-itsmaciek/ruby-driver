@@ -118,7 +118,8 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 <span class="n">policy</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Constant</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
 <span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
              <span class="ss">listeners</span><span class="p">:</span> <span class="o">[</span><span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">)</span><span class="o">]</span><span class="p">,</span>
-             <span class="ss">reconnection_policy</span><span class="p">:</span> <span class="n">policy</span>
+             <span class="ss">reconnection_policy</span><span class="p">:</span> <span class="n">policy</span><span class="p">,</span>
+             <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:one</span>
            <span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span>
 
