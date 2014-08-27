@@ -593,6 +593,27 @@ appropriate compressor will be provided automatically
           </td>
         </tr>
         
+        <tr>
+          <td class="name"><var>:futures_factory</var></td>
+          <td class="type">
+<code>Object</code>&lt;<code>#all</code>, <code>#error</code>, <code>#value</code>, <code>#promise</code>&gt;</td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>none</code>
+              
+            </span>
+            
+              a custom futures factory to assist with integration into existing
+futures library. Note that promises returned by this object must conform
+to <code>Promise</code> api, which is not yet public. Things may change,
+use at your own risk.
+
+            
+          </td>
+        </tr>
+        
         </tbody>
       </table>
     </dd>
