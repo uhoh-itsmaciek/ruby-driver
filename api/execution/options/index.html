@@ -92,18 +92,19 @@
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="initialize-instance_method">
+    <div class="panel panel-default" id="consistency-instance_method">
   <div class="panel-heading method-header">
   
     
-      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>options</var><big>)</big> 
+      <span class="path"><strong>consistency</strong></span> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a new instance of Options</p>
+    <p>Returns consistency for request. Must be one of
+<code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code></p>
 
 <dl class="dl-horizontal notes">
 
@@ -111,7 +112,7 @@
 <dl class="tags">
   
 <dt class="tag-title">
-  Raises:
+  Returns:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
@@ -129,10 +130,14 @@
       <tr>
         
         
-        <td class="type"><code>::ArgumentError</code></td>
+        <td class="type"><code>Symbol</code></td>
         
         <td class="details">
           
+          
+          consistency for request. Must be one of
+<code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
           
         </td>
       </tr>
@@ -142,27 +147,6 @@
 </dd>
 
 </dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="consistency-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>consistency</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns the value of attribute consistency</p>
-
-<dl class="dl-horizontal notes">
-
-</dl>
-
   </div>
 </div>
 
@@ -178,12 +162,52 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns the value of attribute serial_consistency</p>
+    <p>Returns consistency for request with conditional updates
+(lightweight - compare-and-set, CAS - transactions). Must be one of
+<code><a href="../../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">SERIAL_CONSISTENCIES</a></code></p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          consistency for request with conditional updates
+(lightweight - compare-and-set, CAS - transactions). Must be one of
+<code><a href="../../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">SERIAL_CONSISTENCIES</a></code>
 
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -199,12 +223,48 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns the value of attribute page_size</p>
+    <p>Returns requested page size</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          requested page size
 
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -220,12 +280,48 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns the value of attribute timeout</p>
+    <p>Returns request timeout interval</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Numeric</code></td>
+        
+        <td class="details">
+          
+          
+          request timeout interval
 
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
   </div>
 </div>
 
@@ -241,7 +337,8 @@
   
   </div>
   <div class="panel-body method-body">
-    
+    <p>Returns whether request tracing was enabled</p>
+
 <dl class="dl-horizontal notes">
 
 </dl>
@@ -270,6 +367,9 @@
         
         <td class="details">
           
+          
+          whether request tracing was enabled
+
           
         </td>
       </tr>
