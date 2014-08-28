@@ -58,7 +58,20 @@
           </nav>
           <h1 id="datastax-ruby-driver-for-apache-cassandra">Datastax Ruby Driver for Apache Cassandra</h1>
 
-<p>A Ruby client driver for Apache Cassandra. It has built-in support for:</p>
+<p>A Ruby client driver for Apache Cassandra. This driver works exclusively with
+the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.</p>
+
+<ul>
+<li>JIRA: <a href="https://datastax-oss.atlassian.net/browse/RUBY">https://datastax-oss.atlassian.net/browse/RUBY</a>
+</li>
+<li>MAILING LIST: <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user</a>
+</li>
+<li>IRC: #datastax-drivers on <a href="http://freenode.net">irc.freenode.net</a>
+</li>
+<li>TWITTER: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a> </li>
+</ul>
+
+<p>It has built-in support for:</p>
 
 <ul>
 <li>one-off, <a href="features/prepared_statements/">prepared</a> and <a href="features/batch_statements/">batch statements</a>
@@ -228,6 +241,10 @@
 <li>Because the driver reactor is using <code>IO.select</code>, the maximum number of tcp connections allowed is 1024.</li>
 </ul>
 
+<h2 id="credits">Credits</h2>
+
+<p>This driver is based on the original work of <a href="https://github.com/iconara">Theo Hultberg</a> on <a href="https://github.com/iconara/cql-rb/">cql-rb</a>, which will be discontinued. The development effort to provide an up to date, high performance, full featured Ruby Driver for Apache Cassandra will continue on this project.</p>
+
 <h2 id="copyright">Copyright</h2>
 
 <p>Copyright 2013-2014 DataStax, Inc.</p>
@@ -245,6 +262,7 @@
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb</a></li>
 <li><a href="#changelog-versioning">Changelog &amp; versioning</a></li>
 <li><a href="#known-bugs-limitations">Known bugs &amp; limitations</a></li>
+<li><a href="#credits">Credits</a></li>
 <li><a href="#copyright">Copyright</a></li>
 </ol>
         </nav>

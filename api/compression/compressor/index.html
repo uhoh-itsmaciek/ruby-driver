@@ -156,6 +156,9 @@ e.g. &#8220;snappy&#8221; or &#8220;lz4&#8221;.</p>
         <td class="details">
           
           
+          algorithm
+
+          
         </td>
       </tr>
     
@@ -172,7 +175,7 @@ e.g. &#8220;snappy&#8221; or &#8220;lz4&#8221;.</p>
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>compress?</strong></span> 
+      <span class="path"><strong>compress?</strong></span><big>(</big><var>frame</var><big>)</big> 
     
   
   
@@ -258,6 +261,9 @@ tell Cassandra that it supports compressed frames.</p>
         <td class="details">
           
           
+          whether to perform compression or not
+
+          
         </td>
       </tr>
     
@@ -274,7 +280,7 @@ tell Cassandra that it supports compressed frames.</p>
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>compress</strong></span> 
+      <span class="path"><strong>compress</strong></span><big>(</big><var>frame</var><big>)</big> 
     
   
   
@@ -368,7 +374,7 @@ tell Cassandra that it supports compressed frames.</p>
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>decompress</strong></span> 
+      <span class="path"><strong>decompress</strong></span><big>(</big><var>compressed_frame</var><big>)</big> 
     
   
   
@@ -409,8 +415,8 @@ tell Cassandra that it supports compressed frames.</p>
         <td class="details">
           
           
-          the bytes of the compressed
-frame to be uncompressed
+          the bytes of the compressed frame to
+be uncompressed
 
           
         </td>
@@ -443,6 +449,9 @@ frame to be uncompressed
         
         <td class="details">
           
+          
+          uncompressed bytes
+
           
         </td>
       </tr>
