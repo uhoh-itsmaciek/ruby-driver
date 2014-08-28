@@ -68,24 +68,34 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 </li>
 <li>IRC: #datastax-drivers on <a href="http://freenode.net">irc.freenode.net</a>
 </li>
-<li>TWITTER: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a> </li>
+<li>TWITTER: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a>, <a href="https://twitter.com/al3xandru">@al3xandru</a> </li>
 </ul>
 
-<p>It has built-in support for:</p>
+<p>This driver is based on <a href="https://github.com/iconara/cql-rb">the cql-rb gem</a> by <a href="https://github.com/iconara">Theo Hultberg</a> and we addded support for:</p>
 
 <ul>
+<li><a href="features/asynchronous_io/">asynchronous execution</a></li>
 <li>one-off, <a href="features/prepared_statements/">prepared</a> and <a href="features/batch_statements/">batch statements</a>
 </li>
-<li><a href="features/asynchronous_io/">asynchronous execution</a></li>
 <li>automatic peer discovery and cluster metadata</li>
-<li>
-<a href="features/load_balancing/">diverse load-balancing</a>, <a href="features/retry_policies/">retry</a> and reconnection policies, <a href="features/load_balancing/implementing_a_policy/">with ability to write your own</a>
+<li>various <a href="features/load_balancing/">load-balancing</a>, <a href="features/retry_policies/">retry</a> and reconnection policies, <a href="features/load_balancing/implementing_a_policy/">with ability to write your own</a>
 </li>
 </ul>
 
-<p>This driver works exclusively with the Cassandra Query Language v3 (CQL3) and Cassandra’s native protocol. Cassandra versions 1.2 and 2.0 are supported as well as Ruby 1.9.3, 2.0, JRuby 1.7 and Rubinius 2.1.</p>
+<h2 id="compability">Compability</h2>
 
-<p>This driver is based on <a href="https://github.com/iconara/cql-rb">the cql-rb gem</a> by <a href="https://github.com/iconara">Theo Hultberg</a>.</p>
+<p>This driver works exclusively with the Cassandra Query Language v3 (CQL3) and Cassandra’s native protocol. The current version works with:</p>
+
+<ul>
+<li>  Cassandra versions 1.2 and 2.0</li>
+<li>  Ruby 1.9.3 and 2.0</li>
+<li>
+<p>JRuby 1.7</p>
+
+<p><u>Note</u>: JRuby 1.6 is not officially supported, although 1.6.8 should work.</p>
+</li>
+<li><p>Rubinius 2.1</p></li>
+</ul>
 
 <h2 id="quick-start">Quick start</h2>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -119,113 +129,8 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <h2 id="upgrading-from-cql-rb">Upgrading from cql-rb</h2>
 
-<p>Since Datastax Ruby driver introduces a lot of breaking api changes from cql-rb, it is important to understand what exactly has changed and why:</p>
+<p>Some of the new features added to the driver have unfortunately led to changes in the original cql-rb API. Primarily around promise and statements interfaces. In the examples directory, you can find <a href="https://github.com/datastax/ruby-driver/blob/master/examples/cql-rb-wrapper.rb">an example of how to wrap the ruby driver to achieve almost complete interface parity with cql-rb</a> to assist you with gradual upgrade.</p>
 
-<ul>
-<li>
-<a href="api/#connect-class_method">Cassandra.connect</a> returns a <a href="api/cluster/">Cassandra::Cluster</a> object that cannot be used to execute queries. A cluster is a metadata container and can be used to get information about all members of cassandra cluster that it is connected to, their respective datacenters, versions and more. <a href="api/host/">Read about Cassandra::Host</a> for more info. As well as to register listeners that will be notified whenever membership status changes.</li>
-<li>
-<a href="api/session/#execute-instance_method">Cassandra::Session#execute</a> or <a href="api/session/#execute_async-instance_method">Cassandra::Session#execute_async</a> should be used to execute queries and prepare statements.</li>
-<li>
-<a href="api/cluster/#connect-instance_method">Cluster#connect</a> or its asynchronous implementation - <a href="api/cluster/#connect_async-instance_method">Cluster#connect_async</a> - are used to get a <code>Cassandra::Session</code> instance, optionally scoped to a given <code>keyspace</code>.</li>
-<li>
-<a href="api/future/">Cassandra::Future</a> api is incompatible with <code>Ione::Future</code>. This is done both to sipmlify the api and to preserve backwards compatibility in the future. Futures interface will stay the same even if Ione implementation changes or if a different reactor altogether is used.</li>
-<li>
-<a href="api/result/">Cassandra::Result</a> has been enhanced to include <code>#execution_info</code> and <code>#next_page_async</code>. Methods <code>#trace_id</code> and <code>#metadata</code> have been removed. Trace can be accessed from <a href="api/execution/info/">Cassandra::Execution::Info</a> and metadata is considered private.</li>
-<li>
-<a href="api/statements/prepared/">Cassandra::Statements::Prepared</a> now includes <code>#execution_info</code>. However <code>#metadata</code> and <code>#result_metadata</code> have been remove and are not members of the public interface anymore.</li>
-<li>Finally, <code>#execute</code> and <code>#batch</code> methods have been removed from all statement implementations. <a href="api/statements/">Statements</a> are expected to be passed to <code>Cassandra::Session#execute</code> for execution.</li>
-</ul>
-
-<p>Below is an example of how to create a thin backwards compatibility shim to ease migration from cql-rb to the ruby driver:</p>
-<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
-<span class="nb">require</span> <span class="s1">'ione'</span>
-
-<span class="k">class</span> <span class="nc">PreparedStatement</span>
-  <span class="kp">attr_reader</span> <span class="ss">:statement</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">statement</span><span class="p">)</span>
-    <span class="vi">@client</span> <span class="o">=</span> <span class="n">client</span>
-    <span class="vi">@statement</span> <span class="o">=</span> <span class="n">statement</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="vi">@client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="vi">@statement</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="nc">BatchStatement</span>
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
-    <span class="vi">@client</span> <span class="o">=</span> <span class="n">client</span>
-    <span class="vi">@batch</span> <span class="o">=</span> <span class="n">batch</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
-    <span class="vi">@client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="vi">@batch</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="vi">@batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="nb">self</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="k">class</span> <span class="nc">Client</span>
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
-    <span class="vi">@session</span> <span class="o">=</span> <span class="n">session</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-    <span class="n">future</span> <span class="o">=</span> <span class="no">Ione</span><span class="o">::</span><span class="no">CompletableFuture</span><span class="o">.</span><span class="n">new</span>
-    <span class="vi">@session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span><span class="o">.</span><span class="n">on_complete</span> <span class="k">do</span> <span class="o">|</span><span class="n">e</span><span class="p">,</span> <span class="n">v</span><span class="o">|</span>
-      <span class="k">if</span> <span class="n">e</span>
-        <span class="n">future</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-      <span class="k">else</span>
-        <span class="n">future</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
-    <span class="n">future</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">prepare</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
-    <span class="n">future</span> <span class="o">=</span> <span class="no">Ione</span><span class="o">::</span><span class="no">CompletableFuture</span><span class="o">.</span><span class="n">new</span>
-    <span class="vi">@session</span><span class="o">.</span><span class="n">prepare_async</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">on_complete</span> <span class="k">do</span> <span class="o">|</span><span class="n">e</span><span class="p">,</span> <span class="n">v</span><span class="o">|</span>
-      <span class="k">if</span> <span class="n">e</span>
-        <span class="n">future</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-      <span class="k">else</span>
-        <span class="n">future</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="no">PreparedStatement</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
-    <span class="n">future</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">batch</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="ss">:logged</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
-    <span class="n">batch</span> <span class="o">=</span> <span class="no">BatchStatement</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="vi">@session</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:"</span><span class="si">#{</span><span class="n">type</span><span class="si">}</span><span class="ss">_batch"</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">block_given?</span>
-      <span class="k">yield</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-      <span class="n">batch</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-    <span class="k">else</span>
-      <span class="n">batch</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">close</span>
-    <span class="n">future</span> <span class="o">=</span> <span class="no">Ione</span><span class="o">::</span><span class="no">CompletableFuture</span><span class="o">.</span><span class="n">new</span>
-    <span class="vi">@session</span><span class="o">.</span><span class="n">close</span><span class="o">.</span><span class="n">on_complete</span> <span class="k">do</span> <span class="o">|</span><span class="n">e</span><span class="p">,</span> <span class="n">v</span><span class="o">|</span>
-      <span class="k">if</span> <span class="n">e</span>
-        <span class="n">future</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-      <span class="k">else</span>
-        <span class="n">future</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
-    <span class="n">future</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span>
-<span class="n">client</span>  <span class="o">=</span> <span class="no">Client</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
-</code></pre>
 <h2 id="changelog-versioning">Changelog &amp; versioning</h2>
 
 <p>Check out the <a href="https://github.com/datastax/ruby-driver/releases">releases on GitHub</a>. Version numbering follows the <a href="http://semver.org/">semantic versioning</a> scheme.</p>
@@ -243,7 +148,9 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <h2 id="credits">Credits</h2>
 
-<p>This driver is based on the original work of <a href="https://github.com/iconara">Theo Hultberg</a> on <a href="https://github.com/iconara/cql-rb/">cql-rb</a>, which will be discontinued. The development effort to provide an up to date, high performance, full featured Ruby Driver for Apache Cassandra will continue on this project.</p>
+<p>This driver is based on the original work of <a href="https://github.com/iconara">Theo Hultberg</a> on <a href="https://github.com/iconara/cql-rb/">cql-rb</a> and adds a series of advanced features that are common across all other DataStax drivers for Apache Cassandra.</p>
+
+<p>The development effort to provide an up to date, high performance, fully featured Ruby Driver for Apache Cassandra will continue on this project, while <a href="https://github.com/iconara/cql-rb/">cql-rb</a> will be discontinued. </p>
 
 <h2 id="copyright">Copyright</h2>
 
@@ -258,6 +165,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
         </div>
         <nav class="col-md-3 side-nav">
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+<li><a href="#compability">Compability</a></li>
 <li><a href="#quick-start">Quick start</a></li>
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb</a></li>
 <li><a href="#changelog-versioning">Changelog &amp; versioning</a></li>
