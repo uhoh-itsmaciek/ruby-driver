@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Datatypes</title>
+
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../">Introduction</a></li>
+            <li class="active"><a href="../">Features</a></li>
+            <li><a href="../../api/">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              <li><a href="../../">Introduction</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Features</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Datatypes</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="feature-section">
+<h1 id="datatypes">Datatypes</h1>
+<p>A columnfamily can have all the datatypes defined in Cassandra.
+<a href="http://www.datastax.com/documentation/cql/3.0/cql/cql_reference/cql_data_types_c.html">See here</a>
+for a full list of datatypes and their differences.</p>
+<h2 id="background">Background</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221;</dd>
+</dl>
+<h2 id="text-like-datatypes-are-inserted-into-a-column-family">Text-like datatypes are inserted into a column family</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (a int PRIMARY KEY, b ascii,</span>
+<span class="s2">                                                            c blob,</span>
+<span class="s2">                                                            d text,</span>
+<span class="s2">                                                            e varchar,</span>
+<span class="s2">                                                            )"</span><span class="p">)</span>
+
+  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'ascii'</span><span class="p">,</span> <span class="s2">"blob"</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="s1">'varchar'</span><span class="p">)</span>
+
+  <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+  <span class="n">rows</span><span class="o">.</span><span class="n">each_value</span> <span class="k">do</span> <span class="o">|</span><span class="n">datatype</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">datatype</span>
+  <span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>0
+ascii
+blob
+text
+varchar</code></pre>
+</dd>
+</dl>
+<h2 id="integer-like-datatypes-are-inserted-into-a-column-family">Integer-like datatypes are inserted into a column family</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (a int PRIMARY KEY, b bigint,</span>
+<span class="s2">                                                            c decimal,</span>
+<span class="s2">                                                            d double,</span>
+<span class="s2">                                                            e float,</span>
+<span class="s2">                                                            f int,</span>
+<span class="s2">                                                            g varint</span>
+<span class="s2">                                                            )"</span><span class="p">)</span>
+
+  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f, g) VALUES (?, ?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">765438000</span><span class="p">,</span> <span class="no">BigDecimal</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'1313123123.234234234234234234123'</span><span class="p">),</span>
+                              <span class="no">Math</span><span class="o">::</span><span class="no">PI</span><span class="p">,</span> <span class="mi">3</span><span class="o">.</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">67890656781923123918798273492834712837198237</span><span class="p">)</span>
+
+  <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+  <span class="n">rows</span><span class="o">.</span><span class="n">each_value</span> <span class="k">do</span> <span class="o">|</span><span class="n">datatype</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">datatype</span>
+  <span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>0
+765438000
+0.1313123123234234234234234234123E10
+3.141592653589793
+3.140000104904175
+4
+67890656781923123918798273492834712837198237</code></pre>
+</dd>
+</dl>
+<h2 id="id-like-datatypes-are-inserted-into-a-column-family">ID-like datatypes are inserted into a column family</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (a int PRIMARY KEY, b boolean,</span>
+<span class="s2">                                                            c inet,</span>
+<span class="s2">                                                            d timestamp,</span>
+<span class="s2">                                                            e timeuuid,</span>
+<span class="s2">                                                            f uuid</span>
+<span class="s2">                                                            )"</span><span class="p">)</span>
+
+  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f) VALUES (?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                              <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'FE2B4360-28C6-11E2-81C1-0800200C9A66'</span><span class="p">),</span>
+                              <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'00b69180-d0e1-11e2-8b8b-0800200c9a66'</span><span class="p">))</span>
+
+  <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+  <span class="n">rows</span><span class="o">.</span><span class="n">each_value</span> <span class="k">do</span> <span class="o">|</span><span class="n">datatype</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">datatype</span>
+  <span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>0
+true
+200.199.198.197
+2013-12-11 02:09:08 -0800
+fe2b4360-28c6-11e2-81c1-0800200c9a66
+00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
+</dd>
+</dl>
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+            
+            <li><a href="../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../prepared_statements/">Prepared Statements</a></li>
+            
+            
+            
+            <li><a href="../batch_statements/">Batch Statements</a></li>
+            
+            
+            
+            <li><a href="../security/">Security</a></li>
+            
+            
+            
+            <li><a href="../debugging/">Debugging</a></li>
+            
+            
+            
+            <li><a href="../load_balancing/">Load Balancing</a></li>
+            
+            
+            
+            <li><a href="../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../reconnection/">Reconnection</a></li>
+            
+            
+            
+            <li class="active">
+              <a href="./">Datatypes</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+              </ul>
+            </li>
+            
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54260831-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
