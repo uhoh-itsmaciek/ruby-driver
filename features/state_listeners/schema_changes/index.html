@@ -130,7 +130,7 @@ argument.</p>
 
 <span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE KEYSPACE new_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3}"</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE KEYSPACE new_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3}"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
 </code></pre>
 </dd>
 <dt>When </dt>
@@ -166,7 +166,7 @@ argument.</p>
 
 <span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_keyspace.new_table (id timeuuid PRIMARY KEY)"</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_keyspace.new_table (id timeuuid PRIMARY KEY)"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
 </code></pre>
 </dd>
 <dt>When </dt>

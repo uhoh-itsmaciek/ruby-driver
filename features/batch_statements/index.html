@@ -259,8 +259,8 @@ songs contain 3 rows</code></pre>
   <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
   <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE test"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE test (k text, v int, PRIMARY KEY (k, v))"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE test"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE test (k text, v int, PRIMARY KEY (k, v))"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
 
   <span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO test (k, v) VALUES (?, ?) IF NOT EXISTS"</span><span class="p">)</span>
   <span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span>
