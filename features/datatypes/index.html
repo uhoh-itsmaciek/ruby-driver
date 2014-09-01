@@ -94,6 +94,7 @@ for a full list of datatypes and their differences.</p>
 <span class="s2">    d text,</span>
 <span class="s2">    e varchar,</span>
 <span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
 
   <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'ascii'</span><span class="p">,</span> <span class="s2">"blob"</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="s1">'varchar'</span><span class="p">)</span>
@@ -133,6 +134,7 @@ Varchar: varchar</code></pre>
 <span class="s2">    f int,</span>
 <span class="s2">    g varint</span>
 <span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
 
   <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f, g) VALUES (?, ?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">765438000</span><span class="p">,</span> <span class="no">BigDecimal</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'1313123123.234234234234234234123'</span><span class="p">),</span>
@@ -177,6 +179,7 @@ Varint: 67890656781923123918798273492834712837198237</code></pre>
 <span class="s2">    e timeuuid,</span>
 <span class="s2">    f uuid</span>
 <span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
 
   <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f) VALUES (?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
@@ -219,6 +222,7 @@ Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
 <span class="s2">    locations Map&lt;timestamp, double&gt;,</span>
 <span class="s2">    ip_addresses Set&lt;inet&gt;</span>
 <span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
 
   <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO user (id, user_name, logins, locations, ip_addresses) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"cassandra_user"</span><span class="p">,</span>

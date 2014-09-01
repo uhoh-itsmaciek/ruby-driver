@@ -58,6 +58,8 @@
           </nav>
           <h1 id="datastax-ruby-driver-for-apache-cassandra">Datastax Ruby Driver for Apache Cassandra</h1>
 
+<p><a href="https://travis-ci.org/datastax/ruby-driver"><img src="https://travis-ci.org/datastax/ruby-driver.svg?branch=master" alt="Build Status"></a></p>
+
 <p>A Ruby client driver for Apache Cassandra. This driver works exclusively with
 the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.</p>
 
@@ -129,6 +131,16 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <li><a href="features">Usage documentation</a></li>
 </ul>
 
+<h2 id="installation">Installation</h2>
+
+<p>Install via rubygems</p>
+<pre class="highlight"><code class="bash">gem install cassandra-driver
+</code></pre>
+<p>Install via Gemfile</p>
+<pre class="highlight"><code class="ruby"><span class="n">gem</span> <span class="s1">'cassandra-driver'</span>
+</code></pre>
+<p>Note: if you want to use compression you should also install <a href="http://rubygems.org/gems/snappy">snappy</a> or <a href="http://rubygems.org/gems/lz4-ruby">lz4-ruby</a>. <a href="features/#compression">Read more about compression.</a></p>
+
 <h2 id="upgrading-from-cql-rb">Upgrading from cql-rb</h2>
 
 <p>Some of the new features added to the driver have unfortunately led to changes in the original cql-rb API. In the examples directory, you can find <a href="https://github.com/datastax/ruby-driver/blob/master/examples/cql-rb-wrapper.rb">an example of how to wrap the ruby driver to achieve almost complete interface parity with cql-rb</a> to assist you with gradual upgrade.</p>
@@ -169,6 +181,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
 <li><a href="#compability">Compability</a></li>
 <li><a href="#quick-start">Quick start</a></li>
+<li><a href="#installation">Installation</a></li>
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb</a></li>
 <li><a href="#changelog-versioning">Changelog &amp; versioning</a></li>
 <li><a href="#known-bugs-limitations">Known bugs &amp; limitations</a></li>
