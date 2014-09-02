@@ -164,9 +164,10 @@ argument.</p>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'new_keyspace'</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_keyspace.new_table (id timeuuid PRIMARY KEY)"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'DROP new_table'</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_table (id timeuuid PRIMARY KEY)"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
 </code></pre>
 </dd>
 <dt>When </dt>

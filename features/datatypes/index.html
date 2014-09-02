@@ -87,6 +87,7 @@ for a full list of datatypes and their differences.</p>
   <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
   <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE mytable"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (</span>
 <span class="s2">    a int PRIMARY KEY,</span>
 <span class="s2">    b ascii,</span>
@@ -125,6 +126,7 @@ Varchar: varchar</code></pre>
   <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
   <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE mytable"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (</span>
 <span class="s2">    a int PRIMARY KEY,</span>
 <span class="s2">    b bigint,</span>
@@ -171,6 +173,7 @@ Varint: 67890656781923123918798273492834712837198237</code></pre>
   <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
   <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE mytable"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (</span>
 <span class="s2">    a int PRIMARY KEY,</span>
 <span class="s2">    b boolean,</span>
@@ -215,6 +218,7 @@ Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
   <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
   <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE user"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
   <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE user (</span>
 <span class="s2">    id int PRIMARY KEY,</span>
 <span class="s2">    user_name text,</span>
