@@ -75,7 +75,19 @@ execute it.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and an empty table &#8220;songs&#8221;</dd>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">album</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">artist</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="k">set</span><span class="o">&lt;</span><span class="nb">text</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="k">data</span> <span class="nb">blob</span>
+<span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">cas_batch</span> <span class="p">(</span><span class="n">k</span> <span class="nb">text</span><span class="p">,</span> <span class="n">v</span> <span class="nb">int</span><span class="p">,</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">));</span>
+</code></pre>
+</dd>
 </dl>
 <div class="pull-right"><span class="label label-primary">since cassadra v2.0</span></div>
 <h2 id="a-batch-of-simple-statements-is-executed">A batch of simple statements is executed</h2>
@@ -253,30 +265,27 @@ songs contain 3 rows</code></pre>
 <h2 id="a-cas-batch-is-never-applied-more-than-once">A cas batch is never applied more than once</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE test"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE test (k text, v int, PRIMARY KEY (k, v))"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
-  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 
-  <span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO test (k, v) VALUES (?, ?) IF NOT EXISTS"</span><span class="p">)</span>
-  <span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO cas_batch (k, v) VALUES (?, ?) IF NOT EXISTS"</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span>
 
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"INSERT INTO test (k, v) VALUES ('key1', 0)"</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s2">"key1"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s2">"key1"</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"INSERT INTO cas_batch (k, v) VALUES ('key1', 0)"</span><span class="p">)</span>
+<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s2">"key1"</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s2">"key1"</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-  <span class="n">results</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-  <span class="n">rows</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">first</span>
-  <span class="nb">puts</span> <span class="s2">"batch applied? </span><span class="si">#{</span><span class="n">rows</span><span class="o">[</span><span class="s2">"[applied]"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="n">results</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">first</span>
+<span class="nb">puts</span> <span class="s2">"batch applied? </span><span class="si">#{</span><span class="n">rows</span><span class="o">[</span><span class="s2">"[applied]"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 
-  <span class="n">results</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-  <span class="n">rows</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">first</span>
-  <span class="nb">puts</span> <span class="s2">"batch applied? </span><span class="si">#{</span><span class="n">rows</span><span class="o">[</span><span class="s2">"[applied]"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="n">results</span> <span class="o">=</span>  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">first</span>
+<span class="nb">puts</span> <span class="s2">"batch applied? </span><span class="si">#{</span><span class="n">rows</span><span class="o">[</span><span class="s2">"[applied]"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>

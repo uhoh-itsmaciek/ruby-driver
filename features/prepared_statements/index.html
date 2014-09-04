@@ -76,20 +76,29 @@ to represent a dynamic value in a statement.</p>
 <h2 id="an-insert-statement-is-prepared">an INSERT statement is prepared</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and an empty table &#8220;playlists&#8221;</dd>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">playlists</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">uuid</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">album</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">artist</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">song_id</span> <span class="n">uuid</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-
-<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
-
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
             <span class="s2">"INSERT INTO playlists (id, song_id, title, artist, album) "</span> <span class="p">\</span>
             <span class="s2">"VALUES (62c36092-82a1-3a00-93d1-46196ee77204, ?, ?, ?, ?)"</span>
           <span class="p">)</span>
-<span class="n">songs</span>   <span class="o">=</span> <span class="o">[</span>
+
+<span class="n">songs</span> <span class="o">=</span> <span class="o">[</span>
   <span class="p">{</span>
     <span class="ss">:id</span>     <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
     <span class="ss">:title</span>  <span class="o">=&gt;</span> <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
@@ -135,14 +144,54 @@ to represent a dynamic value in a statement.</p>
 <h2 id="a-select-statement-with-parameterized-limit-is-prepared">a SELECT statement with parameterized LIMIT is prepared</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;playlists&#8221;</dd>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">playlists</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">uuid</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">album</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">artist</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">song_id</span> <span class="n">uuid</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">2</span><span class="n">cc9ccb7</span><span class="o">-</span><span class="mi">6221</span><span class="o">-</span><span class="mi">4</span><span class="n">ccb</span><span class="o">-</span><span class="mi">8387</span><span class="o">-</span><span class="n">f22b6a1b354d</span><span class="p">,</span>
+   <span class="mi">756716</span><span class="n">f7</span><span class="o">-</span><span class="mi">2</span><span class="n">e54</span><span class="o">-</span><span class="mi">4715</span><span class="o">-</span><span class="mi">9</span><span class="n">f00</span><span class="o">-</span><span class="mi">91</span><span class="n">dcbea6cf50</span><span class="p">,</span>
+   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
+   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
+   <span class="s1">'Joséphine Baker'</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">2</span><span class="n">cc9ccb7</span><span class="o">-</span><span class="mi">6221</span><span class="o">-</span><span class="mi">4</span><span class="n">ccb</span><span class="o">-</span><span class="mi">8387</span><span class="o">-</span><span class="n">f22b6a1b354d</span><span class="p">,</span>
+   <span class="n">f6071e72</span><span class="o">-</span><span class="mi">48</span><span class="n">ec</span><span class="o">-</span><span class="mi">4</span><span class="n">fcb</span><span class="o">-</span><span class="n">bf3e</span><span class="o">-</span><span class="mi">379</span><span class="n">c8a696488</span><span class="p">,</span>
+   <span class="s1">'Die Mösch'</span><span class="p">,</span>
+   <span class="s1">'In Gold'</span><span class="p">,</span>
+   <span class="s1">'Willi Ostermann'</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">3</span><span class="n">fd2bedf</span><span class="o">-</span><span class="n">a8c8</span><span class="o">-</span><span class="mi">455</span><span class="n">a</span><span class="o">-</span><span class="n">a462</span><span class="o">-</span><span class="mi">0</span><span class="n">cd3a4353c54</span><span class="p">,</span>
+   <span class="n">fbdf82ed</span><span class="o">-</span><span class="mi">0063</span><span class="o">-</span><span class="mi">4796</span><span class="o">-</span><span class="mi">9</span><span class="n">c7c</span><span class="o">-</span><span class="n">a3d4f47b4b25</span><span class="p">,</span>
+   <span class="s1">'Memo From Turner'</span><span class="p">,</span>
+   <span class="s1">'Performance'</span><span class="p">,</span>
+   <span class="s1">'Mick Jager'</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">3</span><span class="n">fd2bedf</span><span class="o">-</span><span class="n">a8c8</span><span class="o">-</span><span class="mi">455</span><span class="n">a</span><span class="o">-</span><span class="n">a462</span><span class="o">-</span><span class="mi">0</span><span class="n">cd3a4353c54</span><span class="p">,</span>
+   <span class="mi">756716</span><span class="n">f7</span><span class="o">-</span><span class="mi">2</span><span class="n">e54</span><span class="o">-</span><span class="mi">4715</span><span class="o">-</span><span class="mi">9</span><span class="n">f00</span><span class="o">-</span><span class="mi">91</span><span class="n">dcbea6cf50</span><span class="p">,</span>
+   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
+   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
+   <span class="s1">'Joséphine Baker'</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-
-<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
-
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="nb">select</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM playlists LIMIT ?"</span><span class="p">)</span>
 <span class="n">limits</span>  <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span>

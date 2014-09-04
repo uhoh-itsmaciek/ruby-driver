@@ -81,7 +81,42 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;songs&#8221;</dd>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">album</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">artist</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="k">set</span><span class="o">&lt;</span><span class="nb">text</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="k">data</span> <span class="nb">blob</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">songs</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">756716</span><span class="n">f7</span><span class="o">-</span><span class="mi">2</span><span class="n">e54</span><span class="o">-</span><span class="mi">4715</span><span class="o">-</span><span class="mi">9</span><span class="n">f00</span><span class="o">-</span><span class="mi">91</span><span class="n">dcbea6cf50</span><span class="p">,</span>
+   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
+   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
+   <span class="s1">'Joséphine Baker'</span><span class="p">,</span>
+   <span class="err">{</span><span class="s1">'jazz'</span><span class="p">,</span> <span class="s1">'2013'</span><span class="err">}</span><span class="p">)</span>
+<span class="p">;</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">songs</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="n">f6071e72</span><span class="o">-</span><span class="mi">48</span><span class="n">ec</span><span class="o">-</span><span class="mi">4</span><span class="n">fcb</span><span class="o">-</span><span class="n">bf3e</span><span class="o">-</span><span class="mi">379</span><span class="n">c8a696488</span><span class="p">,</span>
+   <span class="s1">'Die Mösch'</span><span class="p">,</span>
+   <span class="s1">'In Gold'</span><span class="p">,</span>
+   <span class="s1">'Willi Ostermann'</span><span class="p">,</span>
+   <span class="err">{</span><span class="s1">'kölsch'</span><span class="p">,</span> <span class="s1">'1996'</span><span class="p">,</span> <span class="s1">'birds'</span><span class="err">}</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">songs</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="n">fbdf82ed</span><span class="o">-</span><span class="mi">0063</span><span class="o">-</span><span class="mi">4796</span><span class="o">-</span><span class="mi">9</span><span class="n">c7c</span><span class="o">-</span><span class="n">a3d4f47b4b25</span><span class="p">,</span>
+   <span class="s1">'Memo From Turner'</span><span class="p">,</span>
+   <span class="s1">'Performance'</span><span class="p">,</span>
+   <span class="s1">'Mick Jager'</span><span class="p">,</span>
+   <span class="err">{</span><span class="s1">'soundtrack'</span><span class="p">,</span> <span class="s1">'1991'</span><span class="err">}</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
 <dt>And </dt>
 <dd>a file named &#8220;printing_listener.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">PrintingListener</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">io</span><span class="p">)</span>
@@ -147,7 +182,11 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 <h2 id="driver-reconnects-when-all-hosts-are-down">Driver reconnects when all hosts are down</h2>
 <dl class="steps">
 <dt>When </dt>
-<dd>all nodes go down</dd>
+<dd>node 1 stops</dd>
+<dt>When </dt>
+<dd>node 2 stops</dd>
+<dt>When </dt>
+<dd>node 3 stops</dd>
 <dt>And </dt>
 <dd>I type &#8220;SELECT * FROM simplex.songs&#8221;</dd>
 <dt>And </dt>
@@ -159,16 +198,10 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 <dt>And </dt>
 <dd>I close the stdin stream</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>Host 127.0.0.1 is found
-Host 127.0.0.1 is up
-Host 127.0.0.3 is found
-Host 127.0.0.3 is up
-Host 127.0.0.2 is found
-Host 127.0.0.2 is up
-=== START ===
+<dd>its output should contain:<pre><code>=== START ===
 Host 127.0.0.1 is down
-Host 127.0.0.3 is down
 Host 127.0.0.2 is down
+Host 127.0.0.3 is down
 Query "SELECT * FROM simplex.songs" failed with Cassandra::Errors::NoHostsAvailable: no hosts available, check #errors property for details
 Host 127.0.0.1 is up
 Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1

@@ -1416,7 +1416,7 @@ thread upon resolution.
 </dt>
     
     <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
-<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">session</span><span class="o">.</span><span class="n">.execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM another-table'</span><span class="p">)}</span>
+<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM another-table'</span><span class="p">)}</span>
 </code></pre></dd>
   
   </dl>

@@ -82,7 +82,18 @@
 <h2 id="fallthrough-policy-is-used-explicitly">Fallthrough policy is used explicitly</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221; and a table &#8220;songs&#8221;</dd>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="n">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">title</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">album</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">artist</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="k">set</span><span class="o">&lt;</span><span class="nb">text</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="k">data</span> <span class="nb">blob</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 

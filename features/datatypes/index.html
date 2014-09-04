@@ -76,36 +76,37 @@ for a full list of datatypes and their differences.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with a keyspace &#8220;simplex&#8221;</dd>
+<dd>a running cassandra cluster</dd>
 </dl>
 <h2 id="text-like-datatypes-are-inserted-into-a-column-family">Text-like datatypes are inserted into a column family</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
+  <span class="n">a</span> <span class="nb">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">b</span> <span class="n">ascii</span><span class="p">,</span>
+  <span class="k">c</span> <span class="nb">blob</span><span class="p">,</span>
+  <span class="n">d</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">e</span> <span class="nb">varchar</span><span class="p">,</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE mytable"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (</span>
-<span class="s2">    a int PRIMARY KEY,</span>
-<span class="s2">    b ascii,</span>
-<span class="s2">    c blob,</span>
-<span class="s2">    d text,</span>
-<span class="s2">    e varchar,</span>
-<span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
-  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'ascii'</span><span class="p">,</span> <span class="s2">"blob"</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="s1">'varchar'</span><span class="p">)</span>
 
-  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'ascii'</span><span class="p">,</span> <span class="s2">"blob"</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="s1">'varchar'</span><span class="p">)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
-  <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
-
-  <span class="nb">puts</span> <span class="s2">"Ascii: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Blob: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Text: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Varchar: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Ascii: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Blob: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Text: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Varchar: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>
@@ -120,36 +121,37 @@ Varchar: varchar</code></pre>
 <h2 id="integer-like-datatypes-are-inserted-into-a-column-family">Integer-like datatypes are inserted into a column family</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
+  <span class="n">a</span> <span class="nb">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">b</span> <span class="nb">bigint</span><span class="p">,</span>
+  <span class="k">c</span> <span class="nb">decimal</span><span class="p">,</span>
+  <span class="n">d</span> <span class="n">double</span><span class="p">,</span>
+  <span class="n">e</span> <span class="nb">float</span><span class="p">,</span>
+  <span class="n">f</span> <span class="nb">int</span><span class="p">,</span>
+  <span class="k">g</span> <span class="n">varint</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f, g) VALUES (?, ?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE mytable"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (</span>
-<span class="s2">    a int PRIMARY KEY,</span>
-<span class="s2">    b bigint,</span>
-<span class="s2">    c decimal,</span>
-<span class="s2">    d double,</span>
-<span class="s2">    e float,</span>
-<span class="s2">    f int,</span>
-<span class="s2">    g varint</span>
-<span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
-  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">765438000</span><span class="p">,</span> <span class="no">BigDecimal</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'1313123123.234234234234234234123'</span><span class="p">),</span>
+                            <span class="no">Math</span><span class="o">::</span><span class="no">PI</span><span class="p">,</span> <span class="mi">3</span><span class="o">.</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">67890656781923123918798273492834712837198237</span><span class="p">)</span>
 
-  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f, g) VALUES (?, ?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">765438000</span><span class="p">,</span> <span class="no">BigDecimal</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'1313123123.234234234234234234123'</span><span class="p">),</span>
-                              <span class="no">Math</span><span class="o">::</span><span class="no">PI</span><span class="p">,</span> <span class="mi">3</span><span class="o">.</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">67890656781923123918798273492834712837198237</span><span class="p">)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
-  <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
-
-  <span class="nb">puts</span> <span class="s2">"Bigint: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Decimal: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Double: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Float: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Integer: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'f'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Varint: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'g'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Bigint: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Decimal: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Double: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Float: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Integer: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'f'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Varint: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'g'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>
@@ -166,36 +168,37 @@ Varint: 67890656781923123918798273492834712837198237</code></pre>
 <h2 id="id-like-datatypes-are-inserted-into-a-column-family">ID-like datatypes are inserted into a column family</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
-  <span class="nb">require</span> <span class="s1">'time'</span>
+<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
+  <span class="n">a</span> <span class="nb">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">b</span> <span class="nb">boolean</span><span class="p">,</span>
+  <span class="k">c</span> <span class="n">inet</span><span class="p">,</span>
+  <span class="n">d</span> <span class="k">timestamp</span><span class="p">,</span>
+  <span class="n">e</span> <span class="n">timeuuid</span><span class="p">,</span>
+  <span class="n">f</span> <span class="n">uuid</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+<span class="nb">require</span> <span class="s1">'time'</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f) VALUES (?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE mytable"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE mytable (</span>
-<span class="s2">    a int PRIMARY KEY,</span>
-<span class="s2">    b boolean,</span>
-<span class="s2">    c inet,</span>
-<span class="s2">    d timestamp,</span>
-<span class="s2">    e timeuuid,</span>
-<span class="s2">    f uuid</span>
-<span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
-  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                            <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'FE2B4360-28C6-11E2-81C1-0800200C9A66'</span><span class="p">),</span>
+                            <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'00b69180-d0e1-11e2-8b8b-0800200c9a66'</span><span class="p">))</span>
 
-  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f) VALUES (?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-                              <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'FE2B4360-28C6-11E2-81C1-0800200C9A66'</span><span class="p">),</span>
-                              <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'00b69180-d0e1-11e2-8b8b-0800200c9a66'</span><span class="p">))</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
-  <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
-
-  <span class="nb">puts</span> <span class="s2">"Boolean: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Inet: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Timestamp: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">].</span><span class="n">httpdate</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Timeuuid: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Uuid: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'f'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Boolean: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Inet: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Timestamp: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">].</span><span class="n">httpdate</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Timeuuid: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Uuid: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'f'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>
@@ -211,36 +214,37 @@ Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
 <h2 id="collection-datatypes-are-inserted-into-a-column-family">Collection-datatypes are inserted into a column family</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
-  <span class="nb">require</span> <span class="s1">'time'</span>
+<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="nb">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">user_name</span> <span class="nb">text</span><span class="p">,</span>
+  <span class="n">logins</span> <span class="n">List</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="n">locations</span> <span class="k">Map</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="p">,</span> <span class="n">double</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="n">ip_addresses</span> <span class="k">Set</span><span class="o">&lt;</span><span class="n">inet</span><span class="o">&gt;</span>
+<span class="p">);</span>
+</code></pre>
+</dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+<span class="nb">require</span> <span class="s1">'time'</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO user (id, user_name, logins, locations, ip_addresses) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"DROP TABLE user"</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE user (</span>
-<span class="s2">    id int PRIMARY KEY,</span>
-<span class="s2">    user_name text,</span>
-<span class="s2">    logins List&lt;timestamp&gt;,</span>
-<span class="s2">    locations Map&lt;timestamp, double&gt;,</span>
-<span class="s2">    ip_addresses Set&lt;inet&gt;</span>
-<span class="s2">  )"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
-  <span class="nb">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># wait for the change to propagate</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"cassandra_user"</span><span class="p">,</span>
+                           <span class="o">[</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">]</span><span class="p">,</span>
+                           <span class="p">{</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">37</span><span class="o">.</span><span class="mi">397357</span><span class="p">},</span>
+                           <span class="no">Set</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'192.168.1.15'</span><span class="p">)</span><span class="o">]</span><span class="p">)</span>
+                           <span class="p">)</span>
 
-  <span class="n">insert</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO user (id, user_name, logins, locations, ip_addresses) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"cassandra_user"</span><span class="p">,</span>
-                             <span class="o">[</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">]</span><span class="p">,</span>
-                             <span class="p">{</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">37</span><span class="o">.</span><span class="mi">397357</span><span class="p">},</span>
-                             <span class="no">Set</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'192.168.1.15'</span><span class="p">)</span><span class="o">]</span><span class="p">)</span>
-                             <span class="p">)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM user"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
-  <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM user"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
-
-  <span class="nb">puts</span> <span class="s2">"Username: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'user_name'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Logins: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'logins'</span><span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:httpdate</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Location at </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">httpdate</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'locations'</span><span class="o">][</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="nb">puts</span> <span class="s2">"Ip Addresses: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'ip_addresses'</span><span class="o">].</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Username: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'user_name'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Logins: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'logins'</span><span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:httpdate</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Location at </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">httpdate</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'locations'</span><span class="o">][</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Ip Addresses: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'ip_addresses'</span><span class="o">].</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>

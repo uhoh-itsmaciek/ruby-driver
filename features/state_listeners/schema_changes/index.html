@@ -123,14 +123,12 @@ argument.</p>
 </dl>
 <h2 id="listening-for-keyspace-creation">Listening for keyspace creation</h2>
 <dl class="steps">
-<dt>Given </dt>
-<dd>no keyspace &#8220;new_keyspace&#8221;</dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE KEYSPACE new_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3}"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE KEYSPACE new_keyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 3}"</span><span class="p">)</span>
 </code></pre>
 </dd>
 <dt>When </dt>
@@ -142,7 +140,9 @@ argument.</p>
 <h2 id="listening-for-keyspace-drop">Listening for keyspace drop</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a keyspace &#8220;new_keyspace&#8221;</dd>
+<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">new_keyspace</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span>
+</code></pre>
+</dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
@@ -160,14 +160,15 @@ argument.</p>
 <h2 id="listening-for-keyspace-changes">Listening for keyspace changes</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a keyspace &#8220;new_keyspace&#8221;</dd>
+<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">new_keyspace</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span>
+</code></pre>
+</dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">session</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'new_keyspace'</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'DROP new_table'</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span> <span class="k">rescue</span> <span class="kp">nil</span>
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_table (id timeuuid PRIMARY KEY)"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"CREATE TABLE new_table (id timeuuid PRIMARY KEY)"</span><span class="p">)</span>
 </code></pre>
 </dd>
 <dt>When </dt>
