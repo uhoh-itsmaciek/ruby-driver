@@ -929,7 +929,7 @@ thread upon resolution.
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>on_complete</strong></span> {|error, value| &#8230; }
+      <span class="path"><strong>on_complete</strong></span> {|value, error| &#8230; }
     
   
   
@@ -937,7 +937,7 @@ thread upon resolution.
   </div>
   <div class="panel-body method-body">
     <p>Run block when future resolves. The block will always be called with 2
-  arguments - error and value. In case a future resolves to an error, the
+  arguments - value and error. In case a future resolves to an error, the
   error argument will be non-nil.</p>
 
 <dl class="dl-horizontal notes">
@@ -972,22 +972,6 @@ thread upon resolution.
     
       <tr>
         
-        <td class="name"><var>error</var></td>
-        
-        
-        <td class="type">(<code>Exception</code> or <code>nil</code>)</td>
-        
-        <td class="details">
-          
-          
-          an error or nil
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
         <td class="name"><var>value</var></td>
         
         
@@ -997,6 +981,22 @@ thread upon resolution.
           
           
           a value or nil
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>error</var></td>
+        
+        
+        <td class="type">(<code>Exception</code> or <code>nil</code>)</td>
+        
+        <td class="details">
+          
+          
+          an error or nil
 
           
         </td>
