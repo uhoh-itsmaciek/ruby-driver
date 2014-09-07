@@ -852,8 +852,100 @@ factory and a collection of metadata.</p>
   
   </div>
   <div class="panel-body method-body">
-    <p>Register a cluster state listener. State listeners receive notifications
-about topology and schema changes</p>
+    <p>Register a cluster state listener. State listener will start receiving
+notifications about topology and schema changes</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>listener</var></td>
+        
+        
+        <td class="type"><code><a href="../listener/" title="Cassandra::Listener (class)">Cassandra::Listener</a></code></td>
+        
+        <td class="details">
+          
+          
+          cluster state listener
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="unregister-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>unregister</strong></span><big>(</big><var>listener</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Unregister a cluster state listener. State listener will stop receiving
+notifications about topology and schema changes</p>
 
 <dl class="dl-horizontal notes">
 
