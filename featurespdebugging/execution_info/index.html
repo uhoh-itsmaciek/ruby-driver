@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Executing Queries</title>
+    <title>Datastax Cassandra Ruby Driver - Execution Info</title>
 
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
@@ -62,22 +62,21 @@
               
               
               
-              <li><a href="../">Asynchronous Io</a></li>
+              <li><a href="../">Debugging</a></li>
               
               
               
               
               
-              <li class="active">Executing Queries</li>
+              <li class="active">Execution Info</li>
               
               
               
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="executing-queries-asynchronously">Executing queries asynchronously</h1>
-<p>Session objects support asynchronous statement execution using <code>Cassandra::Session#execute_async</code> method.
-This method returns a <code>Cassandra::Future&lt;Cassandra::Result&gt;</code>.</p>
+<h1 id="execution-information">Execution information</h1>
+<p>Every result contains <a href="../../../api/execution/info/">useful execution information</a>.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
@@ -118,69 +117,87 @@ This method returns a <code>Cassandra::Future&lt;Cassandra::Result&gt;</code>.</
 </code></pre>
 </dd>
 </dl>
-<h2 id="listening-for-future">Listening for future</h2>
+<h2 id="execution-information-is-accessible-from-execution-result">execution information is accessible from execution result</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">future</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span>
 
-<span class="n">future</span><span class="o">.</span><span class="n">on_success</span> <span class="k">do</span> <span class="o">|</span><span class="n">rows</span><span class="o">|</span>
-  <span class="n">rows</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
-    <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"artist"</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"title"</span><span class="o">]</span><span class="si">}</span><span class="s2"> / </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"album"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
 
-<span class="nb">puts</span> <span class="s2">"driver is fetching rows from cassandra"</span>
-<span class="n">future</span><span class="o">.</span><span class="n">join</span> <span class="c1"># block until the future has been resolved</span>
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:one</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+
+<span class="nb">puts</span> <span class="s2">"coordinator: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">ip</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"keyspace: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">keyspace</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"cql: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">cql</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"requested consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"actual consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"number of retries: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">retries</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>
 <dd>it is executed</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>driver is fetching rows from cassandra
-Joséphine Baker: La Petite Tonkinoise / Bye Bye Blackbird
-Willi Ostermann: Die Mösch / In Gold
-Mick Jager: Memo From Turner / Performance</code></pre>
+<dd>its output should match:<pre><code>coordinator: 127\.0\.0\.(1|2|3)</code></pre>
+</dd>
+<dt>And </dt>
+<dd>its output should contain:<pre><code>keyspace: simplex
+cql: SELECT * FROM songs
+requested consistency: one
+actual consistency: one
+number of retries: 0</code></pre>
 </dd>
 </dl>
-<h2 id="running-queries-in-parallel">Running queries in parallel</h2>
+<h2 id="execution-information-reflects-retry-decision">execution information reflects retry decision</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+<dd>a file named &#8220;retrying_at_a_given_consistency_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">RetryingAtAGivenConsistencyPolicy</span>
+  <span class="kp">include</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Retry</span><span class="o">::</span><span class="no">Policy</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">count</span>   <span class="o">=</span> <span class="mi">10</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">consistency_to_use</span><span class="p">)</span>
+    <span class="vi">@consistency_to_use</span> <span class="o">=</span> <span class="n">consistency_to_use</span>
+  <span class="k">end</span>
 
-<span class="nb">puts</span> <span class="s2">"running </span><span class="si">#{</span><span class="n">count</span><span class="si">}</span><span class="s2"> queries in parallel"</span>
-<span class="n">futures</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">times</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">def</span> <span class="nf">read_timeout</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">required_responses</span><span class="p">,</span>
+                   <span class="n">received_responses</span><span class="p">,</span> <span class="n">data_retrieved</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
+    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
+  <span class="k">end</span>
 
-<span class="nb">puts</span> <span class="s2">"resolving futures"</span>
+  <span class="k">def</span> <span class="nf">write_timeout</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">write_type</span><span class="p">,</span>
+                    <span class="n">acks_required</span><span class="p">,</span> <span class="n">acks_received</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
+    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
+  <span class="k">end</span>
 
-<span class="n">futures</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">future</span><span class="o">|</span>
-  <span class="n">rows</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">get</span>
-  <span class="nb">puts</span> <span class="s2">"fetched </span><span class="si">#{</span><span class="n">rows</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> rows"</span>
+  <span class="k">def</span> <span class="nf">unavailable</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">replicas_required</span><span class="p">,</span>
+                  <span class="n">replicas_alive</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
+    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
+  <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
 </dd>
+<dt>And </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+<span class="nb">require</span> <span class="s1">'retrying_at_a_given_consistency_policy'</span>
+
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">retry_policy</span><span class="p">:</span> <span class="no">RetryingAtAGivenConsistencyPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:one</span><span class="p">))</span>
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span><span class="o">.</span><span class="n">execution_info</span>
+
+<span class="nb">puts</span> <span class="s2">"requested consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"actual consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">consistency</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"number of retries: </span><span class="si">#{</span><span class="n">execution</span><span class="o">.</span><span class="n">retries</span><span class="si">}</span><span class="s2">"</span>
+</code></pre>
+</dd>
 <dt>When </dt>
+<dd>node 3 stops</dd>
+<dt>And </dt>
 <dd>it is executed</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>running 10 queries in parallel
-resolving futures
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows
-fetched 3 rows</code></pre>
+<dd>its output should contain:<pre><code>requested consistency: all
+actual consistency: one
+number of retries: 1</code></pre>
 </dd>
 </dl>
 </div>
@@ -193,27 +210,7 @@ fetched 3 rows</code></pre>
             
             
             
-            <li class="active">
-              <a href="../">Asynchronous Io</a>
-              <ul class="nav nav-pills nav-stacked">
-                
-                
-                <li class="active">
-                  <a href="./">Executing Queries</a>
-                  <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#listening-for-future">Listening for future</a></li>
-<li><a href="#running-queries-in-parallel">Running queries in parallel</a></li>
-</ul>
-                </li>
-                
-                
-                
-                <li><a href="../preparing_statements/">Preparing Statements</a></li>
-                
-                
-              </ul>
-            </li>
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
             
             
             
@@ -221,7 +218,27 @@ fetched 3 rows</code></pre>
             
             
             
-            <li><a href="../../debugging/">Debugging</a></li>
+            <li class="active">
+              <a href="../">Debugging</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li class="active">
+                  <a href="./">Execution Info</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#execution-information-is-accessible-from-execution-result">execution information is accessible from execution result</a></li>
+<li><a href="#execution-information-reflects-retry-decision">execution information reflects retry decision</a></li>
+</ul>
+                </li>
+                
+                
+                
+                <li><a href="../request_tracing/">Request Tracing</a></li>
+                
+                
+              </ul>
+            </li>
             
             
             

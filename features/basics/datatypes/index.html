@@ -11,8 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Datatypes</title>
 
-    <link href="../../css/style.css" rel="stylesheet">
-    <link href="../../css/pygments.css" rel="stylesheet">
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li class="active"><a href="../">Features</a></li>
-            <li><a href="../../api/">API docs</a></li>
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Features</a></li>
+            <li><a href="../../../api/">API docs</a></li>
           </ul>
         </div>
       </div>
@@ -50,13 +50,19 @@
               
               
               
-              <li><a href="../../">Introduction</a></li>
+              <li><a href="../../../">Introduction</a></li>
               
               
               
               
               
-              <li><a href="../">Features</a></li>
+              <li><a href="../../">Features</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Basics</a></li>
               
               
               
@@ -70,15 +76,19 @@
           </nav>
           <div class="feature-section">
 <h1 id="datatypes">Datatypes</h1>
-<p>A columnfamily can have all the datatypes defined in Cassandra.
-<a href="http://www.datastax.com/documentation/cql/3.0/cql/cql_reference/cql_data_types_c.html">See here</a>
-for a full list of datatypes and their differences.</p>
+<p>Apache Cassandra <a href="http://www.datastax.com/documentation/cql/3.0/cql/cql_reference/cql_data_types_c.html">supports a variety of datatypes</a>.
+Ruby driver transparently maps each of those datatypes to a specific Ruby type.</p>
+
+<p>Datatypes that map to <code>String</code> can have different encodings.</p>
+
+<p>Cassandra uuid and timeuuid are represented with <code>Cassandra::Uuid</code> and
+<code>Cassandra::TimeUuid</code> accordingly.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster</dd>
 </dl>
-<h2 id="text-like-datatypes-are-inserted-into-a-column-family">Text-like datatypes are inserted into a column family</h2>
+<h2 id="using-strings">Using strings</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
@@ -97,9 +107,15 @@ for a full list of datatypes and their differences.</p>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'ascii'</span><span class="p">,</span> <span class="s2">"blob"</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="s1">'varchar'</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e)</span>
+<span class="s2">                 VALUES (</span>
+<span class="s2">                   0,</span>
+<span class="s2">                   'ascii',</span>
+<span class="s2">                   0x626c6f62,</span>
+<span class="s2">                   'text',</span>
+<span class="s2">                   'varchar'</span>
+<span class="s2">                 )"</span><span class="p">)</span>
 
 <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
@@ -118,7 +134,7 @@ Text: text
 Varchar: varchar</code></pre>
 </dd>
 </dl>
-<h2 id="integer-like-datatypes-are-inserted-into-a-column-family">Integer-like datatypes are inserted into a column family</h2>
+<h2 id="using-numbers">Using numbers</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
@@ -139,10 +155,17 @@ Varchar: varchar</code></pre>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f, g) VALUES (?, ?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">765438000</span><span class="p">,</span> <span class="no">BigDecimal</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'1313123123.234234234234234234123'</span><span class="p">),</span>
-                            <span class="no">Math</span><span class="o">::</span><span class="no">PI</span><span class="p">,</span> <span class="mi">3</span><span class="o">.</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">67890656781923123918798273492834712837198237</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f, g)</span>
+<span class="s2">                 VALUES (</span>
+<span class="s2">                   0,</span>
+<span class="s2">                   765438000,</span>
+<span class="s2">                   1313123123.234234234234234234123,</span>
+<span class="s2">                   3.141592653589793,</span>
+<span class="s2">                   3.14,</span>
+<span class="s2">                   4,</span>
+<span class="s2">                   67890656781923123918798273492834712837198237</span>
+<span class="s2">                 )"</span><span class="p">)</span>
 
 <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
@@ -165,7 +188,7 @@ Integer: 4
 Varint: 67890656781923123918798273492834712837198237</code></pre>
 </dd>
 </dl>
-<h2 id="id-like-datatypes-are-inserted-into-a-column-family">ID-like datatypes are inserted into a column family</h2>
+<h2 id="using-identifiers,-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
@@ -186,16 +209,21 @@ Varint: 67890656781923123918798273492834712837198237</code></pre>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f) VALUES (?, ?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kp">true</span><span class="p">,</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-                            <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'FE2B4360-28C6-11E2-81C1-0800200C9A66'</span><span class="p">),</span>
-                            <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'00b69180-d0e1-11e2-8b8b-0800200c9a66'</span><span class="p">))</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"INSERT INTO mytable (a, b, c, d, e, f)</span>
+<span class="s2">                 VALUES (</span>
+<span class="s2">                   0,</span>
+<span class="s2">                   true,</span>
+<span class="s2">                   '200.199.198.197',</span>
+<span class="s2">                   '2013-12-11 10:09:08+0000',</span>
+<span class="s2">                   FE2B4360-28C6-11E2-81C1-0800200C9A66,</span>
+<span class="s2">                   00b69180-d0e1-11e2-8b8b-0800200c9a66</span>
+<span class="s2">                 )"</span><span class="p">)</span>
 
 <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM mytable"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
 <span class="nb">puts</span> <span class="s2">"Boolean: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'b'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"Inet: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Inet: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">].</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> - </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'c'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"Timestamp: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'d'</span><span class="o">].</span><span class="n">httpdate</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"Timeuuid: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'e'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"Uuid: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'f'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
@@ -205,20 +233,19 @@ Varint: 67890656781923123918798273492834712837198237</code></pre>
 <dd>it is executed</dd>
 <dt>Then </dt>
 <dd>its output should contain:<pre><code>Boolean: true
-Inet: 200.199.198.197
+Inet: IPAddr - 200.199.198.197
 Timestamp: Wed, 11 Dec 2013 10:09:08 GMT
 Timeuuid: fe2b4360-28c6-11e2-81c1-0800200c9a66
 Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
 </dd>
 </dl>
-<h2 id="collection-datatypes-are-inserted-into-a-column-family">Collection-datatypes are inserted into a column family</h2>
+<h2 id="using-lists,-maps-and-sets">Using lists, maps and sets</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
 <span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="p">(</span>
   <span class="n">id</span> <span class="nb">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-  <span class="n">user_name</span> <span class="nb">text</span><span class="p">,</span>
   <span class="n">logins</span> <span class="n">List</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="n">locations</span> <span class="k">Map</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="p">,</span> <span class="n">double</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="n">ip_addresses</span> <span class="k">Set</span><span class="o">&lt;</span><span class="n">inet</span><span class="o">&gt;</span>
@@ -231,29 +258,28 @@ Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">insert</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"INSERT INTO user (id, user_name, logins, locations, ip_addresses) VALUES (?, ?, ?, ?, ?)"</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"cassandra_user"</span><span class="p">,</span>
-                           <span class="o">[</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">]</span><span class="p">,</span>
-                           <span class="p">{</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">37</span><span class="o">.</span><span class="mi">397357</span><span class="p">},</span>
-                           <span class="no">Set</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span><span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'200.199.198.197'</span><span class="p">),</span> <span class="no">IPAddr</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">'192.168.1.15'</span><span class="p">)</span><span class="o">]</span><span class="p">)</span>
-                           <span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"INSERT INTO user (id, logins, locations, ip_addresses)</span>
+<span class="s2">                 VALUES (</span>
+<span class="s2">                   0,</span>
+<span class="s2">                   ['2014-09-11 10:09:08+0000', '2014-09-12 10:09:00+0000'],</span>
+<span class="s2">                   {'2014-09-11 10:09:08+0000': 37.397357},</span>
+<span class="s2">                   {'200.199.198.197', '192.168.1.15'}</span>
+<span class="s2">                 )"</span><span class="p">)</span>
 
 <span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM user"</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
 
-<span class="nb">puts</span> <span class="s2">"Username: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'user_name'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"Logins: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'logins'</span><span class="o">].</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:httpdate</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"Location at </span><span class="si">#{</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">httpdate</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'locations'</span><span class="o">][</span><span class="no">Time</span><span class="o">.</span><span class="n">utc</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="nb">puts</span> <span class="s2">"Location at </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'locations'</span><span class="o">].</span><span class="n">first</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'locations'</span><span class="o">].</span><span class="n">first</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
 <span class="nb">puts</span> <span class="s2">"Ip Addresses: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'ip_addresses'</span><span class="o">].</span><span class="n">inspect</span><span class="si">}</span><span class="s2">"</span>
 </code></pre>
 </dd>
 <dt>When </dt>
 <dd>it is executed</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>Username: cassandra_user
-Logins: ["Thu, 11 Sep 2014 10:09:08 GMT", "Fri, 12 Sep 2014 10:09:00 GMT"]
+<dd>its output should contain:<pre><code>Logins: ["Thu, 11 Sep 2014 10:09:08 GMT", "Fri, 12 Sep 2014 10:09:00 GMT"]
 Location at Thu, 11 Sep 2014 10:09:08 GMT: 37.397357
-Ip Addresses: #<set: ipv4:192.168.1.15>, #<ipaddr: ipv4:200.199.198.197>}&gt;</ipaddr:></set:></code></pre>
+Ip Addresses: #&lt;Set: {#&lt;IPAddr: IPv4:192.168.1.15/255.255.255.255&gt;, #&lt;IPAddr: IPv4:200.199.198.197/255.255.255.255&gt;}&gt;</code></pre>
 </dd>
 </dl>
 </div>
@@ -262,48 +288,65 @@ Ip Addresses: #<set: ipv4:192.168.1.15>, #<ipaddr: ipv4:200.199.198.197>}&gt;</i
           <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
             
             
-            <li><a href="../asynchronous_io/">Asynchronous Io</a></li>
-            
-            
-            
-            <li><a href="../prepared_statements/">Prepared Statements</a></li>
-            
-            
-            
-            <li><a href="../batch_statements/">Batch Statements</a></li>
-            
-            
-            
-            <li><a href="../security/">Security</a></li>
-            
-            
-            
-            <li><a href="../debugging/">Debugging</a></li>
-            
-            
-            
-            <li><a href="../load_balancing/">Load Balancing</a></li>
-            
-            
-            
-            <li><a href="../retry_policies/">Retry Policies</a></li>
-            
-            
-            
-            <li><a href="../state_listeners/">State Listeners</a></li>
-            
-            
-            
-            <li><a href="../reconnection/">Reconnection</a></li>
-            
-            
-            
             <li class="active">
-              <a href="./">Datatypes</a>
+              <a href="../">Basics</a>
               <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li class="active">
+                  <a href="./">Datatypes</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#using-strings">Using strings</a></li>
+<li><a href="#using-numbers">Using numbers</a></li>
+<li><a href="#using-identifiers,-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</a></li>
+<li><a href="#using-lists,-maps-and-sets">Using lists, maps and sets</a></li>
+</ul>
+                </li>
+                
+                
+                
+                <li><a href="../prepared_statements/">Prepared Statements</a></li>
+                
+                
+                
+                <li><a href="../result_paging/">Result Paging</a></li>
+                
+                
+                
+                <li><a href="../batch_statements/">Batch Statements</a></li>
+                
                 
               </ul>
             </li>
+            
+            
+            
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../../security/">Security</a></li>
+            
+            
+            
+            <li><a href="../../debugging/">Debugging</a></li>
+            
+            
+            
+            <li><a href="../../load_balancing/">Load Balancing</a></li>
+            
+            
+            
+            <li><a href="../../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../../reconnection/">Reconnection</a></li>
             
             
           </ol>

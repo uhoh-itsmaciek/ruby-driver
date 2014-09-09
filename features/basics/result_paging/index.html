@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - Result Paging</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li class="active"><a href="../../">Features</a></li>
+            <li><a href="../../../api/">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              <li><a href="../../../">Introduction</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../../">Features</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Basics</a></li>
+              
+              
+              
+              
+              
+              <li class="active">Result Paging</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="feature-section">
+<h1 id="result-paging">Result paging</h1>
+<p>Cassandra native protocol v2, used by Apache Cassandra 2.0, allows paging
+through query results.</p>
+
+<p>Page size can be specified by passing <code>:page_size</code> option to
+<a href="../../../api/session#execute-instance_method"><code>Cassandra::Session#execute</code></a>.</p>
+
+<p>Once a <a href="../../../api/result"><code>Cassandra::Result</code></a> has been received, it can be paged
+through using <code>Cassandra::Result#next_page</code> or
+<code>Cassandra::Result#next_page_async</code> methods for synchronous and asynchronous
+next page retrieval accordingly.</p>
+<h2 id="background">Background</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
+<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span> <span class="nb">text</span><span class="p">,</span> <span class="n">v</span> <span class="nb">int</span><span class="p">,</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'d'</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'e'</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'f'</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'g'</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'h'</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'i'</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'j'</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'k'</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'l'</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'m'</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre>
+</dd>
+</dl>
+<div class="pull-right"><span class="label label-primary">since cassadra v2.0</span></div>
+<h2 id="paging-through-results-synchronously">Paging through results synchronously</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">,</span> <span class="ss">page_size</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+
+  <span class="kp">loop</span> <span class="k">do</span>
+    <span class="nb">puts</span> <span class="s2">"last page? </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">last_page?</span><span class="si">}</span><span class="s2">"</span>
+    <span class="nb">puts</span> <span class="s2">"page size: </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+      <span class="nb">puts</span> <span class="n">row</span>
+    <span class="k">end</span>
+    <span class="nb">puts</span> <span class="s2">""</span>
+
+    <span class="k">break</span> <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">last_page?</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next_page</span>
+  <span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>last page? false
+page size: 5
+{"k"=&gt;"a", "v"=&gt;0}
+{"k"=&gt;"c", "v"=&gt;2}
+{"k"=&gt;"m", "v"=&gt;12}
+{"k"=&gt;"f", "v"=&gt;5}
+{"k"=&gt;"g", "v"=&gt;6}
+
+last page? false
+page size: 5
+{"k"=&gt;"e", "v"=&gt;4}
+{"k"=&gt;"d", "v"=&gt;3}
+{"k"=&gt;"h", "v"=&gt;7}
+{"k"=&gt;"l", "v"=&gt;11}
+{"k"=&gt;"j", "v"=&gt;9}
+
+last page? true
+page size: 3
+{"k"=&gt;"i", "v"=&gt;8}
+{"k"=&gt;"k", "v"=&gt;10}
+{"k"=&gt;"b", "v"=&gt;1}
+</code></pre>
+</dd>
+</dl>
+<div class="pull-right"><span class="label label-primary">since cassadra v2.0</span></div>
+<h2 id="paging-through-results-asynchronously">Paging through results asynchronously</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+  <span class="k">def</span> <span class="nf">page_through</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+    <span class="n">future</span><span class="o">.</span><span class="n">then</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
+      <span class="nb">puts</span> <span class="s2">"last page? </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">last_page?</span><span class="si">}</span><span class="s2">"</span>
+      <span class="nb">puts</span> <span class="s2">"page size: </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span>
+
+      <span class="n">result</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+        <span class="nb">puts</span> <span class="n">row</span>
+      <span class="k">end</span>
+      <span class="nb">puts</span> <span class="s2">""</span>
+
+      <span class="n">page_through</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">next_page_async</span><span class="p">)</span> <span class="k">unless</span> <span class="n">result</span><span class="o">.</span><span class="n">last_page?</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="nb">select</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">)</span>
+  <span class="n">future</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="ss">page_size</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+
+  <span class="n">page_through</span><span class="p">(</span><span class="n">future</span><span class="p">)</span><span class="o">.</span><span class="n">join</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>last page? false
+page size: 5
+{"k"=&gt;"a", "v"=&gt;0}
+{"k"=&gt;"c", "v"=&gt;2}
+{"k"=&gt;"m", "v"=&gt;12}
+{"k"=&gt;"f", "v"=&gt;5}
+{"k"=&gt;"g", "v"=&gt;6}
+
+last page? false
+page size: 5
+{"k"=&gt;"e", "v"=&gt;4}
+{"k"=&gt;"d", "v"=&gt;3}
+{"k"=&gt;"h", "v"=&gt;7}
+{"k"=&gt;"l", "v"=&gt;11}
+{"k"=&gt;"j", "v"=&gt;9}
+
+last page? true
+page size: 3
+{"k"=&gt;"i", "v"=&gt;8}
+{"k"=&gt;"k", "v"=&gt;10}
+{"k"=&gt;"b", "v"=&gt;1}
+</code></pre>
+</dd>
+</dl>
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+            
+            
+            <li class="active">
+              <a href="../">Basics</a>
+              <ul class="nav nav-pills nav-stacked">
+                
+                
+                <li><a href="../datatypes/">Datatypes</a></li>
+                
+                
+                
+                <li><a href="../prepared_statements/">Prepared Statements</a></li>
+                
+                
+                
+                <li class="active">
+                  <a href="./">Result Paging</a>
+                  <ul class="nav nav-pills nav-stacked">
+<li><a href="#background">Background</a></li>
+<li><a href="#paging-through-results-synchronously">Paging through results synchronously</a></li>
+<li><a href="#paging-through-results-asynchronously">Paging through results asynchronously</a></li>
+</ul>
+                </li>
+                
+                
+                
+                <li><a href="../batch_statements/">Batch Statements</a></li>
+                
+                
+              </ul>
+            </li>
+            
+            
+            
+            <li><a href="../../asynchronous_io/">Asynchronous Io</a></li>
+            
+            
+            
+            <li><a href="../../security/">Security</a></li>
+            
+            
+            
+            <li><a href="../../debugging/">Debugging</a></li>
+            
+            
+            
+            <li><a href="../../load_balancing/">Load Balancing</a></li>
+            
+            
+            
+            <li><a href="../../retry_policies/">Retry Policies</a></li>
+            
+            
+            
+            <li><a href="../../state_listeners/">State Listeners</a></li>
+            
+            
+            
+            <li><a href="../../reconnection/">Reconnection</a></li>
+            
+            
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54260831-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
