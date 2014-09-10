@@ -107,19 +107,25 @@ they will be notifies on cluster membership changes.</p>
 </code></pre>
 </dd>
 <dt>And </dt>
-<dd>the following example running in the background:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'printing_listener'</span>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'printing_listener'</span>
 <span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">listener</span> <span class="o">=</span> <span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">)</span>
 <span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
 
-<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="o">.</span><span class="n">close</span> <span class="p">}</span>
-
 <span class="n">cluster</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
 
-<span class="nb">sleep</span>
+<span class="vg">$stdout</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"=== START ==="</span><span class="p">)</span>
+<span class="vg">$stdout</span><span class="o">.</span><span class="n">flush</span>
+<span class="vg">$stdin</span><span class="o">.</span><span class="n">gets</span>
+<span class="vg">$stdout</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"=== STOP ==="</span><span class="p">)</span>
+<span class="vg">$stdout</span><span class="o">.</span><span class="n">flush</span>
 </code></pre>
 </dd>
+<dt>And </dt>
+<dd>it is running interactively</dd>
+<dt>And </dt>
+<dd>I wait for its output to contain &#8220;START&#8221;</dd>
 </dl>
 <h2 id="some-existing-hosts-are-terminated">some existing hosts are terminated</h2>
 <dl class="steps">
@@ -127,8 +133,10 @@ they will be notifies on cluster membership changes.</p>
 <dd>node 3 stops</dd>
 <dt>And </dt>
 <dd>node 2 stops</dd>
+<dt>And </dt>
+<dd>I close the stdin stream</dd>
 <dt>Then </dt>
-<dd>background output should contain:<pre><code>Host 127.0.0.3 is down
+<dd>its output should contain:<pre><code>Host 127.0.0.3 is down
 Host 127.0.0.2 is down</code></pre>
 </dd>
 </dl>
@@ -138,8 +146,10 @@ Host 127.0.0.2 is down</code></pre>
 <dd>node 4 joins</dd>
 <dt>And </dt>
 <dd>node 4 leaves</dd>
+<dt>And </dt>
+<dd>I close the stdin stream</dd>
 <dt>Then </dt>
-<dd>background output should contain:<pre><code>Host 127.0.0.4 is found
+<dd>its output should contain:<pre><code>Host 127.0.0.4 is found
 Host 127.0.0.4 is up
 Host 127.0.0.4 is down
 Host 127.0.0.4 is lost</code></pre>
