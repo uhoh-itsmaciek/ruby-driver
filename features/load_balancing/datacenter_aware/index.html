@@ -94,7 +94,7 @@ change that behavior via constructor.</p>
 <dt>Given </dt>
 <dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
 <dt>And </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
   <span class="n">id</span> <span class="k">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>

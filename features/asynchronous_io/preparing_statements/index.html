@@ -81,7 +81,7 @@ This method returns a <code>Cassandra::Future&lt;Cassandra::Statements::Prepared
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
   <span class="n">id</span> <span class="k">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
