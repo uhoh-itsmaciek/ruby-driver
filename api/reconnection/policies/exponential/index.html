@@ -130,17 +130,16 @@ reconnection interval up to a given maximum</p>
     <dt class="example-title">Using this policy
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">policy</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Exponential</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">schedule</span> <span class="o">=</span> <span class="n">policy</span><span class="o">.</span><span class="n">schedule</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 0.5</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 1.0</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 2.0</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 4.0</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 8.0</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 10.0</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 10.0</span>
-<span class="n">schedule</span><span class="o">.</span><span class="n">next</span> <span class="c1"># 10.0</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">policy</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Exponential</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">schedule</span> <span class="o">=</span> <span class="n">policy</span><span class="p">.</span><span class="nf">schedule</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 0.5</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 1.0</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 2.0</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 4.0</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 8.0</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 10.0</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 10.0</span>
+<span class="n">schedule</span><span class="p">.</span><span class="nf">next</span> <span class="c1"># 10.0</span></code></pre></dd>
   
   </dl>
 </dd>

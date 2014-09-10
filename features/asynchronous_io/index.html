@@ -86,18 +86,18 @@
 <p>When describing different asynchronous method results, we will use a <code>Cassandra::Future&lt;Type&gt;</code> notation to signal the type of the result of the future. For example, <code>Cassandra::Future&lt;Cassandra::Result&gt;</code> is a future that returns an instance of <code>Cassandra::Result</code> when calling its <code>get</code> method.</p>
 
 <h3 id="example-getting-a-result">Example: getting a result</h3>
-<pre class="highlight"><code class="ruby"><span class="n">future</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">get</span> <span class="c1"># will block and raise error or return result</span>
+<pre class="highlight"><code class="ruby"><span class="n">future</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">future</span><span class="p">.</span><span class="nf">get</span> <span class="c1"># will block and raise error or return result</span>
 </code></pre>
 <p>Whenever a Future is resolved using its <a href="../../api/future/#get-instance_method">Future#get</a> method, it will block until it has a value. Once a value is available, it will be returned. In case of an error, an exception will be raised.</p>
 
 <h3 id="example-registering-a-listener">Example: registering a listener</h3>
-<pre class="highlight"><code class="ruby"><span class="n">future</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">future</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span>
 
 <span class="c1"># register success listener</span>
-<span class="n">future</span><span class="o">.</span><span class="n">on_success</span> <span class="k">do</span> <span class="o">|</span><span class="n">rows</span><span class="o">|</span>
-  <span class="n">rows</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
-    <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"artist"</span><span class="o">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"title"</span><span class="o">]</span><span class="si">}</span><span class="s2"> / </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s2">"album"</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">on_success</span> <span class="k">do</span> <span class="o">|</span><span class="n">rows</span><span class="o">|</span>
+  <span class="n">rows</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">row</span><span class="p">[</span><span class="s2">"artist"</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">row</span><span class="p">[</span><span class="s2">"title"</span><span class="p">]</span><span class="si">}</span><span class="s2"> / </span><span class="si">#{</span><span class="n">row</span><span class="p">[</span><span class="s2">"album"</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>

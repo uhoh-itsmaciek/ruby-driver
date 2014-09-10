@@ -69,10 +69,10 @@
 <p>Ruby driver will connection to 127.0.0.1 if no <code>:hosts</code> given to <code>Cassandra.connect</code>. It will automatically discover all peers and add them to cluster metadata.</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
 
-<span class="n">cluster</span><span class="o">.</span><span class="n">each_hosts</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span>
-  <span class="nb">puts</span> <span class="s2">"Host </span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">ip</span><span class="si">}</span><span class="s2">: id=</span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2"> datacenter=</span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">datacenter</span><span class="si">}</span><span class="s2"> rack=</span><span class="si">#{</span><span class="n">host</span><span class="o">.</span><span class="n">rack</span><span class="si">}</span><span class="s2">"</span>
+<span class="n">cluster</span><span class="p">.</span><span class="nf">each_hosts</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="s2">"Host </span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2">: id=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2"> datacenter=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">datacenter</span><span class="si">}</span><span class="s2"> rack=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">rack</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 </code></pre>
 <p>You can also specify a list of seed nodes to connect to. The set of IP addresses we pass to the <code>Cassandra.connect</code> is simply an initial set of contact points. After the driver connects to one of these nodes, it will automatically discover the rest of the nodes in the cluster, so you don’t need to list every node in your cluster.</p>
@@ -83,10 +83,10 @@
 
 <p>You run CQL statements by passing them to <code>Session#execute</code>.</p>
 <pre class="highlight"><code class="ruby"><span class="n">keyspace</span> <span class="o">=</span> <span class="s1">'system'</span>
-<span class="n">session</span>  <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
+<span class="n">session</span>  <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'SELECT keyspace_name, columnfamily_name FROM schema_columnfamilies'</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
-  <span class="nb">puts</span> <span class="s2">"The keyspace </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'keyspace_name'</span><span class="o">]</span><span class="si">}</span><span class="s2"> has a table called </span><span class="si">#{</span><span class="n">row</span><span class="o">[</span><span class="s1">'columnfamily_name'</span><span class="o">]</span><span class="si">}</span><span class="s2">"</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'SELECT keyspace_name, columnfamily_name FROM schema_columnfamilies'</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="s2">"The keyspace </span><span class="si">#{</span><span class="n">row</span><span class="p">[</span><span class="s1">'keyspace_name'</span><span class="p">]</span><span class="si">}</span><span class="s2"> has a table called </span><span class="si">#{</span><span class="n">row</span><span class="p">[</span><span class="s1">'columnfamily_name'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 </code></pre>
 <p>For queries that will be run repeatedly, <a href="#prepared-statements">you should use Prepared statements</a>.</p>
@@ -96,7 +96,7 @@
 <h2 id="parameterized-queries">Parameterized queries</h2>
 
 <p>If you’re using Cassandra 2.0 or later you no longer have to build CQL strings when you want to insert a value in a query, there’s a new feature that lets you bind values with reqular statements:</p>
-<pre class="highlight"><code class="ruby"><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
 </code></pre>
 <p>If you find yourself doing this often, it’s better to use prepared statements. As a rule of thumb, if your application is sending a request more than once, a prepared statement is almost always the right choice.</p>
 
@@ -105,27 +105,27 @@
 <h2 id="executing-statements-in-parallel">Executing Statements in Parallel</h2>
 
 <p>With fully asynchronous api, it is very easy to run queries in parallel:</p>
-<pre class="highlight"><code class="ruby"><span class="n">data</span> <span class="o">=</span> <span class="o">[</span>
-  <span class="o">[</span><span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="o">]</span><span class="p">,</span>
-  <span class="o">[</span><span class="mi">35</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="o">]</span>
-<span class="o">]</span>
+<pre class="highlight"><code class="ruby"><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="s1">'Bob'</span><span class="p">]</span>
+<span class="p">]</span>
 
 <span class="c1"># execute all statements in background</span>
-<span class="n">futures</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span><span class="o">|</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+<span class="n">futures</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span><span class="o">|</span>
+  <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
 <span class="k">end</span>
 
 <span class="c1"># block until both statements executed</span>
-<span class="n">futures</span><span class="o">.</span><span class="n">each</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:join</span><span class="p">)</span>
+<span class="n">futures</span><span class="p">.</span><span class="nf">each</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:join</span><span class="p">)</span>
 </code></pre>
 <p><a href="../api/future/">Read more about futures</a></p>
 
 <h2 id="prepared-statements">Prepared Statements</h2>
 
 <p>The driver supports prepared statements. Use <code>#prepare</code> to create a statement object, and then call <code>#execute</code> on that object to run a statement. You must supply values for all bound parameters when you call <code>#execute</code>.</p>
-<pre class="highlight"><code class="ruby"><span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">'INSERT INTO users (username, email) VALUES (?, ?)'</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'INSERT INTO users (username, email) VALUES (?, ?)'</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'avalanche123'</span><span class="p">,</span> <span class="s1">'bulat.shakirzyanov@datastax.com'</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'avalanche123'</span><span class="p">,</span> <span class="s1">'bulat.shakirzyanov@datastax.com'</span><span class="p">)</span>
 </code></pre>
 <p>You should prepare a statement for a given query <strong>only</strong> once and then resue it by calling #execute. Re-preparing the same statement will have a negative impact on the performance and should be avoided.</p>
 
@@ -138,31 +138,31 @@
 <h2 id="changing-keyspaces">Changing keyspaces</h2>
 
 <p>You can specify a keyspace to change to immediately after connection by passing the keyspace option to <a href="../api/cluster/#connect-instance_method"><code>Cql::Cluster#connect</code></a>, you can also use the <a href="../api/session/#execute-instance_method"><code>Session#execute</code></a> method to change keyspace of an existing session:</p>
-<pre class="highlight"><code class="ruby"><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'USE measurements'</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'USE measurements'</span><span class="p">)</span>
 </code></pre>
 <h2 id="creating-keyspaces-and-tables">Creating keyspaces and tables</h2>
 
 <p>There is no special facility for creating keyspaces and tables, they are created by executing CQL:</p>
-<pre class="highlight"><code class="ruby"><span class="n">keyspace_definition</span> <span class="o">=</span> <span class="o">&lt;&lt;-</span><span class="no">KEYSPACE_CQL</span>
-<span class="sh">  CREATE KEYSPACE measurements</span>
-<span class="sh">  WITH replication = {</span>
-<span class="sh">    'class': 'SimpleStrategy',</span>
-<span class="sh">    'replication_factor': 3</span>
-<span class="sh">  }</span>
-<span class="no">KEYSPACE_CQL</span>
+<pre class="highlight"><code class="ruby"><span class="n">keyspace_definition</span> <span class="o">=</span> <span class="o">&lt;&lt;-</span><span class="no">KEYSPACE_CQL</span><span class="sh">
+  CREATE KEYSPACE measurements
+  WITH replication = {
+    'class': 'SimpleStrategy',
+    'replication_factor': 3
+  }
+</span><span class="no">KEYSPACE_CQL</span>
 
-<span class="n">table_definition</span> <span class="o">=</span> <span class="o">&lt;&lt;-</span><span class="no">TABLE_CQL</span>
-<span class="sh">  CREATE TABLE events (</span>
-<span class="sh">    id INT,</span>
-<span class="sh">    date DATE,</span>
-<span class="sh">    comment VARCHAR,</span>
-<span class="sh">    PRIMARY KEY (id)</span>
-<span class="sh">  )</span>
-<span class="no">TABLE_CQL</span>
+<span class="n">table_definition</span> <span class="o">=</span> <span class="o">&lt;&lt;-</span><span class="no">TABLE_CQL</span><span class="sh">
+  CREATE TABLE events (
+    id INT,
+    date DATE,
+    comment VARCHAR,
+    PRIMARY KEY (id)
+  )
+</span><span class="no">TABLE_CQL</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">keyspace_definition</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'USE measurements'</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">table_definition</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">keyspace_definition</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'USE measurements'</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">table_definition</span><span class="p">)</span>
 </code></pre>
 <p>You can also <code>ALTER</code> keyspaces and tables, and you can read more about that in the <a href="https://github.com/apache/cassandra/blob/cassandra-2.0/doc/cql3/CQL.textile">CQL3 syntax documentation</a>.</p>
 
@@ -171,43 +171,43 @@
 <p>If you’re using Cassandra 2.0 or later you can build batch requests, either from simple or prepared statements. Batches must not contain any select statements, only <code>INSERT</code>, <code>UPDATE</code> and <code>DELETE</code> statements are allowed.</p>
 
 <p>There are a few different ways to work with batches, one is where you build up a batch with a block:</p>
-<pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">batch</span><span class="o">|</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Sue' WHERE user_id = 'unicorn31'"</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Kim' WHERE user_id = 'dudezor13'"</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Jim' WHERE user_id = 'kittenz98'"</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">batch</span><span class="o">|</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Sue' WHERE user_id = 'unicorn31'"</span><span class="p">)</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Kim' WHERE user_id = 'dudezor13'"</span><span class="p">)</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Jim' WHERE user_id = 'kittenz98'"</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 </code></pre>
 <p>Another is by creating a batch building it later:</p>
-<pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span>
+<pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">batch</span>
 
-<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Sue' WHERE user_id = 'unicorn31'"</span><span class="p">)</span>
-<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Kim' WHERE user_id = 'dudezor13'"</span><span class="p">)</span>
-<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Jim' WHERE user_id = 'kittenz98'"</span><span class="p">)</span>
+<span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Sue' WHERE user_id = 'unicorn31'"</span><span class="p">)</span>
+<span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Kim' WHERE user_id = 'dudezor13'"</span><span class="p">)</span>
+<span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET name = 'Jim' WHERE user_id = 'kittenz98'"</span><span class="p">)</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 </code></pre>
 <p>You can mix any combination of statements in a batch:</p>
-<pre class="highlight"><code class="ruby"><span class="n">prepared_statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"UPDATE users SET name = ? WHERE user_id = ?"</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">prepared_statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE users SET name = ? WHERE user_id = ?"</span><span class="p">)</span>
 
-<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">batch</span><span class="o">|</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prepared_statement</span><span class="p">,</span> <span class="s1">'Sue'</span><span class="p">,</span> <span class="s1">'unicorn31'</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET age = 19 WHERE user_id = 'unicorn31'"</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"INSERT INTO activity (user_id, what, when) VALUES (?, 'login', NOW())"</span><span class="p">,</span> <span class="s1">'unicorn31'</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">batch</span><span class="o">|</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">prepared_statement</span><span class="p">,</span> <span class="s1">'Sue'</span><span class="p">,</span> <span class="s1">'unicorn31'</span><span class="p">)</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET age = 19 WHERE user_id = 'unicorn31'"</span><span class="p">)</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"INSERT INTO activity (user_id, what, when) VALUES (?, 'login', NOW())"</span><span class="p">,</span> <span class="s1">'unicorn31'</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 </code></pre>
 <p>Batches can have one of three different types: <code>logged</code>, <code>unlogged</code> or <code>counter</code>, where <code>logged</code> is the default. Their exact semantics are defined in the <a href="http://www.datastax.com/documentation/cql/3.1/webhelp/index.html">Cassandra documentation</a>, but this is how you specify which one you want:</p>
-<pre class="highlight"><code class="ruby"><span class="n">counter_statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"UPDATE my_counter_table SET my_counter = my_counter + ? WHERE id = ?"</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">counter_statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"UPDATE my_counter_table SET my_counter = my_counter + ? WHERE id = ?"</span><span class="p">)</span>
 
-<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">counter_batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">batch</span><span class="o">|</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">counter_statement</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'some_counter'</span><span class="p">)</span>
-  <span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">counter_statement</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'another_counter'</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">counter_batch</span> <span class="k">do</span> <span class="o">|</span><span class="n">batch</span><span class="o">|</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">counter_statement</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'some_counter'</span><span class="p">)</span>
+  <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">counter_statement</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'another_counter'</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 </code></pre>
 <p><a href="../api/session/#batch-instance_method">Read more about <code>Session#batch</code></a></p>
 
@@ -216,13 +216,13 @@
 <h2 id="paging">Paging</h2>
 
 <p>If you’re using Cassandra 2.0 or later you can page your query results by adding the <code>:page_size</code> option to a query:</p>
-<pre class="highlight"><code class="ruby"><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM large_table WHERE id = 'partition_with_lots_of_data'"</span><span class="p">,</span> <span class="ss">page_size</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM large_table WHERE id = 'partition_with_lots_of_data'"</span><span class="p">,</span> <span class="ss">page_size: </span><span class="mi">100</span><span class="p">)</span>
 
 <span class="k">while</span> <span class="n">result</span>
-  <span class="n">result</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+  <span class="n">result</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
     <span class="nb">p</span> <span class="n">row</span>
   <span class="k">end</span>
-  <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next_page</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">next_page</span>
 <span class="k">end</span>
 </code></pre>
 <p><a href="../api/result/#next_page-instance_method">Read more about paging</a></p>
@@ -230,20 +230,20 @@
 <h2 id="consistency">Consistency</h2>
 
 <p>You can specify the default consistency to use when you create a new <code>Cluster</code>:</p>
-<pre class="highlight"><code class="ruby"><span class="n">client</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">client</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">consistency: :all</span><span class="p">)</span>
 </code></pre>
 <p><a href="../api/#connect-class_method">Read more about default consistency</a></p>
 
 <p>Consistency can also be passed to <code>Session#execute</code> and <code>Session#execute_async</code></p>
-<pre class="highlight"><code class="ruby"><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM users'</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:local_quorum</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM users'</span><span class="p">,</span> <span class="ss">consistency: :local_quorum</span><span class="p">)</span>
 
-<span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s1">'SELECT * FROM users'</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:one</span><span class="p">)</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'SELECT * FROM users'</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="ss">consistency: :one</span><span class="p">)</span>
 
-<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">batch</span>
-<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET email = 'sue@foobar.com' WHERE id = 'sue'"</span><span class="p">)</span>
-<span class="n">batch</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">"UPDATE users SET email = 'tom@foobar.com' WHERE id = 'tom'"</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">batch</span>
+<span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET email = 'sue@foobar.com' WHERE id = 'sue'"</span><span class="p">)</span>
+<span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET email = 'tom@foobar.com' WHERE id = 'tom'"</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="ss">consistency: :all</span><span class="p">)</span>
 </code></pre>
 <p><a href="../api/session/#execute-instance_method">Read more about <code>Session#execute</code></a>
 <a href="../api/#CONSISTENCIES-constant">Read more about possible consistencies</a></p>
@@ -257,10 +257,10 @@
 <p>The CQL protocol supports frame compression, which can give you a performance boost if your requests or responses are big. To enable it you can specify compression to use in <code>Cassandra.connect</code>.</p>
 
 <p>Cassandra currently supports two compression algorithms: Snappy and LZ4. ruby driver supports both, but in order to use them you will have to install the <a href="http://rubygems.org/gems/snappy">snappy</a> or <a href="http://rubygems.org/gems/lz4-ruby">lz4-ruby</a> gems separately. Once it’s installed you can enable compression like this:</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">compressor</span><span class="p">:</span> <span class="ss">:snappy</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compressor: :snappy</span><span class="p">)</span>
 </code></pre>
 <p>or</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">compressor</span><span class="p">:</span> <span class="ss">:lz4</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compressor: :lz4</span><span class="p">)</span>
 </code></pre>
 <p>Which one should you choose? On paper the LZ4 algorithm is more efficient and the one Cassandra defaults to for SSTable compression. They both achieve roughly the same compression ratio, but LZ4 does it quicker.</p>
 
@@ -269,7 +269,7 @@
 <p>You can pass a standard Ruby logger to the client to get some more information about what is going on:</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'logger'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">logger</span><span class="p">:</span> <span class="no">Logger</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">))</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">logger: </span><span class="no">Logger</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">))</span>
 </code></pre>
 <p>Most of the logging will be when the driver connects and discovers new nodes, when connections fail and so on. The logging is designed to not cause much overhead and only relatively rare events are logged (e.g. normal requests are not logged).</p>
 
@@ -288,9 +288,9 @@
 <p>A Cluster instance allows to configure different important aspects of the way connections and queries will be handled. At this level you can configure everything from contact points (address of the nodes to be contacted initially before the driver performs node discovery), the request routing policy, retry and reconnection policies, and so forth. Generally such settings are set once at the application level.</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="ss">:hosts</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">'10.1.1.3'</span><span class="p">,</span> <span class="s1">'10.1.1.4'</span><span class="p">,</span> <span class="s1">'10.1.1.5'</span><span class="o">]</span><span class="p">,</span>
-            <span class="ss">:load_balancing_policy</span> <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"US_EAST"</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+            <span class="ss">:hosts</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'10.1.1.3'</span><span class="p">,</span> <span class="s1">'10.1.1.4'</span><span class="p">,</span> <span class="s1">'10.1.1.5'</span><span class="p">],</span>
+            <span class="ss">:load_balancing_policy</span> <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"US_EAST"</span><span class="p">)</span>
           <span class="p">)</span>
 </code></pre>
 <h2 id="session">Session</h2>
@@ -316,12 +316,12 @@
 <p>This means that the driver’s IO reactor has crashed hard. Most of the time it means that you’re using a framework, server or runtime that forks and you call <code>Client.connect</code> in the parent process. Check the documentation and see if there’s any way you can register to run some piece of code in the child process just after a fork, and connect there.</p>
 
 <p>This is how you do it in Resque:</p>
-<pre class="highlight"><code class="ruby"><span class="no">Resque</span><span class="o">.</span><span class="n">after_fork</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span>
+<pre class="highlight"><code class="ruby"><span class="no">Resque</span><span class="p">.</span><span class="nf">after_fork</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span>
   <span class="c1"># connect to Cassandra here</span>
 <span class="k">end</span>
 </code></pre>
 <p>and this is how you do it in Passenger:</p>
-<pre class="highlight"><code class="ruby"><span class="no">PhusionPassenger</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="ss">:starting_worker_process</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">forked</span><span class="o">|</span>
+<pre class="highlight"><code class="ruby"><span class="no">PhusionPassenger</span><span class="p">.</span><span class="nf">on_event</span><span class="p">(</span><span class="ss">:starting_worker_process</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">forked</span><span class="o">|</span>
   <span class="k">if</span> <span class="n">forked</span>
     <span class="c1"># connect to Cassandra here</span>
   <span class="k">end</span>

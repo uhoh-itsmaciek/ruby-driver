@@ -89,9 +89,9 @@ next page retrieval accordingly.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
-<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span> <span class="nb">text</span><span class="p">,</span> <span class="n">v</span> <span class="nb">int</span><span class="p">,</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">));</span>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span> <span class="k">text</span><span class="p">,</span> <span class="n">v</span> <span class="k">int</span><span class="p">,</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">));</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
@@ -104,8 +104,7 @@ next page retrieval accordingly.</p>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'j'</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'k'</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'l'</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'m'</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
-</code></pre>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">test</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'m'</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span></code></pre>
 </dd>
 </dl>
 <div class="pull-right"><span class="label label-primary">since cassadra v2.0</span></div>
@@ -114,21 +113,21 @@ next page retrieval accordingly.</p>
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">,</span> <span class="ss">page_size</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">,</span> <span class="ss">page_size: </span><span class="mi">5</span><span class="p">)</span>
 
   <span class="kp">loop</span> <span class="k">do</span>
-    <span class="nb">puts</span> <span class="s2">"last page? </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">last_page?</span><span class="si">}</span><span class="s2">"</span>
-    <span class="nb">puts</span> <span class="s2">"page size: </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span>
+    <span class="nb">puts</span> <span class="s2">"last page? </span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">last_page?</span><span class="si">}</span><span class="s2">"</span>
+    <span class="nb">puts</span> <span class="s2">"page size: </span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">size</span><span class="si">}</span><span class="s2">"</span>
 
-    <span class="n">result</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+    <span class="n">result</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
       <span class="nb">puts</span> <span class="n">row</span>
     <span class="k">end</span>
     <span class="nb">puts</span> <span class="s2">""</span>
 
-    <span class="k">break</span> <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">last_page?</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">next_page</span>
+    <span class="k">break</span> <span class="k">if</span> <span class="n">result</span><span class="p">.</span><span class="nf">last_page?</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">next_page</span>
   <span class="k">end</span>
 </code></pre>
 </dd>
@@ -166,26 +165,25 @@ page size: 3
 <dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
 
   <span class="k">def</span> <span class="nf">page_through</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
-    <span class="n">future</span><span class="o">.</span><span class="n">then</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
-      <span class="nb">puts</span> <span class="s2">"last page? </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">last_page?</span><span class="si">}</span><span class="s2">"</span>
-      <span class="nb">puts</span> <span class="s2">"page size: </span><span class="si">#{</span><span class="n">result</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">future</span><span class="p">.</span><span class="nf">then</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="o">|</span>
+      <span class="nb">puts</span> <span class="s2">"last page? </span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">last_page?</span><span class="si">}</span><span class="s2">"</span>
+      <span class="nb">puts</span> <span class="s2">"page size: </span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">size</span><span class="si">}</span><span class="s2">"</span>
 
-      <span class="n">result</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
+      <span class="n">result</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
         <span class="nb">puts</span> <span class="n">row</span>
       <span class="k">end</span>
       <span class="nb">puts</span> <span class="s2">""</span>
 
-      <span class="n">page_through</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">next_page_async</span><span class="p">)</span> <span class="k">unless</span> <span class="n">result</span><span class="o">.</span><span class="n">last_page?</span>
+      <span class="n">page_through</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="nf">next_page_async</span><span class="p">)</span> <span class="k">unless</span> <span class="n">result</span><span class="p">.</span><span class="nf">last_page?</span>
     <span class="k">end</span>
   <span class="k">end</span>
 
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-  <span class="nb">select</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">)</span>
-  <span class="n">future</span>  <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="ss">page_size</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
+  <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+  <span class="nb">select</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">)</span>
+  <span class="n">future</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="ss">page_size: </span><span class="mi">5</span><span class="p">)</span>
 
-  <span class="n">page_through</span><span class="p">(</span><span class="n">future</span><span class="p">)</span><span class="o">.</span><span class="n">join</span>
-</code></pre>
+  <span class="n">page_through</span><span class="p">(</span><span class="n">future</span><span class="p">).</span><span class="nf">join</span></code></pre>
 </dd>
 <dt>When </dt>
 <dd>it is executed</dd>

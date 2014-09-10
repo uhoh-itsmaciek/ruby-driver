@@ -82,31 +82,29 @@
 <h2 id="fallthrough-policy-is-used-explicitly">Fallthrough policy is used explicitly</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span><span class="p">;</span>
-<span class="n">USE</span> <span class="n">simplex</span><span class="p">;</span>
-<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
-  <span class="n">id</span> <span class="n">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-  <span class="n">title</span> <span class="nb">text</span><span class="p">,</span>
-  <span class="n">album</span> <span class="nb">text</span><span class="p">,</span>
-  <span class="n">artist</span> <span class="nb">text</span><span class="p">,</span>
-  <span class="n">tags</span> <span class="k">set</span><span class="o">&lt;</span><span class="nb">text</span><span class="o">&gt;</span><span class="p">,</span>
-  <span class="k">data</span> <span class="nb">blob</span>
-<span class="p">);</span>
-</code></pre>
+<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
+<span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="k">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">title</span> <span class="k">text</span><span class="p">,</span>
+  <span class="mi">a</span><span class="n">lbum</span> <span class="k">text</span><span class="p">,</span>
+  <span class="mi">a</span><span class="n">rtist</span> <span class="k">text</span><span class="p">,</span>
+  <span class="n">tags</span> <span class="k">set</span><span class="o">&lt;</span><span class="k">text</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="mi">da</span><span class="n">ta</span> <span class="mi">b</span><span class="n">lob</span>
+<span class="p">);</span></code></pre>
 </dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="ss">retry_policy</span><span class="p">:</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Retry</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Fallthrough</span><span class="o">.</span><span class="n">new</span><span class="p">)</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">retry_policy: </span><span class="no">Cassandra</span><span class="o">::</span><span class="no">Retry</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Fallthrough</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
-  <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM songs'</span><span class="p">,</span> <span class="ss">consistency</span><span class="p">:</span> <span class="ss">:all</span><span class="p">)</span>
+  <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM songs'</span><span class="p">,</span> <span class="ss">consistency: :all</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"failed"</span>
 <span class="k">rescue</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">QueryError</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"success"</span>
-<span class="k">end</span>
-</code></pre>
+<span class="k">end</span></code></pre>
 </dd>
 <dt>When </dt>
 <dd>node 3 stops</dd>

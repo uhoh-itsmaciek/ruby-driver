@@ -163,9 +163,8 @@
   </dd>
 
 </dl>
-      <pre class="highlight"><code class="ruby"><span class="o">[</span> <span class="ss">:any</span><span class="p">,</span> <span class="ss">:one</span><span class="p">,</span> <span class="ss">:two</span><span class="p">,</span> <span class="ss">:three</span><span class="p">,</span> <span class="ss">:quorum</span><span class="p">,</span> <span class="ss">:all</span><span class="p">,</span> <span class="ss">:local_quorum</span><span class="p">,</span>
-<span class="ss">:each_quorum</span><span class="p">,</span> <span class="ss">:serial</span><span class="p">,</span> <span class="ss">:local_serial</span><span class="p">,</span> <span class="ss">:local_one</span> <span class="o">].</span><span class="n">freeze</span>
-</code></pre>
+      <pre class="highlight"><code class="ruby"><span class="p">[</span> <span class="ss">:any</span><span class="p">,</span> <span class="ss">:one</span><span class="p">,</span> <span class="ss">:two</span><span class="p">,</span> <span class="ss">:three</span><span class="p">,</span> <span class="ss">:quorum</span><span class="p">,</span> <span class="ss">:all</span><span class="p">,</span> <span class="ss">:local_quorum</span><span class="p">,</span>
+<span class="ss">:each_quorum</span><span class="p">,</span> <span class="ss">:serial</span><span class="p">,</span> <span class="ss">:local_serial</span><span class="p">,</span> <span class="ss">:local_one</span> <span class="p">].</span><span class="nf">freeze</span></code></pre>
     </div>
   </div>
 
@@ -192,8 +191,7 @@
   </dd>
 
 </dl>
-      <pre class="highlight"><code class="ruby"><span class="o">[</span><span class="ss">:serial</span><span class="p">,</span> <span class="ss">:local_serial</span><span class="o">].</span><span class="n">freeze</span>
-</code></pre>
+      <pre class="highlight"><code class="ruby"><span class="p">[</span><span class="ss">:serial</span><span class="p">,</span> <span class="ss">:local_serial</span><span class="p">].</span><span class="nf">freeze</span></code></pre>
     </div>
   </div>
 
@@ -203,8 +201,7 @@
     </div>
     <div class="panel-body constant-body">
       
-      <pre class="highlight"><code class="ruby"><span class="s1">'1.0.0.beta.1'</span><span class="o">.</span><span class="n">freeze</span>
-</code></pre>
+      <pre class="highlight"><code class="ruby"><span class="s1">'1.0.0.beta.1'</span><span class="p">.</span><span class="nf">freeze</span></code></pre>
     </div>
   </div>
 
@@ -238,19 +235,17 @@
     <dt class="example-title">Connecting to localhost
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span></code></pre></dd>
   
     
     <dt class="example-title">Configuring <code><a href="cluster/" title="Cassandra::Cluster (class)">Cluster</a></code>
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="ss">username</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
-            <span class="ss">password</span><span class="p">:</span> <span class="n">password</span><span class="p">,</span>
-            <span class="ss">hosts</span><span class="p">:</span> <span class="o">[</span><span class="s1">'10.0.1.1'</span><span class="p">,</span> <span class="s1">'10.0.1.2'</span><span class="p">,</span> <span class="s1">'10.0.1.3'</span><span class="o">]</span>
-          <span class="p">)</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+            <span class="ss">username: </span><span class="n">username</span><span class="p">,</span>
+            <span class="ss">password: </span><span class="n">password</span><span class="p">,</span>
+            <span class="ss">hosts: </span><span class="p">[</span><span class="s1">'10.0.1.1'</span><span class="p">,</span> <span class="s1">'10.0.1.2'</span><span class="p">,</span> <span class="s1">'10.0.1.3'</span><span class="p">]</span>
+          <span class="p">)</span></code></pre></dd>
   
   </dl>
 </dd>

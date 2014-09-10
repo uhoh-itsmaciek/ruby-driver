@@ -1213,17 +1213,15 @@ thread upon resolution.
     <dt class="example-title">Block returns a value
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
-<span class="n">future_user</span>  <span class="o">=</span> <span class="n">future_users</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span><span class="o">|</span><span class="n">users</span><span class="o">|</span> <span class="n">users</span><span class="o">.</span><span class="n">first</span><span class="p">}</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_users</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
+<span class="n">future_user</span>  <span class="o">=</span> <span class="n">future_users</span><span class="p">.</span><span class="nf">then</span> <span class="p">{</span><span class="o">|</span><span class="n">users</span><span class="o">|</span> <span class="n">users</span><span class="p">.</span><span class="nf">first</span><span class="p">}</span></code></pre></dd>
   
     
     <dt class="example-title">Block returns a future
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_statement</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">prepare_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">)</span>
-<span class="n">future_users</span>     <span class="o">=</span> <span class="n">future_statement</span><span class="o">.</span><span class="n">then</span> <span class="p">{</span><span class="o">|</span><span class="n">statement</span><span class="o">|</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)}</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare_async</span><span class="p">(</span><span class="s1">'SELECT * FROM users WHERE user_name = ?'</span><span class="p">)</span>
+<span class="n">future_users</span>     <span class="o">=</span> <span class="n">future_statement</span><span class="p">.</span><span class="nf">then</span> <span class="p">{</span><span class="o">|</span><span class="n">statement</span><span class="o">|</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)}</span></code></pre></dd>
   
   </dl>
 </dd>
@@ -1407,17 +1405,15 @@ thread upon resolution.
     <dt class="example-title">Recovering from errors
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
-<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">error</span><span class="o">|</span> <span class="s2">"Execution failed with </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
+<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="p">.</span><span class="nf">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">error</span><span class="o">|</span> <span class="s2">"Execution failed with </span><span class="si">#{</span><span class="n">error</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">error</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span></code></pre></dd>
   
     
     <dt class="example-title">Executing something else on error
 </dt>
     
-    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
-<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="o">.</span><span class="n">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">session</span><span class="o">.</span><span class="n">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM another-table'</span><span class="p">)}</span>
-</code></pre></dd>
+    <dd class="example-code"><pre class="highlight"><code class="ruby"><span class="n">future_error</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM invalid-table'</span><span class="p">)</span>
+<span class="n">future</span>       <span class="o">=</span> <span class="n">future_error</span><span class="p">.</span><span class="nf">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s1">'SELECT * FROM another-table'</span><span class="p">)}</span></code></pre></dd>
   
   </dl>
 </dd>

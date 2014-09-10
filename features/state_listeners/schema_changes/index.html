@@ -93,34 +93,32 @@ argument.</p>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">keyspace_created</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
-    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> created"</span><span class="p">)</span>
+    <span class="vi">@out</span><span class="p">.</span><span class="nf">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">inspect</span><span class="si">}</span><span class="s2"> created"</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">keyspace_changed</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
-    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> changed"</span><span class="p">)</span>
+    <span class="vi">@out</span><span class="p">.</span><span class="nf">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">inspect</span><span class="si">}</span><span class="s2"> changed"</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">keyspace_dropped</span><span class="p">(</span><span class="n">keyspace</span><span class="p">)</span>
-    <span class="vi">@out</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> dropped"</span><span class="p">)</span>
+    <span class="vi">@out</span><span class="p">.</span><span class="nf">puts</span><span class="p">(</span><span class="s2">"Keyspace </span><span class="si">#{</span><span class="n">keyspace</span><span class="p">.</span><span class="nf">name</span><span class="p">.</span><span class="nf">inspect</span><span class="si">}</span><span class="s2"> dropped"</span><span class="p">)</span>
   <span class="k">end</span>
-<span class="k">end</span>
-</code></pre>
+<span class="k">end</span></code></pre>
 </dd>
 <dt>And </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'printing_listener'</span>
 <span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">listener</span> <span class="o">=</span> <span class="no">PrintingListener</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">)</span>
-<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span>
+<span class="n">listener</span> <span class="o">=</span> <span class="no">PrintingListener</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">)</span>
+<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
 
-<span class="n">cluster</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
+<span class="n">cluster</span><span class="p">.</span><span class="nf">register</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
 
-<span class="vg">$stdout</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"=== START ==="</span><span class="p">)</span>
-<span class="vg">$stdout</span><span class="o">.</span><span class="n">flush</span>
-<span class="vg">$stdin</span><span class="o">.</span><span class="n">gets</span>
-<span class="vg">$stdout</span><span class="o">.</span><span class="n">puts</span><span class="p">(</span><span class="s2">"=== STOP ==="</span><span class="p">)</span>
-<span class="vg">$stdout</span><span class="o">.</span><span class="n">flush</span>
-</code></pre>
+<span class="vg">$stdout</span><span class="p">.</span><span class="nf">puts</span><span class="p">(</span><span class="s2">"=== START ==="</span><span class="p">)</span>
+<span class="vg">$stdout</span><span class="p">.</span><span class="nf">flush</span>
+<span class="vg">$stdin</span><span class="p">.</span><span class="nf">gets</span>
+<span class="vg">$stdout</span><span class="p">.</span><span class="nf">puts</span><span class="p">(</span><span class="s2">"=== STOP ==="</span><span class="p">)</span>
+<span class="vg">$stdout</span><span class="p">.</span><span class="nf">flush</span></code></pre>
 </dd>
 <dt>And </dt>
 <dd>it is running interactively</dd>
@@ -143,12 +141,10 @@ argument.</p>
 <h2 id="listening-for-keyspace-drop">Listening for keyspace drop</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">new_keyspace</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span>
-</code></pre>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">new_keyspace</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span></code></pre>
 </dd>
 <dt>When </dt>
-<dd>I execute the following cql:<pre class="highlight"><code class="sql"><span class="k">DROP</span> <span class="n">KEYSPACE</span> <span class="n">new_keyspace</span>
-</code></pre>
+<dd>I execute the following cql:<pre class="highlight"><code class="cql"><span class="mi">D</span><span class="n">ROP</span> <span class="k">KEYSPACE</span> <span class="n">new_keyspace</span></code></pre>
 </dd>
 <dt>And </dt>
 <dd>I close the stdin stream</dd>
@@ -159,12 +155,10 @@ argument.</p>
 <h2 id="listening-for-keyspace-changes">Listening for keyspace changes</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following schema:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="n">KEYSPACE</span> <span class="n">new_keyspace</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="err">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="err">}</span>
-</code></pre>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">new_keyspace</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span></code></pre>
 </dd>
 <dt>When </dt>
-<dd>I execute the following cql:<pre class="highlight"><code class="sql"><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">new_keyspace</span><span class="p">.</span><span class="n">new_table</span> <span class="p">(</span><span class="n">id</span> <span class="n">timeuuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">)</span>
-</code></pre>
+<dd>I execute the following cql:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="n">new_keyspace</span><span class="p">.</span><span class="n">new_table</span> <span class="p">(</span><span class="n">id</span> <span class="k">timeuuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">)</span></code></pre>
 </dd>
 <dt>And </dt>
 <dd>I close the stdin stream</dd>

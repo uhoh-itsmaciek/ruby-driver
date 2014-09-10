@@ -86,18 +86,17 @@ authentication to cassandra cluster.</p>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-              <span class="ss">username</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'USERNAME'</span><span class="o">]</span><span class="p">,</span>
-              <span class="ss">password</span><span class="p">:</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'PASSWORD'</span><span class="o">]</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+              <span class="ss">username: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'USERNAME'</span><span class="p">],</span>
+              <span class="ss">password: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'PASSWORD'</span><span class="p">]</span>
             <span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"authentication successful"</span>
 <span class="k">rescue</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">AuthenticationError</span> <span class="o">=&gt;</span> <span class="n">e</span>
-  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span>
+  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
   <span class="nb">puts</span> <span class="s2">"authentication failed"</span>
 <span class="k">else</span>
-  <span class="n">cluster</span><span class="o">.</span><span class="n">close</span>
-<span class="k">end</span>
-</code></pre>
+  <span class="n">cluster</span><span class="p">.</span><span class="nf">close</span>
+<span class="k">end</span></code></pre>
 </dd>
 </dl>
 <h2 id="authenticating-with-correct-credentials">Authenticating with correct credentials</h2>
