@@ -91,16 +91,16 @@ Ruby driver transparently maps each of those datatypes to a specific Ruby type.<
 <h2 id="using-strings">Using strings</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
-<span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
-  <span class="mi">a</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-  <span class="mi">b</span> <span class="mi">a</span><span class="n">scii</span><span class="p">,</span>
-  <span class="mi">c</span> <span class="mi">b</span><span class="n">lob</span><span class="p">,</span>
-  <span class="mi">d</span> <span class="k">text</span><span class="p">,</span>
-  <span class="mi">e</span> <span class="k">varchar</span><span class="p">,</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
+  <span class="n">a</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">b</span> <span class="k">ascii</span><span class="p">,</span>
+  <span class="n">c</span> <span class="k">blob</span><span class="p">,</span>
+  <span class="n">d</span> <span class="k">text</span><span class="p">,</span>
+  <span class="n">e</span> <span class="k">varchar</span><span class="p">,</span>
 <span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mytable</span> <span class="p">(</span><span class="mi">a</span><span class="p">,</span> <span class="mi">b</span><span class="p">,</span> <span class="mi">c</span><span class="p">,</span> <span class="mi">d</span><span class="p">,</span> <span class="mi">e</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mytable</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 <span class="k">VALUES</span> <span class="p">(</span>
   <span class="mi">0</span><span class="p">,</span>
   <span class="s1">'ascii'</span><span class="p">,</span>
@@ -134,18 +134,18 @@ Varchar: varchar</code></pre>
 <h2 id="using-numbers">Using numbers</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
-<span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
-  <span class="mi">a</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-  <span class="mi">b</span> <span class="mi">b</span><span class="n">igint</span><span class="p">,</span>
-  <span class="mi">c</span> <span class="mi">dec</span><span class="n">imal</span><span class="p">,</span>
-  <span class="mi">d</span> <span class="mi">d</span><span class="n">ouble</span><span class="p">,</span>
-  <span class="mi">e</span> <span class="mi">f</span><span class="n">loat</span><span class="p">,</span>
-  <span class="mi">f</span> <span class="k">int</span><span class="p">,</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
+  <span class="n">a</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">b</span> <span class="k">bigint</span><span class="p">,</span>
+  <span class="n">c</span> <span class="k">decimal</span><span class="p">,</span>
+  <span class="n">d</span> <span class="k">double</span><span class="p">,</span>
+  <span class="n">e</span> <span class="k">float</span><span class="p">,</span>
+  <span class="n">f</span> <span class="k">int</span><span class="p">,</span>
   <span class="n">g</span> <span class="k">varint</span>
 <span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mytable</span> <span class="p">(</span><span class="mi">a</span><span class="p">,</span> <span class="mi">b</span><span class="p">,</span> <span class="mi">c</span><span class="p">,</span> <span class="mi">d</span><span class="p">,</span> <span class="mi">e</span><span class="p">,</span> <span class="mi">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mytable</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
 <span class="k">VALUES</span> <span class="p">(</span>
   <span class="mi">0</span><span class="p">,</span>
   <span class="mi">765438000</span><span class="p">,</span>
@@ -185,24 +185,24 @@ Varint: 67890656781923123918798273492834712837198237</code></pre>
 <h2 id="using-identifiers,-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
-<span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
-  <span class="mi">a</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
-  <span class="mi">b</span> <span class="mi">b</span><span class="n">oolean</span><span class="p">,</span>
-  <span class="mi">c</span> <span class="k">inet</span><span class="p">,</span>
-  <span class="mi">d</span> <span class="k">timestamp</span><span class="p">,</span>
-  <span class="mi">e</span> <span class="k">timeuuid</span><span class="p">,</span>
-  <span class="mi">f</span> <span class="k">uuid</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="p">(</span>
+  <span class="n">a</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+  <span class="n">b</span> <span class="k">boolean</span><span class="p">,</span>
+  <span class="n">c</span> <span class="k">inet</span><span class="p">,</span>
+  <span class="n">d</span> <span class="k">timestamp</span><span class="p">,</span>
+  <span class="n">e</span> <span class="k">timeuuid</span><span class="p">,</span>
+  <span class="n">f</span> <span class="k">uuid</span>
 <span class="p">);</span>
-<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mytable</span> <span class="p">(</span><span class="mi">a</span><span class="p">,</span> <span class="mi">b</span><span class="p">,</span> <span class="mi">c</span><span class="p">,</span> <span class="mi">d</span><span class="p">,</span> <span class="mi">e</span><span class="p">,</span> <span class="mi">f</span><span class="p">)</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mytable</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 <span class="k">VALUES</span> <span class="p">(</span>
   <span class="mi">0</span><span class="p">,</span>
   <span class="k">true</span><span class="p">,</span>
   <span class="s1">'200.199.198.197'</span><span class="p">,</span>
   <span class="s1">'2013-12-11 10:09:08+0000'</span><span class="p">,</span>
-  <span class="mi">FE2B4360</span><span class="o">-</span><span class="mi">28C6</span><span class="o">-</span><span class="mi">11E2</span><span class="o">-</span><span class="mi">81C1</span><span class="o">-</span><span class="mi">0800200C9A66</span><span class="p">,</span>
-  <span class="mi">00b69180</span><span class="o">-</span><span class="mi">d0e1</span><span class="o">-</span><span class="mi">11e2</span><span class="o">-</span><span class="mi">8b8b</span><span class="o">-</span><span class="mi">0800200c9a66</span>
+  <span class="n">FE2B4360</span><span class="o">-</span><span class="mi">28</span><span class="n">C6</span><span class="o">-</span><span class="mi">11</span><span class="n">E2</span><span class="o">-</span><span class="mi">81</span><span class="n">C1</span><span class="o">-</span><span class="mi">0800200</span><span class="n">C9A66</span><span class="p">,</span>
+  <span class="mi">00</span><span class="n">b69180</span><span class="o">-</span><span class="n">d0e1</span><span class="o">-</span><span class="mi">11</span><span class="n">e2</span><span class="o">-</span><span class="mi">8</span><span class="n">b8b</span><span class="o">-</span><span class="mi">0800200</span><span class="n">c9a66</span>
 <span class="p">)</span></code></pre>
 </dd>
 <dt>And </dt>
@@ -233,12 +233,12 @@ Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
 <h2 id="using-lists,-maps-and-sets">Using lists, maps and sets</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="mi">C</span><span class="n">REATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="k">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
-<span class="mi">C</span><span class="n">REATE</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="p">(</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="k">user</span> <span class="p">(</span>
   <span class="n">id</span> <span class="k">int</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
   <span class="n">logins</span> <span class="k">List</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="o">&gt;</span><span class="p">,</span>
-  <span class="n">locations</span> <span class="k">Map</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="p">,</span> <span class="mi">d</span><span class="n">ouble</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="n">locations</span> <span class="k">Map</span><span class="o">&lt;</span><span class="k">timestamp</span><span class="p">,</span> <span class="k">double</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="n">ip_addresses</span> <span class="k">Set</span><span class="o">&lt;</span><span class="k">inet</span><span class="o">&gt;</span>
 <span class="p">);</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="k">user</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">logins</span><span class="p">,</span> <span class="n">locations</span><span class="p">,</span> <span class="n">ip_addresses</span><span class="p">)</span>
