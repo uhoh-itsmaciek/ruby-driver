@@ -257,10 +257,10 @@
 <p>The CQL protocol supports frame compression, which can give you a performance boost if your requests or responses are big. To enable it you can specify compression to use in <code>Cassandra.connect</code>.</p>
 
 <p>Cassandra currently supports two compression algorithms: Snappy and LZ4. ruby driver supports both, but in order to use them you will have to install the <a href="http://rubygems.org/gems/snappy">snappy</a> or <a href="http://rubygems.org/gems/lz4-ruby">lz4-ruby</a> gems separately. Once it’s installed you can enable compression like this:</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compressor: :snappy</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compression: :snappy</span><span class="p">)</span>
 </code></pre>
 <p>or</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compressor: :lz4</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compression: :lz4</span><span class="p">)</span>
 </code></pre>
 <p>Which one should you choose? On paper the LZ4 algorithm is more efficient and the one Cassandra defaults to for SSTable compression. They both achieve roughly the same compression ratio, but LZ4 does it quicker.</p>
 
