@@ -106,7 +106,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span> <span class="c1"># connects to localhost by default</span>
 
-<span class="n">cluster</span><span class="p">.</span><span class="nf">each_hosts</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span> <span class="c1"># automatically discovers all peers</span>
+<span class="n">cluster</span><span class="p">.</span><span class="nf">each_host</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span> <span class="c1"># automatically discovers all peers</span>
   <span class="nb">puts</span> <span class="s2">"Host </span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2">: id=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2"> datacenter=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">datacenter</span><span class="si">}</span><span class="s2"> rack=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">rack</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 
