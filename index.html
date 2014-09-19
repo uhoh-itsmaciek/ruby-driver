@@ -80,11 +80,11 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <p>This driver is based on <a href="https://github.com/iconara/cql-rb">the cql-rb gem</a> by <a href="https://github.com/iconara">Theo Hultberg</a> and we addded support for:</p>
 
 <ul>
-<li><a href="features/asynchronous_io/">asynchronous execution</a></li>
-<li>one-off, <a href="features/prepared_statements/">prepared</a> and <a href="features/batch_statements/">batch statements</a>
+<li><a href="http://datastax.github.io/ruby-driver/features/asynchronous_io/">asynchronous execution</a></li>
+<li>one-off, <a href="http://datastax.github.io/ruby-driver/features/basics/prepared_statements/">prepared</a> and <a href="http://datastax.github.io/ruby-driver/features/basics/batch_statements/">batch statements</a>
 </li>
 <li>automatic peer discovery and cluster metadata</li>
-<li>various <a href="features/load_balancing/">load-balancing</a>, <a href="features/retry_policies/">retry</a> and reconnection policies, <a href="features/load_balancing/implementing_a_policy/">with ability to write your own</a>
+<li>various <a href="http://datastax.github.io/ruby-driver/features/load_balancing/">load-balancing</a>, <a href="http://datastax.github.io/ruby-driver/features/retry_policies/">retry</a> and reconnection policies, <a href="http://datastax.github.io/ruby-driver/features/load_balancing/implementing_a_policy/">with ability to write your own</a>
 </li>
 </ul>
 
@@ -126,9 +126,9 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <p>Read more:</p>
 
 <ul>
-<li><a href="api/#connect-class_method"><code>Cql.connect</code> options</a></li>
-<li><a href="api/session/#execute_async-instance_method"><code>Session#execute_async</code> options</a></li>
-<li><a href="features">Usage documentation</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/api/#connect-class_method"><code>Cql.connect</code> options</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/api/session/#execute_async-instance_method"><code>Session#execute_async</code> options</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/features">Usage documentation</a></li>
 </ul>
 
 <h2 id="installation">Installation</h2>
@@ -139,7 +139,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <p>Install via Gemfile</p>
 <pre class="highlight"><code class="ruby"><span class="n">gem</span> <span class="s1">'cassandra-driver'</span><span class="p">,</span> <span class="s1">'~&gt; 1.0.0.beta'</span>
 </code></pre>
-<p>Note: if you want to use compression you should also install <a href="http://rubygems.org/gems/snappy">snappy</a> or <a href="http://rubygems.org/gems/lz4-ruby">lz4-ruby</a>. <a href="features/#compression">Read more about compression.</a></p>
+<p>Note: if you want to use compression you should also install <a href="http://rubygems.org/gems/snappy">snappy</a> or <a href="http://rubygems.org/gems/lz4-ruby">lz4-ruby</a>. <a href="http://datastax.github.io/ruby-driver/features/#compression">Read more about compression.</a></p>
 
 <h2 id="upgrading-from-cql-rb">Upgrading from cql-rb</h2>
 
