@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -77,19 +77,17 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::LoadBalancing::Policy <small>
-  class</small>
-</h1>
+  <h1>
+<small> <span class="label label-info">abstract</span>
+  class</small> Cassandra::LoadBalancing::Policy</h1>
 </div>
 
 <dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
+<dt><span class="label label-info">Abstract</span></dt>
 <dd>Actual load balancing policies don&#8217;t need to extend this class,
 only implement its methods. This class exists for documentation
-purposes only
+purposes only.
 </dd>
-
 
 </dl>
 
@@ -104,16 +102,82 @@ purposes only
 <div class="subclasses">
   <ul class="list-inline">
     
-    <li><code><a href="../policies/dcaware_round_robin/" title="Cassandra::LoadBalancing::Policies::DCAwareRoundRobin (class)">Cassandra::LoadBalancing::Policies::DCAwareRoundRobin</a></code></li>
+    <li><code><a href="../policies/dcaware_round_robin/" title="Cassandra::LoadBalancing::Policies::DCAwareRoundRobin (class)">LoadBalancing::Policies::DCAwareRoundRobin</a></code></li>
     
-    <li><code><a href="../policies/round_robin/" title="Cassandra::LoadBalancing::Policies::RoundRobin (class)">Cassandra::LoadBalancing::Policies::RoundRobin</a></code></li>
+    <li><code><a href="../policies/round_robin/" title="Cassandra::LoadBalancing::Policies::RoundRobin (class)">LoadBalancing::Policies::RoundRobin</a></code></li>
     
-    <li><code><a href="../policies/white_list/" title="Cassandra::LoadBalancing::Policies::WhiteList (class)">Cassandra::LoadBalancing::Policies::WhiteList</a></code></li>
+    <li><code><a href="../policies/token_aware/" title="Cassandra::LoadBalancing::Policies::TokenAware (class)">LoadBalancing::Policies::TokenAware</a></code></li>
+    
+    <li><code><a href="../policies/white_list/" title="Cassandra::LoadBalancing::Policies::WhiteList (class)">LoadBalancing::Policies::WhiteList</a></code></li>
     
   </ul>
 </div>
 <h2>Methods</h2>
 <div class="module-methods">
+  
+    <div class="panel panel-default" id="setup-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>setup</strong></span><big>(</big><var>cluster</var><big>)</big> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Allows policy to initialize with the cluster instance. This method is
+called once before connecting to the cluster.</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-default">Void</span></dt>
+<dd>Return value of this method is ignored.</dd>
+
+</dl>
+<dl class="tags">
+  <dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>cluster</var></td>
+        
+        
+        <td class="type"><code><a href="../../cluster/" title="Cassandra::Cluster (class)">Cluster</a></code></td>
+        
+        <td class="details">
+          
+          
+          current cluster instance
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
   
     <div class="panel panel-default" id="host_up-instance_method">
   <div class="panel-heading method-header">
@@ -128,9 +192,6 @@ purposes only
   <div class="panel-body method-body">
     
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -140,7 +201,7 @@ purposes only
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../../listener/#host_up-instance_method" title="Cassandra::Listener#host_up (method)">Cassandra::Listener#host_up</a></code></li>
+        <li><code><a href="../../listener/#host_up-instance_method" title="Cassandra::Listener#host_up (method)">Listener#host_up</a></code></li>
       
     </ul>
   </dd>
@@ -163,9 +224,6 @@ purposes only
   <div class="panel-body method-body">
     
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -175,7 +233,7 @@ purposes only
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../../listener/#host_down-instance_method" title="Cassandra::Listener#host_down (method)">Cassandra::Listener#host_down</a></code></li>
+        <li><code><a href="../../listener/#host_down-instance_method" title="Cassandra::Listener#host_down (method)">Listener#host_down</a></code></li>
       
     </ul>
   </dd>
@@ -198,9 +256,6 @@ purposes only
   <div class="panel-body method-body">
     
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -210,7 +265,7 @@ purposes only
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../../listener/#host_found-instance_method" title="Cassandra::Listener#host_found (method)">Cassandra::Listener#host_found</a></code></li>
+        <li><code><a href="../../listener/#host_found-instance_method" title="Cassandra::Listener#host_found (method)">Listener#host_found</a></code></li>
       
     </ul>
   </dd>
@@ -233,9 +288,6 @@ purposes only
   <div class="panel-body method-body">
     
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -245,7 +297,7 @@ purposes only
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../../listener/#host_lost-instance_method" title="Cassandra::Listener#host_lost (method)">Cassandra::Listener#host_lost</a></code></li>
+        <li><code><a href="../../listener/#host_lost-instance_method" title="Cassandra::Listener#host_lost (method)">Listener#host_lost</a></code></li>
       
     </ul>
   </dd>
@@ -266,13 +318,10 @@ purposes only
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a distance that lets the driver to determine host many
-  connections (if any) to open to the host</p>
+    <p>Returns a distance that determines how many connections (if any) the
+driver will open to the host.</p>
 
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -299,7 +348,7 @@ purposes only
         <td class="name"><var>host</var></td>
         
         
-        <td class="type"><code><a href="../../host/" title="Cassandra::Host (class)">Cassandra::Host</a></code></td>
+        <td class="type"><code><a href="../../host/" title="Cassandra::Host (class)">Host</a></code></td>
         
         <td class="details">
           
@@ -369,9 +418,6 @@ purposes only
   should be tried in case of a network failure.</p>
 
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 <dt><span class="label label-primary">Note</span></dt>
 <dd>Hosts that should be ignored, must not be included in the Plan
@@ -419,7 +465,7 @@ purposes only
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></td>
+        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Statement</a></code></td>
         
         <td class="details">
           
@@ -435,7 +481,7 @@ purposes only
         <td class="name"><var>options</var></td>
         
         
-        <td class="type"><code><a href="../../execution/options/" title="Cassandra::Execution::Options (class)">Cassandra::Execution::Options</a></code></td>
+        <td class="type"><code><a href="../../execution/options/" title="Cassandra::Execution::Options (class)">Execution::Options</a></code></td>
         
         <td class="details">
           
@@ -469,7 +515,7 @@ purposes only
       <tr>
         
         
-        <td class="type"><code><a href="../plan/" title="Cassandra::LoadBalancing::Plan (class)">Cassandra::LoadBalancing::Plan</a></code></td>
+        <td class="type"><code><a href="../plan/" title="Cassandra::LoadBalancing::Plan (class)">LoadBalancing::Plan</a></code></td>
         
         <td class="details">
           
@@ -582,7 +628,7 @@ purposes only
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
             
 
 <li><a href="../../auth/">Auth</a></li>
@@ -697,6 +743,35 @@ purposes only
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

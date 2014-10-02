@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -77,11 +77,11 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Statements::Batch <small>
-  class</small>
-</h1>
+  <h1>
+<small>
+  class</small> Cassandra::Statements::Batch</h1>
 </div>
-<p>Batch statement groups several <code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code>. There are several types of Batch statements available:</p>
+<p>Batch statement groups several <code><a href="../../statement/" title="Cassandra::Statement (module)">Statement</a></code>. There are several types of Batch statements available:</p>
 
 <dl class="dl-horizontal notes">
 
@@ -93,13 +93,13 @@
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../../session/#batch-instance_method" title="Cassandra::Session#batch (method)">Cassandra::Session#batch</a></code></li>
+        <li><code><a href="../../session/#batch-instance_method" title="Cassandra::Session#batch (method)">Session#batch</a></code></li>
       
-        <li><code><a href="../../session/#logged_batch-instance_method" title="Cassandra::Session#logged_batch (method)">Cassandra::Session#logged_batch</a></code></li>
+        <li><code><a href="../../session/#logged_batch-instance_method" title="Cassandra::Session#logged_batch (method)">Session#logged_batch</a></code></li>
       
-        <li><code><a href="../../session/#unlogged_batch-instance_method" title="Cassandra::Session#unlogged_batch (method)">Cassandra::Session#unlogged_batch</a></code></li>
+        <li><code><a href="../../session/#unlogged_batch-instance_method" title="Cassandra::Session#unlogged_batch (method)">Session#unlogged_batch</a></code></li>
       
-        <li><code><a href="../../session/#counter_batch-instance_method" title="Cassandra::Session#counter_batch (method)">Cassandra::Session#counter_batch</a></code></li>
+        <li><code><a href="../../session/#counter_batch-instance_method" title="Cassandra::Session#counter_batch (method)">Session#counter_batch</a></code></li>
       
     </ul>
   </dd>
@@ -115,7 +115,7 @@
 <div class="includes">
   <ul class="list-inline">
     
-    <li><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></li>
+    <li><code><a href="../../statement/" title="Cassandra::Statement (module)">Statement</a></code></li>
     
   </ul>
 </div>
@@ -164,7 +164,7 @@
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type">(<code>String</code>, <code><a href="../simple/" title="Cassandra::Statements::Simple (class)">Cassandra::Statements::Simple</a></code>, <code><a href="../prepared/" title="Cassandra::Statements::Prepared (class)">Cassandra::Statements::Prepared</a></code> or <code><a href="../bound/" title="Cassandra::Statements::Bound (class)">Cassandra::Statements::Bound</a></code>)</td>
+        <td class="type">(<code>String</code>, <code><a href="../simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code> or <code><a href="../bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code>)</td>
         
         <td class="details">
           
@@ -407,7 +407,7 @@ statement
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
             
 
 <li><a href="../../auth/">Auth</a></li>
@@ -530,6 +530,35 @@ statement
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

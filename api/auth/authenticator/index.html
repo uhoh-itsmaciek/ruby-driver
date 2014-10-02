@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -77,9 +77,9 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Auth::Authenticator <small>
-  class</small>
-</h1>
+  <h1>
+<small> <span class="label label-info">abstract</span>
+  class</small> Cassandra::Auth::Authenticator</h1>
 </div>
 <p>An authenticator handles the authentication challenge/response cycles of
 a single connection. It can be stateful, but it must not for any reason
@@ -87,13 +87,11 @@ block. If any of the method calls block, the whole connection process
 will be blocked.</p>
 
 <dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>Authenticators created by auth providers don&#8217;t need to be subclasses
-of this class, but need to implement the same methods. This class exists
-only for documentation purposes.
+<dt><span class="label label-info">Abstract</span></dt>
+<dd>Authenticators created by auth providers don&#8217;t need to be
+subclasses of this class, but need to implement the same methods. This
+class exists only for documentation purposes.
 </dd>
-
 
 </dl>
 <dl class="tags">
@@ -105,7 +103,7 @@ only for documentation purposes.
       
         <li><a href="https://github.com/apache/cassandra/blob/trunk/doc/native_protocol_v2.spec#L257-L273" target="_parent" title="Cassandra native protocol v2 SASL authentication">Cassandra native protocol v2 SASL authentication</a></li>
       
-        <li><code><a href="../provider/" title="Cassandra::Auth::Provider (class)">Provider</a></code></li>
+        <li><code><a href="../provider/#create_authenticator-instance_method" title="Cassandra::Auth::Provider#create_authenticator (method)">Provider#create_authenticator</a></code></li>
       
     </ul>
   </dd>
@@ -356,7 +354,7 @@ response token must be created and will be sent back to the server.</p>
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
             
 
 <li class="active">
@@ -471,6 +469,35 @@ response token must be created and will be sent back to the server.</p>
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

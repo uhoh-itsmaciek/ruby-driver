@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -182,7 +182,7 @@ Integer: 4
 Varint: 67890656781923123918798273492834712837198237</code></pre>
 </dd>
 </dl>
-<h2 id="using-identifiers,-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</h2>
+<h2 id="using-identifiers-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -230,7 +230,7 @@ Timeuuid: fe2b4360-28c6-11e2-81c1-0800200c9a66
 Uuid: 00b69180-d0e1-11e2-8b8b-0800200c9a66</code></pre>
 </dd>
 </dl>
-<h2 id="using-lists,-maps-and-sets">Using lists, maps and sets</h2>
+<h2 id="using-lists-maps-and-sets">Using lists, maps and sets</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -287,8 +287,8 @@ Ip Addresses: #&lt;Set: {#&lt;IPAddr: IPv4:192.168.1.15/255.255.255.255&gt;, #&l
 <li><a href="#background">Background</a></li>
 <li><a href="#using-strings">Using strings</a></li>
 <li><a href="#using-numbers">Using numbers</a></li>
-<li><a href="#using-identifiers,-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</a></li>
-<li><a href="#using-lists,-maps-and-sets">Using lists, maps and sets</a></li>
+<li><a href="#using-identifiers-booleans-and-ip-addresses">Using identifiers, booleans and ip addresses</a></li>
+<li><a href="#using-lists-maps-and-sets">Using lists, maps and sets</a></li>
 </ul>
                 </li>
                 
@@ -342,6 +342,35 @@ Ip Addresses: #&lt;Set: {#&lt;IPAddr: IPv4:192.168.1.15/255.255.255.255&gt;, #&l
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

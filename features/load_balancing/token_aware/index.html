@@ -9,7 +9,7 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - Execution Info</title>
+    <title>Datastax Cassandra Ruby Driver - Token Aware</title>
 
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
@@ -62,25 +62,36 @@
               
               
               
-              <li><a href="../">Debugging</a></li>
+              <li><a href="../">Load Balancing</a></li>
               
               
               
               
               
-              <li class="active">Execution Info</li>
+              <li class="active">Token Aware</li>
               
               
               
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="execution-information">Execution information</h1>
-<p>Every result contains <a href="../../../api/execution/info/">useful execution information</a>.</p>
+<h1 id="token-aware-load-balancing-policy">Token-aware Load Balancing Policy</h1>
+<p>Token-aware policy is used to reduce network hops whenever possible by
+sending requests directly to the node that owns the data. Token-aware policy
+acts as a filter, wrapping another load balancing policy.</p>
+
+<p>Token-aware policy uses schema metadata available in the cluster to determine
+the right partitioners and replication strategies for a given keyspace and
+locate replicas for a given statement.</p>
+
+<p>In case replica node(s) cannot be found or reached, this policy fallsback
+onto the wrapped policy plan.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>a running cassandra cluster</dd>
+<dt>And </dt>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
   <span class="n">id</span> <span class="k">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
@@ -116,84 +127,34 @@
 <span class="p">);</span></code></pre>
 </dd>
 </dl>
-<h2 id="execution-information-is-accessible-from-execution-result">execution information is accessible from execution result</h2>
+<h2 id="requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">TokenAware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT token(id) FROM songs WHERE id = ?"</span><span class="p">)</span>
 
-<span class="nb">at_exit</span> <span class="p">{</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">close</span> <span class="p">}</span>
-
-<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">consistency: :one</span><span class="p">).</span><span class="nf">execution_info</span>
-
-<span class="nb">puts</span> <span class="s2">"coordinator: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"keyspace: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">keyspace</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"cql: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">statement</span><span class="p">.</span><span class="nf">cql</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"requested consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">options</span><span class="p">.</span><span class="nf">consistency</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"actual consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">consistency</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"number of retries: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">retries</span><span class="si">}</span><span class="s2">"</span></code></pre>
-</dd>
-<dt>When </dt>
-<dd>it is executed</dd>
-<dt>Then </dt>
-<dd>its output should match:<pre><code>coordinator: 127\.0\.0\.(1|2|3)</code></pre>
-</dd>
-<dt>And </dt>
-<dd>its output should contain:<pre><code>keyspace: simplex
-cql: SELECT * FROM songs
-requested consistency: one
-actual consistency: one
-number of retries: 0</code></pre>
-</dd>
-</dl>
-<h2 id="execution-information-reflects-retry-decision">execution information reflects retry decision</h2>
-<dl class="steps">
-<dt>Given </dt>
-<dd>a file named &#8220;retrying_at_a_given_consistency_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">RetryingAtAGivenConsistencyPolicy</span>
-  <span class="kp">include</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Retry</span><span class="o">::</span><span class="no">Policy</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">consistency_to_use</span><span class="p">)</span>
-    <span class="vi">@consistency_to_use</span> <span class="o">=</span> <span class="n">consistency_to_use</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">read_timeout</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">required_responses</span><span class="p">,</span>
-                   <span class="n">received_responses</span><span class="p">,</span> <span class="n">data_retrieved</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
-    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">write_timeout</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">write_type</span><span class="p">,</span>
-                    <span class="n">acks_required</span><span class="p">,</span> <span class="n">acks_received</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
-    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">unavailable</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">consistency_level</span><span class="p">,</span> <span class="n">replicas_required</span><span class="p">,</span>
-                  <span class="n">replicas_alive</span><span class="p">,</span> <span class="n">retries</span><span class="p">)</span>
-    <span class="n">try_again</span><span class="p">(</span><span class="vi">@consistency_to_use</span><span class="p">)</span>
-  <span class="k">end</span>
+<span class="p">[</span>
+  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'756716f7-2e54-4715-9f00-91dcbea6cf50'</span><span class="p">),</span>
+  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
+  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">)</span>
+<span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">uuid</span><span class="o">|</span>
+  <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">uuid</span><span class="p">)</span>
+  <span class="n">replica</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">execution_info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">first</span>
+  <span class="n">total</span>   <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">execution_info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">size</span>
+  <span class="nb">puts</span> <span class="s2">"uuid=</span><span class="si">#{</span><span class="n">uuid</span><span class="si">}</span><span class="s2"> token=</span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">first</span><span class="p">[</span><span class="s1">'token(id)'</span><span class="p">]</span><span class="si">}</span><span class="s2"> replica=</span><span class="si">#{</span><span class="n">replica</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2"> total=</span><span class="si">#{</span><span class="n">total</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span></code></pre>
 </dd>
-<dt>And </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
-<span class="nb">require</span> <span class="s1">'retrying_at_a_given_consistency_policy'</span>
-
-<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">retry_policy: </span><span class="no">RetryingAtAGivenConsistencyPolicy</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">:one</span><span class="p">))</span>
-<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
-<span class="n">execution</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">consistency: :all</span><span class="p">).</span><span class="nf">execution_info</span>
-
-<span class="nb">puts</span> <span class="s2">"requested consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">options</span><span class="p">.</span><span class="nf">consistency</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"actual consistency: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">consistency</span><span class="si">}</span><span class="s2">"</span>
-<span class="nb">puts</span> <span class="s2">"number of retries: </span><span class="si">#{</span><span class="n">execution</span><span class="p">.</span><span class="nf">retries</span><span class="si">}</span><span class="s2">"</span></code></pre>
-</dd>
 <dt>When </dt>
-<dd>node 3 stops</dd>
-<dt>And </dt>
 <dd>it is executed</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>requested consistency: all
-actual consistency: one
-number of retries: 1</code></pre>
+<dd>its output should contain:<pre><code>uuid=756716f7-2e54-4715-9f00-91dcbea6cf50 token=-4565826248849633211 replica=127.0.0.2 total=1
+uuid=f6071e72-48ec-4fcb-bf3e-379c8a696488 token=-1176857621403111796 replica=127.0.0.3 total=1
+uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.0.0.3 total=1</code></pre>
 </dd>
 </dl>
 </div>
@@ -214,31 +175,42 @@ number of retries: 1</code></pre>
             
             
             
+            <li><a href="../../debugging/">Debugging</a></li>
+            
+            
+            
             <li class="active">
-              <a href="../">Debugging</a>
+              <a href="../">Load Balancing</a>
               <ul class="nav nav-pills nav-stacked">
                 
                 
+                <li><a href="../round_robin/">Round Robin</a></li>
+                
+                
+                
+                <li><a href="../datacenter_aware/">Datacenter Aware</a></li>
+                
+                
+                
+                <li><a href="../whitelist/">Whitelist</a></li>
+                
+                
+                
+                <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
+                
+                
+                
                 <li class="active">
-                  <a href="./">Execution Info</a>
+                  <a href="./">Token Aware</a>
                   <ul class="nav nav-pills nav-stacked">
 <li><a href="#background">Background</a></li>
-<li><a href="#execution-information-is-accessible-from-execution-result">execution information is accessible from execution result</a></li>
-<li><a href="#execution-information-reflects-retry-decision">execution information reflects retry decision</a></li>
+<li><a href="#requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica</a></li>
 </ul>
                 </li>
                 
                 
-                
-                <li><a href="../request_tracing/">Request Tracing</a></li>
-                
-                
               </ul>
             </li>
-            
-            
-            
-            <li><a href="../../load_balancing/">Load Balancing</a></li>
             
             
             

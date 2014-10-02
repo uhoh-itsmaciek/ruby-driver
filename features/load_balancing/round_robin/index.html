@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -161,9 +161,7 @@ execution info.</p>
   <span class="n">info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">ip</span>
 <span class="k">end</span>
 
-<span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="p">.</span><span class="nf">sort</span>
-
-<span class="nb">puts</span> <span class="n">ips</span><span class="p">.</span><span class="nf">sort</span></code></pre>
+<span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="p">.</span><span class="nf">sort</span></code></pre>
 </dd>
 <dt>When </dt>
 <dd>it is executed</dd>
@@ -249,6 +247,10 @@ execution info.</p>
                 <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
                 
                 
+                
+                <li><a href="../token_aware/">Token Aware</a></li>
+                
+                
               </ul>
             </li>
             
@@ -270,6 +272,35 @@ execution info.</p>
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

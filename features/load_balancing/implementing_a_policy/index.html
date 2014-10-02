@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -143,6 +143,9 @@ doesn’t have to be thread-safe.</p>
     <span class="vi">@policy</span>   <span class="o">=</span> <span class="n">original_policy</span>
   <span class="k">end</span>
 
+  <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+  <span class="k">end</span>
+
   <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
     <span class="k">if</span> <span class="vi">@keyspace</span> <span class="o">==</span> <span class="n">keyspace</span>
       <span class="no">Plan</span><span class="p">.</span><span class="nf">new</span>
@@ -209,6 +212,9 @@ doesn’t have to be thread-safe.</p>
         <span class="vi">@ips</span> <span class="o">&lt;&lt;</span> <span class="o">::</span><span class="no">IPAddr</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
       <span class="k">end</span>
     <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
@@ -318,6 +324,10 @@ Hosts used:
                 </li>
                 
                 
+                
+                <li><a href="../token_aware/">Token Aware</a></li>
+                
+                
               </ul>
             </li>
             
@@ -339,6 +349,35 @@ Hosts used:
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -83,9 +83,9 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Reconnection::Policies::Constant <small>
-  class</small>
-</h1>
+  <h1>
+<small>
+  class</small> Cassandra::Reconnection::Policies::Constant</h1>
 </div>
 <p>A reconnection policy that returns a constant reconnection interval</p>
 
@@ -95,7 +95,7 @@
 
 
 <h2>Inherits</h2>
-<div class="superclass"><code><a href="../../policy/" title="Cassandra::Reconnection::Policy (class)">Cassandra::Reconnection::Policy</a></code></div>
+<div class="superclass"><code><a href="../../policy/" title="Cassandra::Reconnection::Policy (class)">Reconnection::Policy</a></code></div>
 
 
 
@@ -202,7 +202,7 @@ with constant interval</p>
       <tr>
         
         
-        <td class="type"><code><a href="../../schedule/" title="Cassandra::Reconnection::Schedule (class)">Cassandra::Reconnection::Schedule</a></code></td>
+        <td class="type"><code><a href="../../schedule/" title="Cassandra::Reconnection::Schedule (class)">Reconnection::Schedule</a></code></td>
         
         <td class="details">
           
@@ -226,7 +226,7 @@ with constant interval
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
             
 
 <li><a href="../../../auth/">Auth</a></li>
@@ -357,6 +357,35 @@ with constant interval
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -145,9 +145,19 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <p>Some of the new features added to the driver have unfortunately led to changes in the original cql-rb API. In the examples directory, you can find <a href="https://github.com/datastax/ruby-driver/blob/master/examples/cql-rb-wrapper.rb">an example of how to wrap the ruby driver to achieve almost complete interface parity with cql-rb</a> to assist you with gradual upgrade.</p>
 
+<h2 id="what-s-new-in-v1-0-0-beta-2">What’s new in v1.0.0.beta.2</h2>
+
+<p>Current release introduces the following new features:</p>
+
+<ul>
+<li>TokenAware load balancing policy</li>
+<li>Domain names</li>
+<li>SSL encryption</li>
+</ul>
+
 <h2 id="changelog-versioning">Changelog &amp; versioning</h2>
 
-<p>Check out the <a href="https://github.com/datastax/ruby-driver/releases">releases on GitHub</a>. Version numbering follows the <a href="http://semver.org/">semantic versioning</a> scheme.</p>
+<p>Check out the <a href="https://github.com/datastax/ruby-driver/releases">releases on GitHub</a> and <a href="https://github.com/datastax/ruby-driver/blob/master/CHANGELOG.md">changelog</a>. Version numbering follows the <a href="http://semver.org/">semantic versioning</a> scheme.</p>
 
 <p>Private and experimental APIs, defined as whatever is not in the <a href="http://datastax.github.io/ruby-driver/api">public API documentation</a>, i.e. classes and methods marked as <code>@private</code>, will change without warning. If you’ve been recommended to try an experimental API by the maintainers, please let them know if you depend on that API. Experimental APIs will eventually become public, and knowing how they are used helps in determining their maturity.</p>
 
@@ -183,6 +193,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <li><a href="#quick-start">Quick start</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb</a></li>
+<li><a href="#what-s-new-in-v1-0-0-beta-2">What’s new in v1.0.0.beta.2</a></li>
 <li><a href="#changelog-versioning">Changelog &amp; versioning</a></li>
 <li><a href="#known-bugs-limitations">Known bugs &amp; limitations</a></li>
 <li><a href="#credits">Credits</a></li>
@@ -192,6 +203,35 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

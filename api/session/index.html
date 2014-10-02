@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -71,9 +71,9 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Session <small>
-  class</small>
-</h1>
+  <h1>
+<small>
+  class</small> Cassandra::Session</h1>
 </div>
 <p>Sessions are used for query execution. Each session tracks its current keyspace. A session should be reused as much as possible, however it is ok to create several independent session for interacting with different keyspaces in the same application.</p>
 
@@ -86,10 +86,76 @@
 <div class="superclass"><code>Object</code></div>
 
 
+<h2>Extends</h2>
+<div class="extends">
+  <ul class="list-inline">
+    
+    <li><code>Forwardable</code></li>
+    
+  </ul>
+</div>
+
 
 
 <h2>Methods</h2>
 <div class="module-methods">
+  
+    <div class="panel panel-default" id="keyspace-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>keyspace</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns current keyspace</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>String</code></td>
+        
+        <td class="details">
+          
+          
+          current keyspace
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
   
     <div class="panel panel-default" id="execute_async-instance_method">
   <div class="panel-heading method-header">
@@ -138,7 +204,7 @@ with the last parameter required to be a map datatype.
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Cassandra::Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Cassandra::Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Cassandra::Statements::Prepared</a></code>)</td>
+        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>)</td>
         
         <td class="details">
           
@@ -287,7 +353,7 @@ seconds after which to time out the request if it hasn&#8217;t completed
             
               this option is only
 relevant for conditional updates and specifies a serial consistency to
-be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">Cassandra::SERIAL_CONSISTENCIES</a></code>
+be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">SERIAL_CONSISTENCIES</a></code>
 
             
           </td>
@@ -318,7 +384,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
         
         
         <td class="type">
-<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="../result/" title="Cassandra::Result (class)">Cassandra::Result</a></code>&gt;</td>
+<code><a href="../future/" title="Cassandra::Future (class)">Future</a></code>&lt;<code><a href="../result/" title="Cassandra::Result (class)">Result</a></code>&gt;</td>
         
         <td class="details">
           
@@ -381,7 +447,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
       <tr>
         
         
-        <td class="type"><code><a href="../result/" title="Cassandra::Result (class)">Cassandra::Result</a></code></td>
+        <td class="type"><code><a href="../result/" title="Cassandra::Result (class)">Result</a></code></td>
         
         <td class="details">
           
@@ -414,7 +480,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
       <tr>
         
         
-        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cassandra::Errors::NoHostsAvailable (class)">Cassandra::Errors::NoHostsAvailable</a></code></td>
+        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cassandra::Errors::NoHostsAvailable (class)">Errors::NoHostsAvailable</a></code></td>
         
         <td class="details">
           
@@ -428,7 +494,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
       <tr>
         
         
-        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Cassandra::Errors::QueryError</a></code></td>
+        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Errors::QueryError</a></code></td>
         
         <td class="details">
           
@@ -499,7 +565,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type">(<code>String</code> or <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Cassandra::Statements::Simple</a></code>)</td>
+        <td class="type">(<code>String</code> or <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>)</td>
         
         <td class="details">
           
@@ -610,7 +676,7 @@ seconds after which to time out the request if it hasn&#8217;t completed
         
         
         <td class="type">
-<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Cassandra::Statements::Prepared</a></code>&gt;</td>
+<code><a href="../future/" title="Cassandra::Future (class)">Future</a></code>&lt;<code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>&gt;</td>
         
         <td class="details">
           
@@ -668,7 +734,7 @@ prepared statement
       <tr>
         
         
-        <td class="type"><code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Cassandra::Statements::Prepared</a></code></td>
+        <td class="type"><code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code></td>
         
         <td class="details">
           
@@ -701,7 +767,7 @@ prepared statement
       <tr>
         
         
-        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cassandra::Errors::NoHostsAvailable (class)">Cassandra::Errors::NoHostsAvailable</a></code></td>
+        <td class="type"><code><a href="../errors/no_hosts_available/" title="Cassandra::Errors::NoHostsAvailable (class)">Errors::NoHostsAvailable</a></code></td>
         
         <td class="details">
           
@@ -715,7 +781,7 @@ prepared statement
       <tr>
         
         
-        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Cassandra::Errors::QueryError</a></code></td>
+        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Errors::QueryError</a></code></td>
         
         <td class="details">
           
@@ -761,7 +827,7 @@ prepared statement
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a logged <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Cassandra::Statements::Batch</a></code> instance and optionally yields it to
+    <p>Returns a logged <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code> instance and optionally yields it to
 a given block</p>
 
 <dl class="dl-horizontal notes">
@@ -856,7 +922,7 @@ a given block</p>
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a unlogged <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Cassandra::Statements::Batch</a></code> instance and optionally yields it
+    <p>Returns a unlogged <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code> instance and optionally yields it
 to a given block</p>
 
 <dl class="dl-horizontal notes">
@@ -951,7 +1017,7 @@ to a given block</p>
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a counter <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Cassandra::Statements::Batch</a></code> instance and optionally yields it
+    <p>Returns a counter <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code> instance and optionally yields it
 to a given block</p>
 
 <dl class="dl-horizontal notes">
@@ -1073,7 +1139,7 @@ to a given block</p>
         
         
         <td class="type">
-<code><a href="../future/" title="Cassandra::Future (class)">Cassandra::Future</a></code>&lt;<code><a href="./" title="Cassandra::Session (class)">Cassandra::Session</a></code>&gt;</td>
+<code><a href="../future/" title="Cassandra::Future (class)">Future</a></code>&lt;<code><a href="./" title="Cassandra::Session (class)">Session</a></code>&gt;</td>
         
         <td class="details">
           
@@ -1220,7 +1286,7 @@ self once closed
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
             
 
 <li><a href="../auth/">Auth</a></li>
@@ -1315,6 +1381,35 @@ self once closed
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

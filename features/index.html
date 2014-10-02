@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -77,7 +77,7 @@
 </code></pre>
 <p>You can also specify a list of seed nodes to connect to. The set of IP addresses we pass to the <code>Cassandra.connect</code> is simply an initial set of contact points. After the driver connects to one of these nodes, it will automatically discover the rest of the nodes in the cluster, so you don’t need to list every node in your cluster.</p>
 
-<p><a href="../api/#connect-class_method">Read more in the api docs</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/#connect-class_method">Read more in the api docs</a></p>
 
 <h2 id="executing-queries">Executing Queries</h2>
 
@@ -91,7 +91,7 @@
 </code></pre>
 <p>For queries that will be run repeatedly, <a href="#prepared-statements">you should use Prepared statements</a>.</p>
 
-<p><a href="../api/session/#execute-instance_method">Read more in the api docs</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/session/#execute-instance_method">Read more in the api docs</a></p>
 
 <h2 id="parameterized-queries">Parameterized queries</h2>
 
@@ -118,7 +118,7 @@
 <span class="c1"># block until both statements executed</span>
 <span class="n">futures</span><span class="p">.</span><span class="nf">each</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:join</span><span class="p">)</span>
 </code></pre>
-<p><a href="../api/future/">Read more about futures</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/future/">Read more about futures</a></p>
 
 <h2 id="prepared-statements">Prepared Statements</h2>
 
@@ -133,11 +133,11 @@
 
 <p><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> and <code>SELECT</code> statements can be prepared, other statements may raise <code>QueryError</code>.</p>
 
-<p>For each query, statements are prepared lazily - each call to <code>#execute</code> selects a host to try (according to <a href="load_balancing/">a load balancing policy</a>) and a statement is prepared if needed.</p>
+<p>For each query, statements are prepared lazily - each call to <code>#execute</code> selects a host to try (according to <a href="http://datastax.github.io/ruby-driver/features/load_balancing/">a load balancing policy</a>) and a statement is prepared if needed.</p>
 
 <h2 id="changing-keyspaces">Changing keyspaces</h2>
 
-<p>You can specify a keyspace to change to immediately after connection by passing the keyspace option to <a href="../api/cluster/#connect-instance_method"><code>Cql::Cluster#connect</code></a>, you can also use the <a href="../api/session/#execute-instance_method"><code>Session#execute</code></a> method to change keyspace of an existing session:</p>
+<p>You can specify a keyspace to change to immediately after connection by passing the keyspace option to <a href="http://datastax.github.io/ruby-driver/api/cluster/#connect-instance_method"><code>Cql::Cluster#connect</code></a>, you can also use the <a href="http://datastax.github.io/ruby-driver/api/session/#execute-instance_method"><code>Session#execute</code></a> method to change keyspace of an existing session:</p>
 <pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'USE measurements'</span><span class="p">)</span>
 </code></pre>
 <h2 id="creating-keyspaces-and-tables">Creating keyspaces and tables</h2>
@@ -209,7 +209,7 @@
 
 <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 </code></pre>
-<p><a href="../api/session/#batch-instance_method">Read more about <code>Session#batch</code></a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/session/#batch-instance_method">Read more about <code>Session#batch</code></a></p>
 
 <p>Cassandra 1.2 also supported batching, but only as a CQL feature, you had to build the batch as a string, and it didn’t really play well with prepared statements.</p>
 
@@ -225,14 +225,14 @@
   <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">next_page</span>
 <span class="k">end</span>
 </code></pre>
-<p><a href="../api/result/#next_page-instance_method">Read more about paging</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/result/#next_page-instance_method">Read more about paging</a></p>
 
 <h2 id="consistency">Consistency</h2>
 
 <p>You can specify the default consistency to use when you create a new <code>Cluster</code>:</p>
 <pre class="highlight"><code class="ruby"><span class="n">client</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">consistency: :all</span><span class="p">)</span>
 </code></pre>
-<p><a href="../api/#connect-class_method">Read more about default consistency</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/#connect-class_method">Read more about default consistency</a></p>
 
 <p>Consistency can also be passed to <code>Session#execute</code> and <code>Session#execute_async</code></p>
 <pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM users'</span><span class="p">,</span> <span class="ss">consistency: :local_quorum</span><span class="p">)</span>
@@ -245,8 +245,8 @@
 <span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"UPDATE users SET email = 'tom@foobar.com' WHERE id = 'tom'"</span><span class="p">)</span>
 <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="ss">consistency: :all</span><span class="p">)</span>
 </code></pre>
-<p><a href="../api/session/#execute-instance_method">Read more about <code>Session#execute</code></a>
-<a href="../api/#CONSISTENCIES-constant">Read more about possible consistencies</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/session/#execute-instance_method">Read more about <code>Session#execute</code></a>
+<a href="http://datastax.github.io/ruby-driver/api/#CONSISTENCIES-constant">Read more about possible consistencies</a></p>
 
 <p>The default consistency level unless you’ve set it yourself is <code>:quorum</code>.</p>
 
@@ -275,7 +275,7 @@
 
 <h1 id="architecture">Architecture</h1>
 
-<p>The diagram below represents a high level architecture of the driver. Each arrow represents direction of ownership, where owner is pointed to by its children. For example, a single <a href="../api/cluster">Cassandra::Cluster</a> instance can manage multiple <a href="../api/session">Cassandra::Session</a> instances, etc.</p>
+<p>The diagram below represents a high level architecture of the driver. Each arrow represents direction of ownership, where owner is pointed to by its children. For example, a single <a href="http://datastax.github.io/ruby-driver/api/cluster">Cassandra::Cluster</a> instance can manage multiple <a href="http://datastax.github.io/ruby-driver/api/session">Cassandra::Session</a> instances, etc.</p>
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAz4AAAGkCAIAAAB/y2eDAAAqjUlEQVR42u3d%0Ae2yVdZ4/cK5KFSoKSInoMIqGYQaB1dmg4kyNeEvYEdGNOlNMJg47JDqIwQAG%0AgcQI7rBZMLLrlTAzrAEKclnRLpdQEAHDRSiWolxaWqgpVtseWloptD9/3/D8%0Apr8uN0EKnNPzev1Bep7n4fT0+Tzvc97ntM85Lb4HACBBtLALAABUNwAALlh1%0A+z8AAMQl1Q0AQHUDAEB1AwBQ3VQ3AADVDQAA1Q0AQHVT3QAAVDcAAFQ3AADV%0ADQAA1Q0AANUNAEB1AwBAdQMAQHUDAFDdAABQ3QAAUN0AAFQ3AABUNwAAVDcA%0AANUNAADVDQAA1Q0AQHUDAEB1AwBAdQMAUN0AAFDdAABUN9UNAEB1AwBAdQPi%0A286dOzMyMrp3794iCRg3oLoBCSw7OzstLW369On79u37vrkL1S0Wi1VVVdXU%0A1NTW1tbV1TkAANUNSBjl5eU9evTIzc39PjmE6lZUVFRSUlJWVhYKXGhvjgFA%0AdQMSxowZMzIyMr5PGqG6hZ66Z8+e4uLi0N5qamocA4DqBiSMIUOGLFiwIKmq%0A27p163JyckJ7KykpqaqqcgwAqhuQMHr16hVKTFJVt6ysrNDecnNzi4qKYrGY%0AYwBQ3YCE0aZNm6qqqqSqbnPnzl22bNmmTZtCZy0rK3MMAKobkDBClWmSSlRY%0AWPj555+HJtQ8qltlZeWIESMcHoDqBiR2dcvNzZ08efJTTz01ePDgUG5effXV%0AtWvXhuUPP/xwuKq33nqrGVS3DRs29OrVyzvAAaobkMDVLWw8evToNm3ahP9y%0A0003paend+7cOXz9u9/9rqmqW3l5eWhUu3btulTV7ejRo5MmTWrXrp037wVU%0ANyCxq1uoZWHj1NTUpUuXNiwsKCjYunVrU1W3ESNGhCuZOHHiJaluO3fuHDBg%0AgM9dAFQ3IOGr27Fjxzp27Bg2njJlyik3OKG6/cu//Msdd9yxZs2a6OIjjzwS%0ALubl5UUXDx06FK5n0KBBXbt27dev3+uvvx4Wvvfee+FiuJLu3buHjUMpjO7c%0Apk+ffvvtt3fr1u3ee++NamIwduzYsM3ixYvD9fzsZz9bvXr1eVa3N954I/oB%0AVTdAdQMSvrrt3r07ajP5+flnU91CrwoXFy5cGF284YYbwsWNGzdGF3//+9+H%0A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%0AKDEFU8AUTKHZUt0Q0aTjtU9ZwBRMQXUDEYVz4Dxf90iYguqGiAKcA5+m4HFB%0AdfMcF1MA4Bw4TUF10+sBgGbbRlQ3SDpe+wRQ3U5h586dGRkZ3bt3b8F5OP8p%0ADBky5LrrrrMnL+0UZMEUTMEU4mcKjz32mMeFSzWF+K1u2dnZaWlp06dP37dv%0A3/f8WGHAsVisqqqqpqamtra2rq7OFEzBFEzBFEzBFBJ3CnFa3crLy3v06JGb%0Am2u6539wFBUVlZSUlJWVhUMkHB+mYAqmcK5T+Oqrr0xBFkzBFOJkCnF6msKM%0AGTMyMjKMtkkOjpCxPXv2FBcXh+MjtHtTMAVTONcpjBkzxhRkwRRMIU6mcP4u%0ASHUbMmTIggULjLZJDo5169bl5OSE4yO0+1Dtz34Kv/nNb0zhkk9BFuJhCvff%0Af78pyIIpBIMHDzaFSz6FOK1uvXr1Cj+M0TbJwZGVlRWOj9Dui4qKYrHY2U/h%0A5ptvNoVLPgVZkAVTkAVZMIUEqG5t2rQJDdRom+TgmDt37rJlyzZt2hTyVlZW%0AZgqmYAqmYAqmYAqJO4U4rW7hRzLXS35wmIIpmIIpmIIpmEK8TSFOT1M414Mj%0ANzd38uTJTz311ODBg0eMGPHqq6+uXbs2nmf27LPP9u7dOzMzszlF1BRMwRRM%0AwRRMwRQuwhQSu7qFjUePHt2mTZvwX2666ab09PTOnTuHr3/3u9/Fz6FQXl4e%0AZrNr166GJeE47tKly1//+tfmEVFTMAVTMAVTMAVTUN3OyltvvRU2Tk1NXbp0%0AacPCgoKCrVu3xs/BEZ5qhBs5ceLE5vrCuCmYgimYgimYgimobj/s2LFjHTt2%0ADBtPmTLldNvMmjXrrrvu6tq1a//+/V988cWamppo+dixY++4447FixfPnDnz%0A9ttvv/POO8PXDf/rzGvDLZw+fXpY3q1bt3vvvbfxgThnzpxf//rXYfnNN988%0AePDgsOS9994L3z3cyO7du4frDAdu4+s/z9sZDxE1BVMwBVMwBVMwhYs5hQSu%0Abrt3744+CCw/P/+UG4wbNy6s7dSp04QJE3r37h2+Dju6vr4+rHr44Yeji+3b%0At//5z38evg7HWW1tbfQfz7z2ueeeC0sGDhwYrjY8pejQoUMsFgvLX3rppbC8%0AdevWTzzxxMiRI3/1q1+FhWvWrOnXr19YHuY6ZsyYgwcPNlx/eFJynrczHiJq%0A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%0Abt26NVr+3nvvPfnkk7169frZz372pz/9aceOHY2vc86cOb/+9a/Df7n55psH%0ADx4cbd+1a9dwzd27d7/jjjsKCgqiLWfNmnXXXXeFVf3793/xxRdramqi5WPH%0Ajg2bLV68eMqUKeFbrF69WnUDVDegWVW30FGi18wailHDn75Fy7/++uszV7el%0AS5eGr6+88srq6upo7XPPPReWDBw4cMKECampqR06dIjFYmH5kONmzJjx9NNP%0Ahw0eeOCBhit86aWXwpLWrVs/8cQTI0eO/NWvfhUWrlmzpl+/fmH5nXfeOWbM%0AmIMHD4aF48aNC0s6deoUrrx3797h61DX6uvrG27Vbbfd1qpVq549e2ZnZ6tu%0AgOoGNKvq9tFHH4WvW7ZseezYsRP+yCyqbieczdD4Gvr06XPdddeFL7p27bp+%0A/fpoVVFRUevjvv3223Bx+PDhYYN33nmn8X8PTeuaa64J3zTqhcXFxW3atAmb%0AzZ8//8y/MG3YMvp2R48ejX6xGypXw6265ZZbwmZ+YQqobkAzrG4bNmyIKlpF%0ARUXjbQoLC6PleXl5p7uGW2+9tW/fvuGLoUOHNqz64IMPwpIOHTo8eVz0stmY%0AMWPCqqqqqv/8z/8cNmzYfffdd/nllze81BfVx3bt2jW8bne66vbhhx+Giykp%0AKaG0RUvCVYUlo0ePbrhVb775pr91A5qK0xSA+KpuobFFFW3NmjWNt4kaWOvW%0ArWtra8/wC9NDhw5169YtfP23v/0tWrVo0aKoXY0dO3bc373//vuVlZV9+vQJ%0AqwYPHhzuCjt27NhQ3cLa8PVVV13VUMhOV92iLa+55pqGe8NHH300LHnmmWca%0AbtVbb72lugHxQ3UDmrK6RX+CFr27R8NdTF1d3d133x0WDhs27AdPU5gzZ074%0AOjU1dd++fY3/eO6E37RGlS49PT26eMMNNzRUty+++CL6L8uXLz/hG0V/Njdq%0A1KjoYsOWDa8Fdu/ePVx84403VDdAdQOSorrt37//6quvDkseeeSR//mf//nv%0A//7vBx54IFy89tprT3mOwslnmN5zzz3hYmh70ekCofCFizfeeGP4FosXL540%0AadLrr7/+2WefhYXdunV77733/vmf/zl6Q7iocgVDhw4NF9PS0iZPnrx06dKJ%0AEyceOXIkLA9FKiwPPS80v+g0hWjLAQMGhFXRa3LXX3999FFgqhugugHNv7oF%0AX3311T/90z+1bt06ek2rbdu2TzzxRGlp6ZmvoaG67dy5M/yXsCR6F9/q6urR%0Ao0enpKRE19alS5foN55/+MMfLr/88lDa/vjHP77wwgvR2uiXpLFYbPjw4Zdd%0Adlm0sGvXrtFbftTV1T3++OON32QubPn0009H3y5cVWiNX375ZeNbpboBqhvQ%0ArKrb6Rw5cmTbtm2hh538N2c/QrhthYWF5eXljReG4lVZWRl9/fXXX4d61Hjt%0AsWPH8vPzGzZofMNCuTx5y4Z3dPOWvMAF4jQFIH6rm4+fV92Ak+9jVTdAdVPd%0AANUNUN34saI3SVHdANUNUN0SwI4dOzp16hSq2/Lly0N127t3r+oGqG6A6han%0A3n777T59+sybNy9Ut82bN4fqVl5e7ugCnKYAqG5xp76+Pj09fejQoZmZmStW%0ArNiyZUt+fn5FRYWjCzh/qhugujWxhQsXpqWlvfbaawsWLFi1atXWrVsLCwsP%0AHTrk6AJUN0B1i6MX27Zt2/b888+npqaGf2fNmrVkyZKPP/44Nze3uLj48OHD%0Aji5AdQOavrrxo6WkpPTt23f8+PEzZ86cM2fOsmXLNm7cuHv37tLS0u+++87R%0ABahuQNOLxWJFRUW5ubnr1q3LysqaG/eit+GIE/PmzcvMzFy0aFHobRs2bMjL%0Ayztw4EDYpUePHnVoAU5TAJpeVVVVSUnJnj17cnJyQntbFvdCdYuTW7L8uJUr%0AV65evXrjxo07duwoLCz85ptvqqur6+rqHFqANwcBml5NTU1ZWVlxcXFob7m5%0AuZviXrgrjJ8bs3nz5i1btmzfvn3Xrl379+8vLS0NVdhLboDqBlwotbW1oW2E%0A9lZSUlJUVLQn7oW7wji5JXuPKygoCKXt4MGD5eXlYU+G/VlfX++4AlQ34IKo%0Aq6sLbaOmpibUjlgsVhb3xowZEz83JtS1ioqKysrK6urqI0eOHDt2TG8DVDcA%0AgMTjNAUAgCSiugEAqG4AAKhuACc4/78dAVDdAC6S8z9jCyBRnmqqboDqBpAw%0A91eqG+CuEEB1A1DdAFQ3gBM4TQFQ3QAAiLunmqobAEDCUN0AAFQ3AABUN4AT%0AOE0BUN0AEoY3BwGS56mm6gaobgAJc3+lugHuCgFUNwDVDUB1AziB0xQA1Q0A%0AgLh7qqm6AQAkDNUNaD7PZVs0csJTW2uttdba+FmrugEAJAXVDQBAdQMAQHUD%0AAFDdVDcAANUNAADVDQBAdVPdAABUNwAAVDcAANUNAADVDQAA1Q0AQHUDAEB1%0AAwBAdQMAUN0AAFDdAABQ3QAAVDcAAFQ3AABUNwAA1Q0AANUNAADVDQBAdQMA%0AQHUDAEB1AwBQ3QAAUN0AAFQ31Q0AIIGrGwAAcU51AwBQ3QAAaGr/FzQg6jBq%0AjSIwAAAAAElFTkSuQmCC%0A" alt="Text Diagram" class="img-rounded img-thumbnail center-block ditaa">
 <h2 id="thread-safety">Thread safety</h2>
 
@@ -347,7 +347,7 @@
 
 <h2 id="authentication-doesn-t-work">Authentication doesn’t work</h2>
 
-<p>If you’re using Cassandra 2.0 or DataStax Enterprise 3.1 or higher and/or are using something other than the built in <a href="../api/auth/providers/password/"><code>Password</code> authenticator</a> your setup is supported.</p>
+<p>If you’re using Cassandra 2.0 or DataStax Enterprise 3.1 or higher and/or are using something other than the built in <a href="http://datastax.github.io/ruby-driver/api/auth/providers/password/"><code>Password</code> authenticator</a> your setup is supported.</p>
 
 <p>DSE before 3.1 uses a non-standard protocol and is not currently supported.</p>
 
@@ -444,6 +444,35 @@
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>

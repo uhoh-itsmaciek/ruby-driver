@@ -21,7 +21,7 @@
   </head>
 
   <body data-spy="scroll" data-target=".toc" data-offset="0">
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,9 +40,9 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div class="container">
+    <div class="container" id="content">
       <div class="row">
         <div class="col-md-9 content">
           <nav class="crumbs">
@@ -77,10 +77,19 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>Cassandra::Retry::Policy <small>
-  module</small>
-</h1>
+  <h1>
+<small> <span class="label label-info">abstract</span>
+  module</small> Cassandra::Retry::Policy</h1>
 </div>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-info">Abstract</span></dt>
+<dd>Actual retry policies supplied as <code>:retry_policy</code> option to
+<code><a href="../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> don&#8217;t need to inherit this class, only implement
+its methods. This class exists for documentation purposes only.
+</dd>
+
+</dl>
 
 
 
@@ -90,11 +99,11 @@
 <div class="included">
   <ul class="list-inline">
     
-    <li><code><a href="../policies/default/" title="Cassandra::Retry::Policies::Default (class)">Cassandra::Retry::Policies::Default</a></code></li>
+    <li><code><a href="../policies/default/" title="Cassandra::Retry::Policies::Default (class)">Retry::Policies::Default</a></code></li>
     
-    <li><code><a href="../policies/downgrading_consistency/" title="Cassandra::Retry::Policies::DowngradingConsistency (class)">Cassandra::Retry::Policies::DowngradingConsistency</a></code></li>
+    <li><code><a href="../policies/downgrading_consistency/" title="Cassandra::Retry::Policies::DowngradingConsistency (class)">Retry::Policies::DowngradingConsistency</a></code></li>
     
-    <li><code><a href="../policies/fallthrough/" title="Cassandra::Retry::Policies::Fallthrough (class)">Cassandra::Retry::Policies::Fallthrough</a></code></li>
+    <li><code><a href="../policies/fallthrough/" title="Cassandra::Retry::Policies::Fallthrough (class)">Retry::Policies::Fallthrough</a></code></li>
     
   </ul>
 </div>
@@ -116,9 +125,6 @@
     <p>Decides wether to retry a read and at what consistency level.</p>
 
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 <dt><span class="label label-primary">Note</span></dt>
 <dd>this method may be called even if required_responses &gt;= received
@@ -151,7 +157,7 @@ responses if data_present is false.
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></td>
+        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Statement</a></code></td>
         
         <td class="details">
           
@@ -316,9 +322,6 @@ checksum) was present in the received responses.
     <p>Decides wether to retry a write and at what consistency level.</p>
 
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -345,7 +348,7 @@ checksum) was present in the received responses.
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></td>
+        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Statement</a></code></td>
         
         <td class="details">
           
@@ -511,9 +514,6 @@ query timed out
 exception.</p>
 
 <dl class="dl-horizontal notes">
-<dt><span class="label label-info">Abstract</span></dt>
-<dd>implementation should be provided by an actual policy
-</dd>
 
 </dl>
 <dl class="tags">
@@ -540,7 +540,7 @@ exception.</p>
         <td class="name"><var>statement</var></td>
         
         
-        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Cassandra::Statement</a></code></td>
+        <td class="type"><code><a href="../../statement/" title="Cassandra::Statement (module)">Statement</a></code></td>
         
         <td class="details">
           
@@ -888,7 +888,7 @@ and return an empty result to the application
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
             
 
 <li><a href="../../auth/">Auth</a></li>
@@ -999,6 +999,35 @@ and return an empty result to the application
       </div>
     </div>
 
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.2</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>
