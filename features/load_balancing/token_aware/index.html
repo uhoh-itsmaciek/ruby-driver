@@ -91,7 +91,7 @@ onto the wrapped policy plan.</p>
 <dt>Given </dt>
 <dd>a running cassandra cluster</dd>
 <dt>And </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
   <span class="n">id</span> <span class="k">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
@@ -157,6 +157,36 @@ uuid=f6071e72-48ec-4fcb-bf3e-379c8a696488 token=-1176857621403111796 replica=127
 uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.0.0.3 total=1</code></pre>
 </dd>
 </dl>
+<h2 id="requests-are-routed-to-a-secondary-replica-if-primary-replica-down">Requests are routed to a secondary replica if primary replica down</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">TokenAware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT token(id) FROM songs WHERE id = ?"</span><span class="p">)</span>
+
+<span class="p">[</span>
+  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'f6071e72-48ec-4fcb-bf3e-379c8a696488'</span><span class="p">),</span>
+  <span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'fbdf82ed-0063-4796-9c7c-a3d4f47b4b25'</span><span class="p">)</span>
+<span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">uuid</span><span class="o">|</span>
+  <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="n">uuid</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:one</span><span class="p">)</span>
+  <span class="n">replica</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">execution_info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">first</span>
+  <span class="n">total</span>   <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">execution_info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">size</span>
+  <span class="nb">puts</span> <span class="s2">"uuid=</span><span class="si">#{</span><span class="n">uuid</span><span class="si">}</span><span class="s2"> token=</span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">first</span><span class="p">[</span><span class="s1">'token(id)'</span><span class="p">]</span><span class="si">}</span><span class="s2"> replica=</span><span class="si">#{</span><span class="n">replica</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2"> total=</span><span class="si">#{</span><span class="n">total</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span></code></pre>
+</dd>
+<dt>And </dt>
+<dd>node 3 is stopped</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>uuid=f6071e72-48ec-4fcb-bf3e-379c8a696488 token=-1176857621403111796 replica=127.0.0.1 total=1
+uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.0.0.1 total=1</code></pre>
+</dd>
+</dl>
 </div>
         </div>
         <nav class="col-md-3 side-nav">
@@ -205,6 +235,7 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
                   <ul class="nav nav-pills nav-stacked">
 <li><a href="#background">Background</a></li>
 <li><a href="#requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica</a></li>
+<li><a href="#requests-are-routed-to-a-secondary-replica-if-primary-replica-down">Requests are routed to a secondary replica if primary replica down</a></li>
 </ul>
                 </li>
                 
@@ -232,7 +263,7 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.2</li>
+        <li>v1.0.0.beta.3</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
