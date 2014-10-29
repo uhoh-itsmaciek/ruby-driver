@@ -168,7 +168,7 @@ periodic heart beating of each open connection to detect network outages and
 prevent stale connections from gathering.</p>
 
 <p>The default heartbeat interval is very conservative at 30 seconds with an idle
-timeout of 1 minute, but <a href="http://datastax.github.io/ruby-driver/api/">these numbers can be changed when constructing a cluster</a>.</p>
+timeout of 1 minute, but <a href="http://datastax.github.io/ruby-driver/api/#cluster-class_method">these numbers can be changed when constructing a cluster</a>.</p>
 
 <p>Upon detecting a stale connection, Ruby Driver will automatically close it and
 fail all outstanding requests with a host level error, which will force them to
