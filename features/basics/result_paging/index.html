@@ -113,7 +113,7 @@ next page retrieval accordingly.</p>
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">,</span> <span class="ss">page_size: </span><span class="mi">5</span><span class="p">)</span>
 
@@ -178,7 +178,7 @@ page size: 3
   <span class="k">end</span>
 <span class="k">end</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
 <span class="nb">select</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT * FROM test"</span><span class="p">)</span>
 <span class="n">future</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="ss">page_size: </span><span class="mi">5</span><span class="p">)</span>
@@ -215,7 +215,7 @@ page size: 3
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li class="active">
@@ -277,6 +277,14 @@ page size: 3
             <li><a href="../../reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="../../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -284,7 +292,7 @@ page size: 3
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -313,6 +321,16 @@ page size: 3
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

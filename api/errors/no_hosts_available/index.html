@@ -81,17 +81,41 @@
 <small>
   class</small> Cassandra::Errors::NoHostsAvailable</h1>
 </div>
-<p>This error is thrown when not hosts could be reached during connection or query execution.</p>
+<p>This error is thrown when all attempted hosts raised a
+<code><a href="../host_error/" title="Cassandra::Errors::HostError (module)">HostError</a></code> during connection or query execution.</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
+<dl class="tags">
+  
 
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><code><a href="../../cluster/#connect-instance_method" title="Cassandra::Cluster#connect (method)">Cluster#connect</a></code></li>
+      
+        <li><code><a href="../../session/#execute-instance_method" title="Cassandra::Session#execute (method)">Session#execute</a></code></li>
+      
+    </ul>
+  </dd>
+
+</dl>
 
 <h2>Inherits</h2>
-<div class="superclass"><code><a href="../../error/" title="Cassandra::Error (class)">Error</a></code></div>
+<div class="superclass"><code>StandardError</code></div>
 
 
+
+<h2>Includes</h2>
+<div class="includes">
+  <ul class="list-inline">
+    
+    <li><code><a href="../../error/" title="Cassandra::Error (module)">Error</a></code></li>
+    
+  </ul>
+</div>
 
 
 <h2>Methods</h2>
@@ -108,7 +132,8 @@
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns a map of hosts to underlying exceptions</p>
+    <p>Returns a map
+of hosts to underlying exceptions</p>
 
 <dl class="dl-horizontal notes">
 
@@ -135,12 +160,13 @@
         
         
         <td class="type">
-<code>Hash</code>{<code><a href="../../host/" title="Cassandra::Host (class)">Host</a></code> =&gt; <code>Exception</code>}</td>
+<code>Hash</code>{<code><a href="../../host/" title="Cassandra::Host (class)">Host</a></code> =&gt; <code><a href="../host_error/" title="Cassandra::Errors::HostError (module)">Errors::HostError</a></code>}</td>
         
         <td class="details">
           
           
-          a map of hosts to underlying exceptions
+          a map
+of hosts to underlying exceptions
 
           
         </td>
@@ -158,8 +184,12 @@
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
+
+<li><a href="../../address_resolution/">AddressResolution</a></li>
+
+
 
 <li><a href="../../auth/">Auth</a></li>
 
@@ -187,6 +217,10 @@
   <ul class="nav nav-pills nav-stacked">
     
 
+<li><a href="../already_exists_error/">AlreadyExistsError</a></li>
+
+
+
 <li><a href="../authentication_error/">AuthenticationError</a></li>
 
 
@@ -195,7 +229,39 @@
 
 
 
-<li><a href="../io_error/">IoError</a></li>
+<li><a href="../configuration_error/">ConfigurationError</a></li>
+
+
+
+<li><a href="../decoding_error/">DecodingError</a></li>
+
+
+
+<li><a href="../encoding_error/">EncodingError</a></li>
+
+
+
+<li><a href="../execution_error/">ExecutionError</a></li>
+
+
+
+<li><a href="../host_error/">HostError</a></li>
+
+
+
+<li><a href="../ioerror/">IOError</a></li>
+
+
+
+<li><a href="../internal_error/">InternalError</a></li>
+
+
+
+<li><a href="../invalid_error/">InvalidError</a></li>
+
+
+
+<li><a href="../is_bootstrapping_error/">IsBootstrappingError</a></li>
 
 
 
@@ -206,7 +272,51 @@
 
 
 
-<li><a href="../query_error/">QueryError</a></li>
+<li><a href="../overloaded_error/">OverloadedError</a></li>
+
+
+
+<li><a href="../protocol_error/">ProtocolError</a></li>
+
+
+
+<li><a href="../read_timeout_error/">ReadTimeoutError</a></li>
+
+
+
+<li><a href="../server_error/">ServerError</a></li>
+
+
+
+<li><a href="../syntax_error/">SyntaxError</a></li>
+
+
+
+<li><a href="../timeout_error/">TimeoutError</a></li>
+
+
+
+<li><a href="../truncate_error/">TruncateError</a></li>
+
+
+
+<li><a href="../unauthorized_error/">UnauthorizedError</a></li>
+
+
+
+<li><a href="../unavailable_error/">UnavailableError</a></li>
+
+
+
+<li><a href="../unprepared_error/">UnpreparedError</a></li>
+
+
+
+<li><a href="../validation_error/">ValidationError</a></li>
+
+
+
+<li><a href="../write_timeout_error/">WriteTimeoutError</a></li>
 
 
 
@@ -283,7 +393,7 @@
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -312,6 +422,16 @@
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

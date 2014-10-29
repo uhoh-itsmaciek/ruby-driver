@@ -180,7 +180,7 @@ doesn’t have to be thread-safe.</p>
 <span class="nb">require</span> <span class="s1">'ignoring_keyspace_policy'</span>
 
 <span class="n">policy</span>  <span class="o">=</span> <span class="no">IgnoringKeyspacePolicy</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">,</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
@@ -247,7 +247,7 @@ doesn’t have to be thread-safe.</p>
 <span class="nb">require</span> <span class="s1">'blacklist_policy'</span>
 
 <span class="n">policy</span>  <span class="o">=</span> <span class="no">BlackListPolicy</span><span class="p">.</span><span class="nf">new</span><span class="p">([</span><span class="s1">'127.0.0.2'</span><span class="p">,</span> <span class="s1">'127.0.0.3'</span><span class="p">],</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">host_ips</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:ip</span><span class="p">).</span><span class="nf">sort</span>
@@ -278,7 +278,7 @@ Hosts used:
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="../../basics/">Basics</a></li>
@@ -302,11 +302,19 @@ Hosts used:
               <ul class="nav nav-pills nav-stacked">
                 
                 
+                <li><a href="../default_policy/">Default Policy</a></li>
+                
+                
+                
                 <li><a href="../round_robin/">Round Robin</a></li>
                 
                 
                 
                 <li><a href="../datacenter_aware/">Datacenter Aware</a></li>
+                
+                
+                
+                <li><a href="../token_aware/">Token Aware</a></li>
                 
                 
                 
@@ -322,10 +330,6 @@ Hosts used:
 <li><a href="#a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts</a></li>
 </ul>
                 </li>
-                
-                
-                
-                <li><a href="../token_aware/">Token Aware</a></li>
                 
                 
               </ul>
@@ -344,6 +348,14 @@ Hosts used:
             <li><a href="../../reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="../../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -351,7 +363,7 @@ Hosts used:
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -380,6 +392,16 @@ Hosts used:
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

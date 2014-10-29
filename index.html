@@ -58,6 +58,8 @@
           </nav>
           <h1 id="datastax-ruby-driver-for-apache-cassandra">Datastax Ruby Driver for Apache Cassandra</h1>
 
+<p><em>If you’re reading this on GitHub, please note that this is the readme for the development version and that some features described here might not yet have been released. You can <a href="http://datastax.github.io/ruby-driver/">find the documentation for latest version through ruby driver docs</a> or via the release tags, <a href="https://github.com/datastax/ruby-driver/tree/v1.0.0-beta.3">e.g. v1.0.0-beta.3</a>.</em></p>
+
 <p><a href="https://travis-ci.org/datastax/ruby-driver"><img src="https://travis-ci.org/datastax/ruby-driver.svg?branch=master" alt="Build Status"></a></p>
 
 <p>A Ruby client driver for Apache Cassandra. This driver works exclusively with
@@ -74,7 +76,8 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 </li>
 <li>IRC: #datastax-drivers on <a href="http://freenode.net">irc.freenode.net</a>
 </li>
-<li>TWITTER: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a>, <a href="https://twitter.com/al3xandru">@al3xandru</a> </li>
+<li>TWITTER: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a>, <a href="https://twitter.com/al3xandru">@al3xandru</a>
+</li>
 </ul>
 
 <p>This driver is based on <a href="https://github.com/iconara/cql-rb">the cql-rb gem</a> by <a href="https://github.com/iconara">Theo Hultberg</a> and we added support for:</p>
@@ -86,6 +89,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <li>automatic peer discovery and cluster metadata</li>
 <li>various <a href="http://datastax.github.io/ruby-driver/features/load_balancing/">load-balancing</a>, <a href="http://datastax.github.io/ruby-driver/features/retry_policies/">retry</a> and reconnection policies, <a href="http://datastax.github.io/ruby-driver/features/load_balancing/implementing_a_policy/">with ability to write your own</a>
 </li>
+<li><a href="http://datastax.github.io/ruby-driver/features/security/ssl_encryption/">SSL encryption</a></li>
 </ul>
 
 <h2 id="compability">Compability</h2>
@@ -104,7 +108,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <h2 id="quick-start">Quick start</h2>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span> <span class="c1"># connects to localhost by default</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span> <span class="c1"># connects to localhost by default</span>
 
 <span class="n">cluster</span><span class="p">.</span><span class="nf">each_host</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span> <span class="c1"># automatically discovers all peers</span>
   <span class="nb">puts</span> <span class="s2">"Host </span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2">: id=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2"> datacenter=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">datacenter</span><span class="si">}</span><span class="s2"> rack=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">rack</span><span class="si">}</span><span class="s2">"</span>
@@ -126,7 +130,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <p>Read more:</p>
 
 <ul>
-<li><a href="http://datastax.github.io/ruby-driver/api/#connect-class_method"><code>Cassandra.connect</code> options</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/api/#cluster-class_method"><code>Cassandra.cluster</code> options</a></li>
 <li><a href="http://datastax.github.io/ruby-driver/api/session/#execute_async-instance_method"><code>Session#execute_async</code> options</a></li>
 <li><a href="http://datastax.github.io/ruby-driver/features">Usage documentation</a></li>
 </ul>
@@ -174,7 +178,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <p>This driver is based on the original work of <a href="https://github.com/iconara">Theo Hultberg</a> on <a href="https://github.com/iconara/cql-rb/">cql-rb</a> and adds a series of advanced features that are common across all other DataStax drivers for Apache Cassandra.</p>
 
-<p>The development effort to provide an up to date, high performance, fully featured Ruby Driver for Apache Cassandra will continue on this project, while <a href="https://github.com/iconara/cql-rb/">cql-rb</a> will be discontinued. </p>
+<p>The development effort to provide an up to date, high performance, fully featured Ruby Driver for Apache Cassandra will continue on this project, while <a href="https://github.com/iconara/cql-rb/">cql-rb</a> will be discontinued.</p>
 
 <h2 id="copyright">Copyright</h2>
 
@@ -188,7 +192,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
 <li><a href="#compability">Compability</a></li>
 <li><a href="#quick-start">Quick start</a></li>
 <li><a href="#installation">Installation</a></li>
@@ -205,7 +209,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -234,6 +238,16 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

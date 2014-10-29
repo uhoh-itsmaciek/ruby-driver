@@ -89,9 +89,9 @@ onto the wrapped policy plan.</p>
 <h2 id="background">Background</h2>
 <dl class="steps">
 <dt>Given </dt>
-<dd>a running cassandra cluster</dd>
+<dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
 <dt>And </dt>
-<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
+<dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'NetworkTopologyStrategy'</span><span class="p">,</span> <span class="s1">'dc1'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'dc2'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
 <span class="k">USE</span> <span class="n">simplex</span><span class="p">;</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">songs</span> <span class="p">(</span>
   <span class="n">id</span> <span class="k">uuid</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
@@ -132,9 +132,9 @@ onto the wrapped policy plan.</p>
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">TokenAware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
-<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 <span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT token(id) FROM songs WHERE id = ?"</span><span class="p">)</span>
 
@@ -153,18 +153,18 @@ onto the wrapped policy plan.</p>
 <dd>it is executed</dd>
 <dt>Then </dt>
 <dd>its output should contain:<pre><code>uuid=756716f7-2e54-4715-9f00-91dcbea6cf50 token=-4565826248849633211 replica=127.0.0.2 total=1
-uuid=f6071e72-48ec-4fcb-bf3e-379c8a696488 token=-1176857621403111796 replica=127.0.0.3 total=1
-uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.0.0.3 total=1</code></pre>
+uuid=f6071e72-48ec-4fcb-bf3e-379c8a696488 token=-1176857621403111796 replica=127.0.0.2 total=1
+uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.0.0.1 total=1</code></pre>
 </dd>
 </dl>
-<h2 id="requests-are-routed-to-a-secondary-replica-if-primary-replica-down">Requests are routed to a secondary replica if primary replica down</h2>
+<h2 id="requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">TokenAware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
-<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 <span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT token(id) FROM songs WHERE id = ?"</span><span class="p">)</span>
 
@@ -179,7 +179,7 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 <span class="k">end</span></code></pre>
 </dd>
 <dt>And </dt>
-<dd>node 3 is stopped</dd>
+<dd>node 2 is stopped</dd>
 <dt>When </dt>
 <dd>it is executed</dd>
 <dt>Then </dt>
@@ -190,7 +190,7 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="../../basics/">Basics</a></li>
@@ -214,6 +214,10 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
               <ul class="nav nav-pills nav-stacked">
                 
                 
+                <li><a href="../default_policy/">Default Policy</a></li>
+                
+                
+                
                 <li><a href="../round_robin/">Round Robin</a></li>
                 
                 
@@ -222,22 +226,22 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
                 
                 
                 
-                <li><a href="../whitelist/">Whitelist</a></li>
-                
-                
-                
-                <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
-                
-                
-                
                 <li class="active">
                   <a href="./">Token Aware</a>
                   <ul class="nav nav-pills nav-stacked">
 <li><a href="#background">Background</a></li>
 <li><a href="#requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica</a></li>
-<li><a href="#requests-are-routed-to-a-secondary-replica-if-primary-replica-down">Requests are routed to a secondary replica if primary replica down</a></li>
+<li><a href="#requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down</a></li>
 </ul>
                 </li>
+                
+                
+                
+                <li><a href="../whitelist/">Whitelist</a></li>
+                
+                
+                
+                <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
                 
                 
               </ul>
@@ -256,6 +260,14 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
             <li><a href="../../reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="../../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -263,7 +275,7 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -292,6 +304,16 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

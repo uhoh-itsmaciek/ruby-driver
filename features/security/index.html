@@ -134,7 +134,7 @@ keytool -genkey -keyalg RSA -noprompt <span class="se">\</span>
 <p>At this point you already have SSL enabled and can even connect to the servers using DataStax Ruby Driver:</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">ssl: </span><span class="kp">true</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">ssl: </span><span class="kp">true</span><span class="p">)</span>
 </code></pre>
 <p>This however is like having no security at all since the driver won’t be able to verify the identity of the server.</p>
 
@@ -169,7 +169,7 @@ keytool -export <span class="se">\</span>
 <p>Finally, having our combined PEM certificate, we can give it to the client to verify our server’s identity:</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">server_cert: </span><span class="s1">'/path/to/server.pem'</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">server_cert: </span><span class="s1">'/path/to/server.pem'</span><span class="p">)</span>
 </code></pre>
 <p>This is better, as our client can now verify the identity of the server. And, combined with Standard Authentication, this provides enough security to be useful. However, we can do better still.</p>
 
@@ -373,7 +373,7 @@ java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><spa
 <p>Make sure to update <code>cassandra.yaml</code> on each server with correct data from previous steps.</p>
 
 <p>Finally, we can use our client certificate and key to connect to our Apache Cassandra cluster:</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span>
   <span class="ss">server_cert:  </span><span class="s1">'/path/to/server.pem'</span><span class="p">,</span>
   <span class="ss">client_cert:  </span><span class="s1">'/path/to/driver.pem'</span><span class="p">,</span>
   <span class="ss">private_key:  </span><span class="s1">'/path/to/driver.key'</span><span class="p">,</span>
@@ -388,7 +388,7 @@ java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><spa
 </ul>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="../basics/">Basics</a></li>
@@ -435,6 +435,14 @@ java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><spa
             <li><a href="../reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -442,7 +450,7 @@ java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><spa
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -471,6 +479,16 @@ java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><spa
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

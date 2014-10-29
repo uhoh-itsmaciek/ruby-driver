@@ -66,18 +66,18 @@
 
 <h2 id="connecting-and-discovering-nodes">Connecting and Discovering Nodes</h2>
 
-<p>Ruby driver will connect to 127.0.0.1 if no <code>:hosts</code> given to <code>Cassandra.connect</code>. It will automatically discover all peers and add them to cluster metadata.</p>
+<p>Ruby driver will connect to 127.0.0.1 if no <code>:hosts</code> given to <code>Cassandra.cluster</code>. It will automatically discover all peers and add them to cluster metadata.</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span>
 
 <span class="n">cluster</span><span class="p">.</span><span class="nf">each_hosts</span> <span class="k">do</span> <span class="o">|</span><span class="n">host</span><span class="o">|</span>
   <span class="nb">puts</span> <span class="s2">"Host </span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2">: id=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">id</span><span class="si">}</span><span class="s2"> datacenter=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">datacenter</span><span class="si">}</span><span class="s2"> rack=</span><span class="si">#{</span><span class="n">host</span><span class="p">.</span><span class="nf">rack</span><span class="si">}</span><span class="s2">"</span>
 <span class="k">end</span>
 </code></pre>
-<p>You can also specify a list of seed nodes to connect to. The set of IP addresses we pass to the <code>Cassandra.connect</code> is simply an initial set of contact points. After the driver connects to one of these nodes, it will automatically discover the rest of the nodes in the cluster, so you don’t need to list every node in your cluster.</p>
+<p>You can also specify a list of seed nodes to connect to. The set of IP addresses we pass to the <code>Cassandra.cluster</code> is simply an initial set of contact points. After the driver connects to one of these nodes, it will automatically discover the rest of the nodes in the cluster, so you don’t need to list every node in your cluster.</p>
 
-<p><a href="http://datastax.github.io/ruby-driver/api/#connect-class_method">Read more in the api docs</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/#cluster-class_method">Read more in the api docs</a></p>
 
 <h2 id="executing-queries">Executing Queries</h2>
 
@@ -95,12 +95,12 @@
 
 <h2 id="parameterized-queries">Parameterized queries</h2>
 
-<p>If you’re using Cassandra 2.0 or later you no longer have to build CQL strings when you want to insert a value in a query, there’s a new feature that lets you bind values with reqular statements:</p>
+<p>If you’re using Cassandra 2.0 or later you no longer have to build CQL strings when you want to insert a value in a query, there’s a new feature that lets you bind values with regular statements:</p>
 <pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
 </code></pre>
 <p>If you find yourself doing this often, it’s better to use prepared statements. As a rule of thumb, if your application is sending a request more than once, a prepared statement is almost always the right choice.</p>
 
-<p>When you use bound values with regular statements the type of the values has to be guessed. Cassandra supports multiple different numeric types, but there’s no reliable way of guessing whether or not a Ruby <code>Fixnum</code> should be encoded as a <code>BIGINT</code> or <code>INT</code>, or whether a Ruby <code>Float</code> is a <code>DOUBLE</code> or <code>FLOAT</code>. When there are multiple choices the encoder will pick the larger type (e.g. <code>BIGINT</code> over <code>INT</code>). For Ruby strings it will always guess <code>VARCHAR</code>, never <code>BLOB</code>.</p>
+<p>When you use bound values with regular statements the type of the values has to be guessed. Cassandra supports multiple different numeric types, but there’s no reliable way of guessing whether or not a Ruby <code>Fixnum</code> should be encoded as a <code>BIGINT</code> or <code>INT</code>, or whether a Ruby <code>Float</code> is a <code>DOUBLE</code> or <code>FLOAT</code>. When there are multiple choices the encoder will pick the larger type (e.g. <code>BIGINT</code> over <code>INT</code>). For Ruby strings it will always guess <code>VARCHAR</code>, never <code>BLOB</code>. <a href="http://datastax.github.io/ruby-driver/features/basics/#ruby-objects-to-from-apache-cassandra-datatypes">Check out this types mapping table for additional details</a>.</p>
 
 <h2 id="executing-statements-in-parallel">Executing Statements in Parallel</h2>
 
@@ -230,9 +230,9 @@
 <h2 id="consistency">Consistency</h2>
 
 <p>You can specify the default consistency to use when you create a new <code>Cluster</code>:</p>
-<pre class="highlight"><code class="ruby"><span class="n">client</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">consistency: :all</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">client</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">consistency: :all</span><span class="p">)</span>
 </code></pre>
-<p><a href="http://datastax.github.io/ruby-driver/api/#connect-class_method">Read more about default consistency</a></p>
+<p><a href="http://datastax.github.io/ruby-driver/api/#cluster-class_method">Read more about default consistency</a></p>
 
 <p>Consistency can also be passed to <code>Session#execute</code> and <code>Session#execute_async</code></p>
 <pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s1">'SELECT * FROM users'</span><span class="p">,</span> <span class="ss">consistency: :local_quorum</span><span class="p">)</span>
@@ -254,13 +254,13 @@
 
 <h2 id="compression">Compression</h2>
 
-<p>The CQL protocol supports frame compression, which can give you a performance boost if your requests or responses are big. To enable it you can specify compression to use in <code>Cassandra.connect</code>.</p>
+<p>The CQL protocol supports frame compression, which can give you a performance boost if your requests or responses are big. To enable it you can specify compression to use in <code>Cassandra.cluster</code>.</p>
 
 <p>Cassandra currently supports two compression algorithms: Snappy and LZ4. ruby driver supports both, but in order to use them you will have to install the <a href="http://rubygems.org/gems/snappy">snappy</a> or <a href="http://rubygems.org/gems/lz4-ruby">lz4-ruby</a> gems separately. Once it’s installed you can enable compression like this:</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compression: :snappy</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">compression: :snappy</span><span class="p">)</span>
 </code></pre>
 <p>or</p>
-<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">compression: :lz4</span><span class="p">)</span>
+<pre class="highlight"><code class="ruby"><span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">compression: :lz4</span><span class="p">)</span>
 </code></pre>
 <p>Which one should you choose? On paper the LZ4 algorithm is more efficient and the one Cassandra defaults to for SSTable compression. They both achieve roughly the same compression ratio, but LZ4 does it quicker.</p>
 
@@ -269,7 +269,7 @@
 <p>You can pass a standard Ruby logger to the client to get some more information about what is going on:</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'logger'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">logger: </span><span class="no">Logger</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">))</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">logger: </span><span class="no">Logger</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$stderr</span><span class="p">))</span>
 </code></pre>
 <p>Most of the logging will be when the driver connects and discovers new nodes, when connections fail and so on. The logging is designed to not cause much overhead and only relatively rare events are logged (e.g. normal requests are not logged).</p>
 
@@ -288,7 +288,7 @@
 <p>A Cluster instance allows to configure different important aspects of the way connections and queries will be handled. At this level you can configure everything from contact points (address of the nodes to be contacted initially before the driver performs node discovery), the request routing policy, retry and reconnection policies, and so forth. Generally such settings are set once at the application level.</p>
 <pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span>
             <span class="ss">:hosts</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'10.1.1.3'</span><span class="p">,</span> <span class="s1">'10.1.1.4'</span><span class="p">,</span> <span class="s1">'10.1.1.5'</span><span class="p">],</span>
             <span class="ss">:load_balancing_policy</span> <span class="o">=&gt;</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"US_EAST"</span><span class="p">)</span>
           <span class="p">)</span>
@@ -402,10 +402,12 @@
 <li><a href="retry_policies/">Retry Policies</a></li>
 <li><a href="state_listeners/">State Listeners</a></li>
 <li><a href="reconnection/">Reconnection</a></li>
+<li><a href="error_handling/">Error Handling</a></li>
+<li><a href="address_resolution/">Address Resolution</a></li>
 </ul>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="basics/">Basics</a></li>
@@ -439,6 +441,14 @@
             <li><a href="reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -446,7 +456,7 @@
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -475,6 +485,16 @@
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

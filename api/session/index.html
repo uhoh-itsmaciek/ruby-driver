@@ -400,7 +400,9 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
   <dd class="tag-content">
     <ul class="see">
       
-        <li><code><a href="../#connect-class_method" title="Cassandra.connect (method)">for description of options that can be specified on the cluster-level as well as default values chosen.</a></code></li>
+        <li><code><a href="../#cluster-class_method" title="Cassandra.cluster (method)">Options that can be specified on the cluster-level and their default values.</a></code></li>
+      
+        <li><code><a href="#execute-instance_method" title="Cassandra::Session#execute (method)">A list of errors this future can be resolved with</a></code></li>
       
     </ul>
   </dd>
@@ -485,7 +487,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
         <td class="details">
           
           
-          if none of the hosts can be reached
+          if all hosts fail
 
           
         </td>
@@ -494,12 +496,41 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
       <tr>
         
         
-        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Errors::QueryError</a></code></td>
+        <td class="type"><code><a href="../errors/execution_error/" title="Cassandra::Errors::ExecutionError (module)">Errors::ExecutionError</a></code></td>
         
         <td class="details">
           
           
-          if Cassandra returns an error response
+          if Cassandra fails to execute
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../errors/validation_error/" title="Cassandra::Errors::ValidationError (module)">Errors::ValidationError</a></code></td>
+        
+        <td class="details">
+          
+          
+          if Cassandra fails to validate
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        
+        <td class="type"><code><a href="../errors/timeout_error/" title="Cassandra::Errors::TimeoutError (class)">Errors::TimeoutError</a></code></td>
+        
+        <td class="details">
+          
+          
+          if request has not completed
+within the <code>:timeout</code> given
 
           
         </td>
@@ -781,7 +812,7 @@ prepared statement
       <tr>
         
         
-        <td class="type"><code><a href="../errors/query_error/" title="Cassandra::Errors::QueryError (class)">Errors::QueryError</a></code></td>
+        <td class="type"><code><a href="../errors/execution_error/" title="Cassandra::Errors::ExecutionError (module)">Errors::ExecutionError</a></code></td>
         
         <td class="details">
           
@@ -1286,8 +1317,12 @@ self once closed
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
+
+<li><a href="../address_resolution/">AddressResolution</a></li>
+
+
 
 <li><a href="../auth/">Auth</a></li>
 
@@ -1383,7 +1418,7 @@ self once closed
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -1412,6 +1447,16 @@ self once closed
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -123,37 +123,13 @@ execution info.</p>
 <span class="p">);</span></code></pre>
 </dd>
 </dl>
-<h2 id="round-robin-policy-is-used-by-default">Round Robin policy is used by default</h2>
-<dl class="steps">
-<dt>Given </dt>
-<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
-
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
-
-<span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">4</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span>
-  <span class="n">info</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">).</span><span class="nf">execution_info</span>
-  <span class="n">info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">ip</span>
-<span class="k">end</span>
-
-<span class="nb">puts</span> <span class="n">coordinator_ips</span><span class="p">.</span><span class="nf">sort</span></code></pre>
-</dd>
-<dt>When </dt>
-<dd>it is executed</dd>
-<dt>Then </dt>
-<dd>its output should contain:<pre><code>127.0.0.1
-127.0.0.2
-127.0.0.3
-127.0.0.4</code></pre>
-</dd>
-</dl>
-<h2 id="round-robin-policy-is-used-explicitly">Round Robin policy is used explicitly</h2>
+<h2 id="configuring-round-robin-load-balancing-policy">Configuring Round Robin load balancing policy</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="n">policy</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">4</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span>
@@ -178,7 +154,7 @@ execution info.</p>
 <dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
 
   <span class="n">policy</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">RoundRobin</span><span class="p">.</span><span class="nf">new</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
   <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
   <span class="n">coordinator_ips</span> <span class="o">=</span> <span class="mi">4</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span>
@@ -200,7 +176,7 @@ execution info.</p>
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="../../basics/">Basics</a></li>
@@ -224,12 +200,15 @@ execution info.</p>
               <ul class="nav nav-pills nav-stacked">
                 
                 
+                <li><a href="../default_policy/">Default Policy</a></li>
+                
+                
+                
                 <li class="active">
                   <a href="./">Round Robin</a>
                   <ul class="nav nav-pills nav-stacked">
 <li><a href="#background">Background</a></li>
-<li><a href="#round-robin-policy-is-used-by-default">Round Robin policy is used by default</a></li>
-<li><a href="#round-robin-policy-is-used-explicitly">Round Robin policy is used explicitly</a></li>
+<li><a href="#configuring-round-robin-load-balancing-policy">Configuring Round Robin load balancing policy</a></li>
 <li><a href="#round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters</a></li>
 </ul>
                 </li>
@@ -240,15 +219,15 @@ execution info.</p>
                 
                 
                 
+                <li><a href="../token_aware/">Token Aware</a></li>
+                
+                
+                
                 <li><a href="../whitelist/">Whitelist</a></li>
                 
                 
                 
                 <li><a href="../implementing_a_policy/">Implementing A Policy</a></li>
-                
-                
-                
-                <li><a href="../token_aware/">Token Aware</a></li>
                 
                 
               </ul>
@@ -267,6 +246,14 @@ execution info.</p>
             <li><a href="../../reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="../../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -274,7 +261,7 @@ execution info.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -303,6 +290,16 @@ execution info.</p>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

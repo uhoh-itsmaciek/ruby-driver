@@ -83,13 +83,13 @@ the most.</p>
 
 <ol>
 <li>Using default SSL context. This method is actually not secure as there is
-no peer validation happening. <code>Cassandra.connect(ssl: true)</code>
+no peer validation happening. <code>Cassandra.cluster(ssl: true)</code>
 </li>
 <li>Using shared certificate authority. This method is more secure than the
 previous one, because the client is able to validate the identity of the
 server. Using this method the server can’t trust the client unless
 additional authentication has been provided.
-<code>Cassandra.connect(server_cert: '/path/to/ca.pem')</code>
+<code>Cassandra.cluster(server_cert: '/path/to/ca.pem')</code>
 </li>
 <li>Using trusted client certificates. This method, in addition to peer
 verification, allows server to validate identities of the clients. Make
@@ -97,7 +97,7 @@ sure to enable <code>client_encryption_options.require_client_auth</code> settin
 <code>cassandra.yaml</code>, as well as add all trusted client keys to Apache
 Cassandra’s truststore. You can use server certificate as well as client
 certificate and private key with an optional passphrase to connect to
-Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client_cert: '/path/to/client.pem', private_key: '/path/to/client.key', passphrase:  'secret passphrase for private key')</code>
+Apache Cassandra. <code>Cassandra.cluster(server_cert: '/path/to/ca.pem', client_cert: '/path/to/client.pem', private_key: '/path/to/client.key', passphrase:  'secret passphrase for private key')</code>
 </li>
 </ol>
 <h2 id="using-default-ssl-encryption">Using default SSL encryption</h2>
@@ -108,7 +108,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">ssl: </span><span class="kp">true</span><span class="p">)</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">ssl: </span><span class="kp">true</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"connection successful"</span>
 <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
@@ -131,7 +131,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">ssl: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">connect_timeout: </span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">ssl: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">connect_timeout: </span><span class="mi">2</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"connection successful"</span>
 <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
@@ -154,7 +154,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">server_cert: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'SERVER_CERT'</span><span class="p">])</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">server_cert: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'SERVER_CERT'</span><span class="p">])</span>
   <span class="nb">puts</span> <span class="s2">"connection successful"</span>
 <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
@@ -177,7 +177,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span>
     <span class="ss">server_cert:  </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'SERVER_CERT'</span><span class="p">],</span>
     <span class="ss">client_cert:  </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'CLIENT_CERT'</span><span class="p">],</span>
     <span class="ss">private_key:  </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'PRIVATE_KEY'</span><span class="p">],</span>
@@ -206,7 +206,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 <span class="nb">require</span> <span class="s1">'openssl'</span>
 
 <span class="k">begin</span>
-  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="ss">ssl: </span><span class="no">OpenSSL</span><span class="o">::</span><span class="no">SSL</span><span class="o">::</span><span class="no">SSLContext</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span>
+  <span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">ssl: </span><span class="no">OpenSSL</span><span class="o">::</span><span class="no">SSL</span><span class="o">::</span><span class="no">SSLContext</span><span class="p">.</span><span class="nf">new</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"connection successful"</span>
 <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
   <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
@@ -224,7 +224,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="../../basics/">Basics</a></li>
@@ -280,6 +280,14 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
             <li><a href="../../reconnection/">Reconnection</a></li>
             
             
+            
+            <li><a href="../../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -287,7 +295,7 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -316,6 +324,16 @@ Apache Cassandra. <code>Cassandra.connect(server_cert: '/path/to/ca.pem', client
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

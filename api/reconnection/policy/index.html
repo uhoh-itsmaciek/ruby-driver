@@ -86,7 +86,7 @@
 <dl class="dl-horizontal notes">
 <dt><span class="label label-info">Abstract</span></dt>
 <dd>Actual reconnection policies supplied as <code>:reconnection_policy</code>
-option to <code><a href="../../#connect-class_method" title="Cassandra.connect (method)">Cassandra.connect</a></code> don&#8217;t need to inherit this class, only
+option to <code><a href="../../#cluster-class_method" title="Cassandra.cluster (method)">Cassandra.cluster</a></code> don&#8217;t need to inherit this class, only
 implement its methods. This class exists for documentation purposes
 only.
 </dd>
@@ -180,8 +180,12 @@ interface.
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
+
+<li><a href="../../address_resolution/">AddressResolution</a></li>
+
+
 
 <li><a href="../../auth/">Auth</a></li>
 
@@ -297,7 +301,7 @@ interface.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -326,6 +330,16 @@ interface.
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
+    <meta name="author" content="">
+
+    <title>Datastax Cassandra Ruby Driver - UnavailableError</title>
+
+    <link href="../../../css/style.css" rel="stylesheet">
+    <link href="../../../css/pygments.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body data-spy="scroll" data-target=".toc" data-offset="0">
+    <header class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../../../">Introduction</a></li>
+            <li><a href="../../../features/">Features</a></li>
+            <li class="active"><a href="../../">API docs</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="container" id="content">
+      <div class="row">
+        <div class="col-md-9 content">
+          <nav class="crumbs">
+            <ol class="breadcrumb">
+              
+              
+              
+              <li><a href="../../../">Introduction</a></li>
+              
+              
+              
+              
+              
+              
+              
+              <li><a href="../../">Cassandra</a></li>
+              
+              
+              
+              
+              
+              <li><a href="../">Errors</a></li>
+              
+              
+              
+              
+              
+              <li class="active">UnavailableError</li>
+              
+              
+              
+            </ol>
+          </nav>
+          <div class="page-header">
+  <h1>
+<small>
+  class</small> Cassandra::Errors::UnavailableError</h1>
+</div>
+<p>Raised when coordinator determines that a request cannot be executed
+because there are not enough replicas. In this scenario, the request is
+not sent to the nodes at all.</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This error can be handled by a <code><a href="../../retry/policy/" title="Cassandra::Retry::Policy (module)">Retry::Policy</a></code> to
+determine the desired outcome.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">See Also:</dt>
+  <dd class="tag-content">
+    <ul class="see">
+      
+        <li><a href="https://github.com/apache/cassandra/blob/trunk/doc/native_protocol_v1.spec#L562-L572" target="_parent" title="Description of Unavailable Error in Apache Cassandra native protocol spec v1">Description of Unavailable Error in Apache Cassandra native protocol spec v1</a></li>
+      
+    </ul>
+  </dd>
+
+</dl>
+
+<h2>Inherits</h2>
+<div class="superclass"><code>StandardError</code></div>
+
+
+
+<h2>Includes</h2>
+<div class="includes">
+  <ul class="list-inline">
+    
+    <li><code><a href="../execution_error/" title="Cassandra::Errors::ExecutionError (module)">ExecutionError</a></code></li>
+    
+  </ul>
+</div>
+
+
+<h2>Methods</h2>
+<div class="module-methods">
+  
+    <div class="panel panel-default" id="consistency-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>consistency</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Consistency level that triggered the error.</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Symbol</code></td>
+        
+        <td class="details">
+          
+          
+          the original consistency level for the request, one of
+<code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="required-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>required</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns the number of replicas required to achieve requested
+consistency level</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of replicas required to achieve requested
+consistency level
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="alive-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>alive</strong></span> 
+    
+  
+  
+  
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns the number of replicas available for the request</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Integer</code></td>
+        
+        <td class="details">
+          
+          
+          the number of replicas available for the request
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+</dl>
+  </div>
+</div>
+
+  
+</div>
+        </div>
+        <nav class="col-md-3 side-nav">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
+            
+
+<li><a href="../../address_resolution/">AddressResolution</a></li>
+
+
+
+<li><a href="../../auth/">Auth</a></li>
+
+
+
+<li><a href="../../cluster/">Cluster</a></li>
+
+
+
+<li><a href="../../column/">Column</a></li>
+
+
+
+<li><a href="../../compression/">Compression</a></li>
+
+
+
+<li><a href="../../error/">Error</a></li>
+
+
+
+<li class="active">
+  <a href="../">Errors</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
+
+<li><a href="../already_exists_error/">AlreadyExistsError</a></li>
+
+
+
+<li><a href="../authentication_error/">AuthenticationError</a></li>
+
+
+
+<li><a href="../client_error/">ClientError</a></li>
+
+
+
+<li><a href="../configuration_error/">ConfigurationError</a></li>
+
+
+
+<li><a href="../decoding_error/">DecodingError</a></li>
+
+
+
+<li><a href="../encoding_error/">EncodingError</a></li>
+
+
+
+<li><a href="../execution_error/">ExecutionError</a></li>
+
+
+
+<li><a href="../host_error/">HostError</a></li>
+
+
+
+<li><a href="../ioerror/">IOError</a></li>
+
+
+
+<li><a href="../internal_error/">InternalError</a></li>
+
+
+
+<li><a href="../invalid_error/">InvalidError</a></li>
+
+
+
+<li><a href="../is_bootstrapping_error/">IsBootstrappingError</a></li>
+
+
+
+<li><a href="../no_hosts_available/">NoHostsAvailable</a></li>
+
+
+
+<li><a href="../overloaded_error/">OverloadedError</a></li>
+
+
+
+<li><a href="../protocol_error/">ProtocolError</a></li>
+
+
+
+<li><a href="../read_timeout_error/">ReadTimeoutError</a></li>
+
+
+
+<li><a href="../server_error/">ServerError</a></li>
+
+
+
+<li><a href="../syntax_error/">SyntaxError</a></li>
+
+
+
+<li><a href="../timeout_error/">TimeoutError</a></li>
+
+
+
+<li><a href="../truncate_error/">TruncateError</a></li>
+
+
+
+<li><a href="../unauthorized_error/">UnauthorizedError</a></li>
+
+
+
+<li class="active">
+  <a href="./">UnavailableError</a>
+  
+</li>
+
+
+
+<li><a href="../unprepared_error/">UnpreparedError</a></li>
+
+
+
+<li><a href="../validation_error/">ValidationError</a></li>
+
+
+
+<li><a href="../write_timeout_error/">WriteTimeoutError</a></li>
+
+
+
+  </ul>
+  
+</li>
+
+
+
+<li><a href="../../execution/">Execution</a></li>
+
+
+
+<li><a href="../../future/">Future</a></li>
+
+
+
+<li><a href="../../host/">Host</a></li>
+
+
+
+<li><a href="../../keyspace/">Keyspace</a></li>
+
+
+
+<li><a href="../../listener/">Listener</a></li>
+
+
+
+<li><a href="../../load_balancing/">LoadBalancing</a></li>
+
+
+
+<li><a href="../../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../../result/">Result</a></li>
+
+
+
+<li><a href="../../retry/">Retry</a></li>
+
+
+
+<li><a href="../../session/">Session</a></li>
+
+
+
+<li><a href="../../statement/">Statement</a></li>
+
+
+
+<li><a href="../../statements/">Statements</a></li>
+
+
+
+<li><a href="../../table/">Table</a></li>
+
+
+
+<li><a href="../../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../../uuid/">Uuid</a></li>
+
+
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <footer class="container text-muted">
+      <ul class="list-inline">
+        <li>v1.0.0.beta.4</li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver">Code</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="http://datastax.github.io/ruby-driver/">Docs</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
+        </li>
+        <li>·</li>
+        <li>
+          <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
+        </li>
+      </ul>
+    </footer>
+    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
+    <script>
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54260831-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>

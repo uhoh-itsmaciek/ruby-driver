@@ -149,7 +149,7 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 
 <span class="n">interval</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># reconnect every 2 seconds</span>
 <span class="n">policy</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Reconnection</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">Constant</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
-<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span>
+<span class="n">cluster</span>  <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span>
              <span class="ss">listeners: </span><span class="p">[</span><span class="no">PrintingListener</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vg">$stdout</span><span class="p">)],</span>
              <span class="ss">reconnection_policy: </span><span class="n">policy</span><span class="p">,</span>
              <span class="ss">consistency: :one</span>
@@ -195,20 +195,16 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 <dt>And </dt>
 <dd>I close the stdin stream</dd>
 <dt>Then </dt>
-<dd>its output should contain:<pre><code>=== START ===
-Host 127.0.0.1 is down
-Host 127.0.0.2 is down
-Host 127.0.0.3 is down
-Query "SELECT * FROM simplex.songs" failed with Cassandra::Errors::NoHostsAvailable: no hosts available, check #errors property for details
-Host 127.0.0.1 is up
-Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1
-=== STOP ===</code></pre>
+<dd>its output should contain:<pre><code>Query "SELECT * FROM simplex.songs" failed with Cassandra::Errors::NoHostsAvailable: All hosts down</code></pre>
+</dd>
+<dt>And </dt>
+<dd>its output should contain:<pre><code>Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1</code></pre>
 </dd>
 </dl>
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="0">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
             
             <li><a href="../../basics/">Basics</a></li>
@@ -257,6 +253,14 @@ Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1
             </li>
             
             
+            
+            <li><a href="../../error_handling/">Error Handling</a></li>
+            
+            
+            
+            <li><a href="../../address_resolution/">Address Resolution</a></li>
+            
+            
           </ol>
         </nav>
       </div>
@@ -264,7 +268,7 @@ Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -293,6 +297,16 @@ Query "SELECT * FROM simplex.songs" fulfilled by 127.0.0.1
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

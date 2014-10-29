@@ -9,10 +9,10 @@
     <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
     <meta name="author" content="">
 
-    <title>Datastax Cassandra Ruby Driver - QueryError</title>
+    <title>Datastax Cassandra Ruby Driver - None</title>
 
-    <link href="../../../css/style.css" rel="stylesheet">
-    <link href="../../../css/pygments.css" rel="stylesheet">
+    <link href="../../../../css/style.css" rel="stylesheet">
+    <link href="../../../../css/pygments.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,13 +30,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../../../">Cassandra Ruby Driver</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="../../../">Introduction</a></li>
-            <li><a href="../../../features/">Features</a></li>
-            <li class="active"><a href="../../">API docs</a></li>
+            <li><a href="../../../../">Introduction</a></li>
+            <li><a href="../../../../features/">Features</a></li>
+            <li class="active"><a href="../../../">API docs</a></li>
           </ul>
         </div>
       </div>
@@ -50,7 +50,7 @@
               
               
               
-              <li><a href="../../../">Introduction</a></li>
+              <li><a href="../../../../">Introduction</a></li>
               
               
               
@@ -58,19 +58,25 @@
               
               
               
-              <li><a href="../../">Cassandra</a></li>
+              <li><a href="../../../">Cassandra</a></li>
               
               
               
               
               
-              <li><a href="../">Errors</a></li>
+              <li><a href="../../">AddressResolution</a></li>
               
               
               
               
               
-              <li class="active">QueryError</li>
+              <li><a href="../">Policies</a></li>
+              
+              
+              
+              
+              
+              <li class="active">None</li>
               
               
               
@@ -79,12 +85,9 @@
           <div class="page-header">
   <h1>
 <small>
-  class</small> Cassandra::Errors::QueryError</h1>
+  class</small> Cassandra::AddressResolution::Policies::None</h1>
 </div>
-<p>This error type represents errors sent by the server, the <code>code</code> attribute
-can be used to find the exact type, and <code>cql</code> contains the request&#8217;s CQL,
-if any. <code>message</code> contains the human readable error message sent by the
-server.</p>
+<p>The default address resolution policy. Always returns original address.</p>
 
 <dl class="dl-horizontal notes">
 
@@ -92,7 +95,7 @@ server.</p>
 
 
 <h2>Inherits</h2>
-<div class="superclass"><code><a href="../../error/" title="Cassandra::Error (class)">Error</a></code></div>
+<div class="superclass"><code>Object</code></div>
 
 
 
@@ -100,31 +103,32 @@ server.</p>
 <h2>Methods</h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="code-instance_method">
+    <div class="panel panel-default" id="resolve-instance_method">
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>code</strong></span> 
+      <span class="path"><strong>resolve</strong></span><big>(</big><var>address</var><big>)</big> 
     
   
   
   
   </div>
   <div class="panel-body method-body">
-    <p>Returns error code</p>
+    <p>Returns original address.</p>
 
 <dl class="dl-horizontal notes">
 
 </dl>
 <dl class="tags">
-  
-<dt class="tag-title">
-  Returns:
+  <dt class="tag-title">
+  Parameters:
 </dt>
 <dd class="tag-content">
   <table class="table table-striped">
     <thead>
       <tr>
+        
+        <th class="name">Name</th>
         
         
         <th class="type">Type</th>
@@ -136,13 +140,15 @@ server.</p>
     
       <tr>
         
+        <td class="name"><var>address</var></td>
         
-        <td class="type"><code>Integer</code></td>
+        
+        <td class="type"><code>IPAddr</code></td>
         
         <td class="details">
           
           
-          error code
+          node ip address from Cassandra&#8217;s system table
 
           
         </td>
@@ -152,29 +158,6 @@ server.</p>
   </table>
 </dd>
 
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="cql-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>cql</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns original CQL used</p>
-
-<dl class="dl-horizontal notes">
-
-</dl>
-<dl class="tags">
-  
 <dt class="tag-title">
   Returns:
 </dt>
@@ -194,70 +177,12 @@ server.</p>
       <tr>
         
         
-        <td class="type"><code>String</code></td>
+        <td class="type"><code>IPAddr</code></td>
         
         <td class="details">
           
           
-          original CQL used
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="details-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>details</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns various error details</p>
-
-<dl class="dl-horizontal notes">
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type">
-<code>Hash</code>{<code>Symbol</code> =&gt; <code>String</code>, <code>Integer</code>}</td>
-        
-        <td class="details">
-          
-          
-          various error details
+          same as <code>address</code>
 
           
         </td>
@@ -275,53 +200,27 @@ server.</p>
 </div>
         </div>
         <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="20">
+          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
             
 
-<li><a href="../../auth/">Auth</a></li>
-
-
-
-<li><a href="../../cluster/">Cluster</a></li>
-
-
-
-<li><a href="../../column/">Column</a></li>
-
-
-
-<li><a href="../../compression/">Compression</a></li>
-
-
-
-<li><a href="../../error/">Error</a></li>
-
-
-
 <li class="active">
-  <a href="../">Errors</a>
+  <a href="../../">AddressResolution</a>
   
   <ul class="nav nav-pills nav-stacked">
     
 
-<li><a href="../authentication_error/">AuthenticationError</a></li>
+<li class="active">
+  <a href="../">Policies</a>
+  
+  <ul class="nav nav-pills nav-stacked">
+    
 
-
-
-<li><a href="../client_error/">ClientError</a></li>
-
-
-
-<li><a href="../io_error/">IoError</a></li>
-
-
-
-<li><a href="../no_hosts_available/">NoHostsAvailable</a></li>
+<li><a href="../ec2multi_region/">EC2MultiRegion</a></li>
 
 
 
 <li class="active">
-  <a href="./">QueryError</a>
+  <a href="./">None</a>
   
 </li>
 
@@ -333,63 +232,97 @@ server.</p>
 
 
 
-<li><a href="../../execution/">Execution</a></li>
+<li><a href="../../policy/">Policy</a></li>
 
 
 
-<li><a href="../../future/">Future</a></li>
+  </ul>
+  
+</li>
 
 
 
-<li><a href="../../host/">Host</a></li>
+<li><a href="../../../auth/">Auth</a></li>
 
 
 
-<li><a href="../../keyspace/">Keyspace</a></li>
+<li><a href="../../../cluster/">Cluster</a></li>
 
 
 
-<li><a href="../../listener/">Listener</a></li>
+<li><a href="../../../column/">Column</a></li>
 
 
 
-<li><a href="../../load_balancing/">LoadBalancing</a></li>
+<li><a href="../../../compression/">Compression</a></li>
 
 
 
-<li><a href="../../reconnection/">Reconnection</a></li>
+<li><a href="../../../error/">Error</a></li>
 
 
 
-<li><a href="../../result/">Result</a></li>
+<li><a href="../../../errors/">Errors</a></li>
 
 
 
-<li><a href="../../retry/">Retry</a></li>
+<li><a href="../../../execution/">Execution</a></li>
 
 
 
-<li><a href="../../session/">Session</a></li>
+<li><a href="../../../future/">Future</a></li>
 
 
 
-<li><a href="../../statement/">Statement</a></li>
+<li><a href="../../../host/">Host</a></li>
 
 
 
-<li><a href="../../statements/">Statements</a></li>
+<li><a href="../../../keyspace/">Keyspace</a></li>
 
 
 
-<li><a href="../../table/">Table</a></li>
+<li><a href="../../../listener/">Listener</a></li>
 
 
 
-<li><a href="../../time_uuid/">TimeUuid</a></li>
+<li><a href="../../../load_balancing/">LoadBalancing</a></li>
 
 
 
-<li><a href="../../uuid/">Uuid</a></li>
+<li><a href="../../../reconnection/">Reconnection</a></li>
+
+
+
+<li><a href="../../../result/">Result</a></li>
+
+
+
+<li><a href="../../../retry/">Retry</a></li>
+
+
+
+<li><a href="../../../session/">Session</a></li>
+
+
+
+<li><a href="../../../statement/">Statement</a></li>
+
+
+
+<li><a href="../../../statements/">Statements</a></li>
+
+
+
+<li><a href="../../../table/">Table</a></li>
+
+
+
+<li><a href="../../../time_uuid/">TimeUuid</a></li>
+
+
+
+<li><a href="../../../uuid/">Uuid</a></li>
 
 
 
@@ -400,7 +333,7 @@ server.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.3</li>
+        <li>v1.0.0.beta.4</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -429,6 +362,16 @@ server.</p>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+      $('#content').height(
+        Math.max(
+          $(".side-nav").height(),
+          $('#content').height()
+        )
+      );
+    });
+    </script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
