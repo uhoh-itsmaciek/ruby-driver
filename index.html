@@ -149,14 +149,14 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <p>Some of the new features added to the driver have unfortunately led to changes in the original cql-rb API. In the examples directory, you can find <a href="https://github.com/datastax/ruby-driver/blob/master/examples/cql-rb-wrapper.rb">an example of how to wrap the ruby driver to achieve almost complete interface parity with cql-rb</a> to assist you with gradual upgrade.</p>
 
-<h2 id="what-s-new-in-v1-0-0-beta-3">What’s new in v1.0.0.beta.3</h2>
+<h2 id="what-s-new-in-v1-0-0-rc-1">What’s new in v1.0.0.rc.1</h2>
 
 <p>Current release introduces the following new features:</p>
 
 <ul>
-<li><a href="http://datastax.github.io/ruby-driver/features/load_balancing/token_aware/">Token-aware load balancing policy</a></li>
-<li><a href="http://datastax.github.io/ruby-driver/features/security/ssl_encryption/">SSL encryption</a></li>
-<li>Domain names</li>
+<li><a href="http://datastax.github.io/features/load_balancing/default_policy/">Token Aware Data Center Aware Round Robin load balancing is now default</a></li>
+<li><a href="http://datastax.github.io/features/error_handling/">Improved exception class hierarchy and documentation and automatic detection of broken connections using heartbeats</a></li>
+<li><a href="http://datastax.github.io/features/address_resolution/">Configurable node address resolution with EC2 multi-region support</a></li>
 </ul>
 
 <h2 id="changelog-versioning">Changelog &amp; versioning</h2>
@@ -197,7 +197,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <li><a href="#quick-start">Quick start</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb</a></li>
-<li><a href="#what-s-new-in-v1-0-0-beta-3">What’s new in v1.0.0.beta.3</a></li>
+<li><a href="#what-s-new-in-v1-0-0-rc-1">What’s new in v1.0.0.rc.1</a></li>
 <li><a href="#changelog-versioning">Changelog &amp; versioning</a></li>
 <li><a href="#known-bugs-limitations">Known bugs &amp; limitations</a></li>
 <li><a href="#credits">Credits</a></li>
@@ -209,7 +209,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.beta.4</li>
+        <li>v1.0.0.rc.1</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
