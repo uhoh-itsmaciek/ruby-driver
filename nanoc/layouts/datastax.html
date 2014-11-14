@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <% if @item[:title] %><meta content="<%= @item[:title] %>" name="description" /><% end %>
+  <title><%= "#{@item[:title]} | " if @item[:title] %>Datastax Ruby Driver for Apache Cassandra Documentation</title>
+  <link rel="shortcut icon" href="http://www.datastax.com/wp-content/themes/datastax-2013/favicon.ico">
+  <link href="http://www.datastax.com/documentation/developer/java-driver/2.1/static/screen.css" rel="stylesheet" />
+  <link href="http://www.datastax.com/documentation/developer/java-driver/2.1/static/print.css" media="print" rel="stylesheet" />
+
+  <link href="http://www.datastax.com/documentation/_static/print-ds.css" media="print" rel="stylesheet">
+  <link href="http://www.datastax.com/documentation/_static/screen-ds.css" rel="stylesheet">
+  <link href="http://www.datastax.com/documentation/_static/datastax-highlight.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/pygments.css" rel="stylesheet">
+</head>
+
+<body>
+  <header role="banner">
+    <a href="http://www.datastax.com/docs" id="ds-home" target="_blank"><img id="logo" src="http://www.datastax.com/wp-content/themes/datastax-2014-08/images/common/logo.png" alt="DataStax logo">
+      <span id="banner-enus">Documentation</span>
+    </a>
+    <a href=" id="logo-link"></a>
+    <a href="http://planetcassandra.org/" id="planetcassandra-link" title="Planet Cassandra Community" target="_blank"><img id="cassandralogo" src="http://www.datastax.com/wp-content/themes/datastax-2013/images/common/planet-cassandra.png" alt="Planet Cassandra logo">
+    </a>
+    <a href="http://www.datastax.com/download" id="downloads-link" title="Download DataStax Enterprise, Cassandra, OpsCenter and Drivers!" target="_blank"><img id="downloadslogo" src="http://www.datastax.com/documentation/_images/download.png" alt="Downloads logo">
+    </a>
+    <h1>Ruby Driver <%= Cassandra::VERSION %> for Apache Cassandra</h1>
+  </header>
+  <section id="center">
+    <article>
+      <noscript>
+        <p>JavaScript must be enabled in order to use this site.</p>
+        <p>Please enable JavaScript in your browser and refresh the page.</p>
+      </noscript>
+
+      <%= yield %>
+    </article>
+    <nav id="topnav">
+      <div id="breadcrumbs">
+        <% breadcrumbs_trail.each do |item| %>
+        <% if item %>
+        <% if item == @item %>
+        <a rel="internal" href="<%= item.path %>" class="current-breadcrumb"><%= item[:title] %></a>
+        <% else %>
+        <a href="<%= item.path %>"><%= item[:title] %></a>
+        <span class="arrowString">&gt;</span>
+        <% end %>
+        <% end %>
+        <% end %>
+      </div>
+
+      <div id="topbuttons">
+        <a id="button-twitter" href="https://www.twitter.com/DataStaxDocs" target="_blank" title="DataStaxDocs"><img src="http://www.datastax.com/documentation/developer/java-driver/2.1/static/twitter-bird-16x16.png" alt="Twitter">
+        </a>
+      </div>
+      <nav id="prodmenu">
+        <ul>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li><a href="http://www.datastax.com/documentation/getting_started/doc/index.html" target="_self">Getting Started</a></li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li>
+            <a href="#">DataStax Enterprise</a>
+            <ul>
+              <li><a href="http://www.datastax.com/documentation/datastax_enterprise/4.5/index.html" target="_self">DataStax Enterprise 4.5</a></li>
+              <li><a href="http://www.datastax.com/documentation/datastax_enterprise/4.0/index.html" target="_self">DataStax Enterprise 4.0</a></li>
+              <li><a href="http://www.datastax.com/documentation/datastax_enterprise/3.2/index.html" target="_self">DataStax Enterprise 3.2</a></li>
+            </ul>
+          </li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li>
+            <a href="#">Cassandra</a>
+            <ul>
+              <li><a href="http://www.datastax.com/documentation/cassandra/2.1/index.html" target="_self">Cassandra 2.1</a></li>
+              <li><a href="http://www.datastax.com/documentation/cassandra/2.0/index.html" target="_self">Cassandra 2.0</a></li>
+              <li><a href="http://www.datastax.com/documentation/cassandra/1.2/index.html" target="_self">Cassandra 1.2</a></li>
+            </ul>
+          </li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li><a href="http://www.datastax.com/documentation/opscenter/5.0/index.html" target="_self">OpsCenter</a></li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png" alt=""></li>
+          <li>
+            <a href="#">CQL</a>
+            <ul>
+              <li><a href="http://www.datastax.com/documentation/cql/3.1/index.html" target="_self">CQL for Cassandra 2.x</a></li>
+              <li><a href="http://www.datastax.com/documentation/cql/3.0/index.html" target="_self">CQL for Cassandra 1.2</a></li>
+            </ul>
+          </li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li>
+            <a href="#">Drivers</a>
+            <ul>
+              <li><a href="http://www.datastax.com/documentation/developer/csharp-driver/2.1/index.html" target="_self">C# 2.1</a></li>
+              <li><a href="http://www.datastax.com/documentation/developer/java-driver/2.1/index.html" target="_self">Java 2.1</a></li>
+              <li><a href="http://www.datastax.com/documentation/developer/nodejs-driver/1.0/index.html" target="_self">Node.js 1.0</a></li>
+              <li><a href="http://www.datastax.com/documentation/developer/python-driver/2.1/index.html" target="_self">Python 2.1</a></li>
+              <li><a href="http://datastax.github.io/ruby-driver/" target="_self">Ruby 1.0</a></li>
+              <li><a href="http://www.datastax.com/documentation/developer/driver-matrix/doc/index.html" target="_self">All versions</a></li>
+            </ul>
+          </li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li><a href="http://www.datastax.com/documentation/developer/devcenter/doc/index.html" target="_self">DevCenter</a></li>
+          <li><img src="http://www.datastax.com/documentation/_static/separator.png"></li>
+          <li><a href="http://www.datastax.com/documentation/upgrade/doc/index.html" target="_self">Upgrade</a></li>
+          <li><img src="http://datastax.com/documentation/_static/separator.png" alt=""></li>
+        </ul>
+      </nav>
+    </nav>
+  </section>
+  <div id="leftbar">
+    <ul class="tabs">
+      <li class="currentli">
+        <a class="toc current"><span>Contents</span></a>
+      </li>
+    </ul>
+    <nav class="toc current">
+      <nav>
+        <ul>
+          <% if @item == @items.at('/') %>
+          <li class="open">
+            <a rel="internal" href="/introduction/">Introduction</a>
+            <ul>{{TOC}}</ul>
+          </li>
+          <% else %>
+          <li class="closed"><a href="/">Introduction</a></li>
+          <% end %>
+          <% if @item == @items.at('/features/') || child_of?(@item, @items.at('/features/')) %>
+          <li class="open">
+            <a rel="internal" href="/features/">Features</a>
+            <%= render 'side-nav', :items => @items.at('/features/')[:nav] %>
+          </li>
+          <% else %>
+          <li class="closed"><a href="/features/">Features</a></li>
+          <% end %>
+          <% if @item == @items.at('/api/cassandra/') || child_of?(@item, @items.at('/api/cassandra/')) %>
+          <li class="open">
+            <a rel="internal" href="/api/">API</a>
+            <%= render 'side-nav', :items => @items.at('/api/cassandra/')[:nav] %>
+          </li>
+          <% else %>
+          <li class="closed"><a href="/api/">API</a></li>
+          <% end %>
+        </ul>
+      </nav>
+    </nav>
+  </div>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-20879577-1']);
+    _gaq.push(['_setDomainName', 'datastax.com']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <div id="footer"><span style="margin-left:295px">©  </span>
+    <script>
+      document.write(new Date().getFullYear());
+    </script>
+    <span> DataStax, Inc. All rights reserved.</span>
+    <span> | Last updated:  <%= Time.now.strftime("%-d %B, %Y") %></span>
+  </div>
+</body>
+
+</html>

@@ -71,7 +71,7 @@ compile '/features*' do
   end
 
   filter :add_ids_to_headers
-  layout 'feature'
+  layout 'datastax'
   filter :add_toc
   filter :relativize_paths, :type => :html
   filter :rubypants
@@ -79,7 +79,9 @@ compile '/features*' do
 end
 
 compile 'api*' do
-  layout 'apidoc'
+  filter :add_ids_to_headers
+  layout 'datastax'
+  filter :add_toc
   filter :relativize_paths, :type => :html
   filter :rubypants
   # filter :beautify
@@ -97,7 +99,7 @@ compile '/' do
     :highlight           => true
   }
   filter :add_ids_to_headers
-  layout 'introduction'
+  layout 'datastax'
   filter :add_toc
   filter :relativize_paths, :type => :html
   filter :rubypants

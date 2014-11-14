@@ -1,14 +1,19 @@
-<% @items.each do |item| %>
-<% if @item == item || child_of?(@item, item) %>
-<li class="active">
-  <a href="<%= item.path %>"><%= item[:title] %></a>
-  <% unless item[:nav].empty? %>
-  <ul class="nav nav-pills nav-stacked">
+<ul>
+  <% @items.each do |item| %>
+  <% next unless item %>
+  <% if @item == item || child_of?(@item, item) %>
+  <li class="open">
+    <a rel="internal" href="<%= item.path %>"<% if @item == item %> class="current"<% end %>><%= item[:title] %></a>
+    <ul>
+    <% if item[:nav].empty? %>
+    {{TOC}}
+    <% else %>
     <%= render 'side-nav', :items => item[:nav] %>
-  </ul>
+    <% end %>
+    </ul>
+  </li>
+  <% else %>
+  <li class="closed"><a href="<%= item.path %>"><%= item[:title] %></a></li>
   <% end %>
-</li>
-<% else %>
-<li><a href="<%= item.path %>"><%= item[:title] %></a></li>
-<% end %>
-<% end %>
+  <% end %>
+</ul>

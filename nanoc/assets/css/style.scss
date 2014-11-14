@@ -1,7 +1,17 @@
 $font-size-base: 16px;
 $line-height-base: 1.5;
 
-@import "bootstrap";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+@import "bootstrap/glyphicons";
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/panels";
 
 //body {
 //  padding-top: 60px;

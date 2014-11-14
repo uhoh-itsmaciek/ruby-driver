@@ -18,7 +18,7 @@ module Docs
 
         # Build table of contents
         headers.each_with_object('') do |header, output|
-          output << %[<li><a href="##{header[:id]}">#{header[:title]}</a></li>]
+          output << %[<li class="leaf"><a href="##{header[:id]}">#{header[:title]}</a></li>]
         end
       end
     end
