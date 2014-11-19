@@ -95,12 +95,14 @@
 
 <h2 id="parameterized-queries">Parameterized queries</h2>
 
-<p>If you’re using Cassandra 2.0 or later you no longer have to build CQL strings when you want to insert a value in a query, there’s a new feature that lets you bind values with regular statements:</p>
+<p><strong>If you’re using Cassandra 2.0 or later</strong> you no longer have to build CQL strings when you want to insert a value in a query, there’s a new feature that lets you bind values with regular statements:</p>
 <pre class="highlight"><code class="ruby"><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
 </code></pre>
 <p>If you find yourself doing this often, it’s better to use prepared statements. As a rule of thumb, if your application is sending a request more than once, a prepared statement is almost always the right choice.</p>
 
-<p>When you use bound values with regular statements the type of the values has to be guessed. Cassandra supports multiple different numeric types, but there’s no reliable way of guessing whether or not a Ruby <code>Fixnum</code> should be encoded as a <code>BIGINT</code> or <code>INT</code>, or whether a Ruby <code>Float</code> is a <code>DOUBLE</code> or <code>FLOAT</code>. When there are multiple choices the encoder will pick the larger type (e.g. <code>BIGINT</code> over <code>INT</code>). For Ruby strings it will always guess <code>VARCHAR</code>, never <code>BLOB</code>. <a href="http://datastax.github.io/ruby-driver/features/basics/#ruby-objects-to-from-apache-cassandra-datatypes">Check out this types mapping table for additional details</a>.</p>
+<p><strong>When you use bound values with regular statements the type of the values has to be guessed</strong>. Cassandra supports multiple different numeric types, but there’s no reliable way of guessing whether or not a Ruby <code>Fixnum</code> should be encoded as a <code>BIGINT</code> or <code>INT</code>, or whether a Ruby <code>Float</code> is a <code>DOUBLE</code> or <code>FLOAT</code>. When there are multiple choices the encoder will pick the larger type (e.g. <code>BIGINT</code> over <code>INT</code>). For Ruby strings it will always guess <code>VARCHAR</code>, never <code>BLOB</code>. <a href="http://datastax.github.io/ruby-driver/features/basics/#ruby-objects-to-from-apache-cassandra-datatypes">Check out this types mapping table for additional details</a>.</p>
+
+<p>Also note that some parameterized queries will not work unless prepared, for example, queries with <code>LIMIT ?</code> clause.</p>
 
 <h2 id="executing-statements-in-parallel">Executing Statements in Parallel</h2>
 
@@ -456,7 +458,7 @@
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.rc.1</li>
+        <li>v1.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

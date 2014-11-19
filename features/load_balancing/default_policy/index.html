@@ -207,7 +207,7 @@ application using the Ruby Driver in the <code>:hosts</code> option to
               <span class="ss">hosts: </span><span class="p">[</span><span class="s1">'127.0.0.1'</span><span class="p">,</span> <span class="s1">'127.0.0.2'</span><span class="p">]</span>
             <span class="p">)</span>
 <span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
-<span class="n">statement</span> <span class="o">=</span> <span class="s2">"SELECT token(id) FROM songs WHERE id = ?"</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="s2">"SELECT token(id) FROM songs"</span>
 
 <span class="vg">$stdout</span><span class="p">.</span><span class="nf">puts</span><span class="p">(</span><span class="s2">"=== START ==="</span><span class="p">)</span>
 <span class="vg">$stdout</span><span class="p">.</span><span class="nf">flush</span>
@@ -328,7 +328,7 @@ application using the Ruby Driver in the <code>:hosts</code> option to
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.rc.1</li>
+        <li>v1.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

@@ -70,13 +70,13 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 </li>
 <li>Docs: <a href="http://datastax.github.io/ruby-driver/">http://datastax.github.io/ruby-driver/</a>
 </li>
-<li>JIRA: <a href="https://datastax-oss.atlassian.net/browse/RUBY">https://datastax-oss.atlassian.net/browse/RUBY</a>
+<li>Jira: <a href="https://datastax-oss.atlassian.net/browse/RUBY">https://datastax-oss.atlassian.net/browse/RUBY</a>
 </li>
-<li>MAILING LIST: <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user</a>
+<li>Mailing List: <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user</a>
 </li>
 <li>IRC: #datastax-drivers on <a href="http://freenode.net">irc.freenode.net</a>
 </li>
-<li>TWITTER: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a>, <a href="https://twitter.com/al3xandru">@al3xandru</a>
+<li>Twitter: Follow the latest news about DataStax Drivers - <a href="http://twitter.com/avalanche123">@avalanche123</a>, <a href="http://twitter.com/mfiguiere">@mfiguiere</a>, <a href="https://twitter.com/al3xandru">@al3xandru</a>
 </li>
 </ul>
 
@@ -97,10 +97,11 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <p>This driver works exclusively with the Cassandra Query Language v3 (CQL3) and Cassandra’s native protocol. The current version works with:</p>
 
 <ul>
-<li>Cassandra versions 1.2 and 2.0</li>
-<li>Ruby 1.9.3 and 2.0</li>
+<li>Apache Cassandra versions 1.2 and 2.0</li>
+<li>DataStax Enterprise 3.1, 3.2, 4.0 and 4.5</li>
+<li>Ruby (MRI) 1.9.3, 2.0 and 2.1</li>
 <li>JRuby 1.7</li>
-<li>Rubinius 2.1</li>
+<li>Rubinius 2.2</li>
 </ul>
 
 <p><strong>Note</strong>: JRuby 1.6 is not officially supported, although 1.6.8 should work.</p>
@@ -149,16 +150,48 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <p>Some of the new features added to the driver have unfortunately led to changes in the original cql-rb API. In the examples directory, you can find <a href="https://github.com/datastax/ruby-driver/blob/master/examples/cql-rb-wrapper.rb">an example of how to wrap the ruby driver to achieve almost complete interface parity with cql-rb</a> to assist you with gradual upgrade.</p>
 
-<h2 id="what-s-new-in-v1-0-0-rc-1">What’s new in v1.0.0.rc.1</h2>
+<h2 id="what-s-new-in-v1-0-0">What’s new in v1.0.0</h2>
 
 <p>Current release introduces the following new features:</p>
 
 <ul>
-<li><a href="http://datastax.github.io/ruby-driver/features/load_balancing/default_policy/">Token Aware Data Center Aware Round Robin load balancing is now default</a></li>
-<li><a href="http://datastax.github.io/ruby-driver/features/error_handling/">Improved exception class hierarchy and documentation and automatic detection of broken connections using heartbeats</a></li>
-<li><a href="http://datastax.github.io/ruby-driver/features/address_resolution/">Configurable node address resolution with EC2 multi-region support</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/features/asynchronous_io/">Asynchronous execution</a></li>
+<li>One-off, <a href="http://datastax.github.io/ruby-driver/features/basics/prepared_statements/">prepared</a> and <a href="http://datastax.github.io/ruby-driver/features/basics/batch_statements/">batch statements</a>
+</li>
+<li>Automatic peer discovery and cluster metadata with <a href="http://datastax.github.io/ruby-driver/features/state_listeners/">support for change notifications</a>
+</li>
+<li>Various <a href="http://datastax.github.io/ruby-driver/features/load_balancing/">load-balancing</a>, <a href="http://datastax.github.io/ruby-driver/features/retry_policies/">retry</a> and reconnection policies, <a href="http://datastax.github.io/ruby-driver/features/load_balancing/implementing_a_policy/">with ability to write your own</a>
+</li>
+<li><a href="http://datastax.github.io/ruby-driver/features/security/ssl_encryption/">SSL encryption</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/features/error_handling/">Flexible and robust error handling</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/features/debugging/">Per-request execution information and tracing</a></li>
+<li><a href="http://datastax.github.io/ruby-driver/features/address_resolution/">Configurable address resolution</a></li>
 </ul>
 
+<h2 id="code-examples">Code examples</h2>
+
+<p>The DataStax Ruby Driver uses the awesome <a href="http://cukes.info/">Cucumber Framework</a> for both end-to-end, or acceptance, testing and constructing documentation. All of the features supported by the driver have appropriate acceptance tests with easy-to-copy code examples in the <code>features/</code> directory.</p>
+
+<h2 id="running-tests">Running tests</h2>
+
+<p>If you don’t feel like reading through the following instructions on how to run ruby-driver tests, feel free to <a href="https://github.com/datastax/ruby-driver/blob/master/.travis.yml">check out .travis.yml for the entire build code</a>.</p>
+
+<ul>
+<li>Check out the driver codebase and install test dependencies:</li>
+</ul>
+<pre class="highlight"><code class="bash">git clone https://github.com/datastax/ruby-driver.git
+<span class="nb">cd </span>ruby-driver
+bundle install --without docs
+</code></pre>
+<ul>
+<li><p><a href="http://www.datastax.com/dev/blog/ccm-a-development-tool-for-creating-local-cassandra-clusters">Install ccm</a></p></li>
+<li><p>Run tests:</p></li>
+</ul>
+<pre class="highlight"><code class="bash">bundle <span class="nb">exec </span>cucumber <span class="c"># runs end-to-end tests (or bundle exec rake cucumber)</span>
+bundle <span class="nb">exec </span>rspec <span class="c"># runs unit tests (or bundle exec rake rspec)</span>
+bundle <span class="nb">exec </span>rake integration <span class="c"># run integration tests</span>
+bundle <span class="nb">exec </span>rake <span class="nb">test</span> <span class="c"># run both as well as integration tests</span>
+</code></pre>
 <h2 id="changelog-versioning">Changelog &amp; versioning</h2>
 
 <p>Check out the <a href="https://github.com/datastax/ruby-driver/releases">releases on GitHub</a> and <a href="https://github.com/datastax/ruby-driver/blob/master/CHANGELOG.md">changelog</a>. Version numbering follows the <a href="http://semver.org/">semantic versioning</a> scheme.</p>
@@ -172,7 +205,10 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <ul>
 <li>JRuby 1.6 is not officially supported, although 1.6.8 should work, if you’re stuck in JRuby 1.6.8 try and see if it works for you.</li>
 <li>Because the driver reactor is using <code>IO.select</code>, the maximum number of tcp connections allowed is 1024.</li>
+<li>Because the driver uses <code>IO#write_nonblock</code>, Windows is not supported.</li>
 </ul>
+
+<p>Please <a href="http://datastax.github.io/ruby-driver/features/">refer to the usage documentation for more information on common pitfalls</a></p>
 
 <h2 id="credits">Credits</h2>
 
@@ -197,7 +233,9 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 <li><a href="#quick-start">Quick start</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb</a></li>
-<li><a href="#what-s-new-in-v1-0-0-rc-1">What’s new in v1.0.0.rc.1</a></li>
+<li><a href="#what-s-new-in-v1-0-0">What’s new in v1.0.0</a></li>
+<li><a href="#code-examples">Code examples</a></li>
+<li><a href="#running-tests">Running tests</a></li>
 <li><a href="#changelog-versioning">Changelog &amp; versioning</a></li>
 <li><a href="#known-bugs-limitations">Known bugs &amp; limitations</a></li>
 <li><a href="#credits">Credits</a></li>
@@ -209,7 +247,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0.rc.1</li>
+        <li>v1.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
