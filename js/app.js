@@ -100,7 +100,7 @@
         var result = $scope.results[$scope.current]
 
         if (result) {
-          window.location.pathname = result.path;
+          window.location.pathname = '/ruby-driver' + result.path;
         }
       }
 
