@@ -527,8 +527,62 @@ combine
   </dd>
 
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future.all</code> succeeds when all futures succeed
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">futures</span> <span class="o">=</span> <span class="mi">10</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="no">Future</span><span class="p">.</span><span class="nf">value</span><span class="p">(</span><span class="n">i</span><span class="p">)}</span>
+<span class="n">expect</span><span class="p">(</span><span class="no">Future</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span><span class="n">futures</span><span class="p">).</span><span class="nf">get</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future.all</code> fails when any futures fail
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">futures</span> <span class="o">=</span> <span class="mi">9</span><span class="p">.</span><span class="nf">times</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="no">Future</span><span class="p">.</span><span class="nf">value</span><span class="p">(</span><span class="n">i</span><span class="p">)}</span>
+<span class="n">futures</span> <span class="o">&lt;&lt;</span> <span class="no">Future</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="no">RuntimeError</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"something happened"</span><span class="p">))</span>
+<span class="n">expect</span> <span class="p">{</span> <span class="no">Future</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span><span class="n">futures</span><span class="p">).</span><span class="nf">get</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="s2">"something happened"</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
 
 </dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="promise-class_method">
+  <div class="panel-heading method-header">
+  
+    
+      <em>self.</em><span class="path"><strong>promise</strong></span> 
+    
+  
+  
+  
+    <a class="anchor" href="#promise-class_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns a new promise instance</p>
+
+<dl class="dl-horizontal notes">
+
+</dl>
+
   </div>
 </div>
 
@@ -1950,7 +2004,7 @@ future itself
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.0</li>
+        <li>v1.1.1</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

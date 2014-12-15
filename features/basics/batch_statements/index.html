@@ -315,6 +315,31 @@ songs contain 3 rows</code></pre>
 batch applied? false</code></pre>
 </dd>
 </dl>
+<div class="pull-right"><span class="label label-primary">since cassadra v1.2</span></div>
+<h2 id="cassandra-1-2-doesn-t-support-batch-statements">Cassandra 1.2 doesn&#8217;t support batch statements<a class="anchor" href="#cassandra-1-2-doesn-t-support-batch-statements" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">cluster</span> <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s2">"simplex"</span><span class="p">)</span>
+<span class="n">batch</span>   <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">batch</span>
+
+<span class="n">batch</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="s2">"INSERT INTO cas_batch (k, v) VALUES ('key1', 0)"</span><span class="p">)</span>
+
+<span class="k">begin</span>
+  <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="p">.</span><span class="nf">message</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span></code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>Cassandra::Errors::ClientError: Batch statements are not supported by the current version of Apache Cassandra</code></pre>
+</dd>
+</dl>
 </div>
         </div>
         <nav class="col-md-3 side-nav">
@@ -351,6 +376,8 @@ batch applied? false</code></pre>
 <li><a href="#a-prepared-statement-is-executed-in-a-batch">A prepared statement is executed in a batch
 </a></li>
 <li><a href="#a-cas-batch-is-never-applied-more-than-once">A cas batch is never applied more than once
+</a></li>
+<li><a href="#cassandra-1-2-doesn-t-support-batch-statements">Cassandra 1.2 doesn&#8217;t support batch statements
 </a></li>
 </ul>
                 </li>
@@ -404,7 +431,7 @@ batch applied? false</code></pre>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.0</li>
+        <li>v1.1.1</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
