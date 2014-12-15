@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Policy</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -87,9 +89,10 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>
+  <h1 id="abstract-module-cassandra-retry-policy">
 <small> <span class="label label-info">abstract</span>
-  module</small> Cassandra::Retry::Policy</h1>
+  module</small> Cassandra::Retry::Policy<a class="anchor" href="#abstract-module-cassandra-retry-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 </div>
 
 <dl class="dl-horizontal notes">
@@ -105,7 +108,8 @@ its methods. This class exists for documentation purposes only.
 
 
 
-<h2>Mixed into</h2>
+<h2 id="mixed-into">Mixed into<a class="anchor" href="#mixed-into" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="included">
   <ul class="list-inline">
     
@@ -118,7 +122,8 @@ its methods. This class exists for documentation purposes only.
   </ul>
 </div>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods<a class="anchor" href="#methods" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="module-methods">
   
     <div class="panel panel-default" id="read_timeout-instance_method">
@@ -130,6 +135,7 @@ its methods. This class exists for documentation purposes only.
   
   
   
+    <a class="anchor" href="#read_timeout-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Decides wether to retry a read and at what consistency level.</p>
@@ -144,7 +150,8 @@ responses if data_present is false.
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -189,7 +196,7 @@ responses if data_present is false.
           
           
           the original consistency level for the
-request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+request, one of <code><a href="../../#consistencies-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
           
         </td>
@@ -313,6 +320,7 @@ checksum) was present in the received responses.
     </ul>
   </dd>
 
+
 </dl>
   </div>
 </div>
@@ -327,6 +335,7 @@ checksum) was present in the received responses.
   
   
   
+    <a class="anchor" href="#write_timeout-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Decides wether to retry a write and at what consistency level.</p>
@@ -335,7 +344,8 @@ checksum) was present in the received responses.
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -380,7 +390,7 @@ checksum) was present in the received responses.
           
           
           the original consistency level for the
-request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+request, one of <code><a href="../../#consistencies-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
           
         </td>
@@ -396,7 +406,7 @@ request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cassandra::
         <td class="details">
           
           
-          One of <code><a href="../../#WRITE_TYPES-constant" title="Cassandra::WRITE_TYPES (constant)">WRITE_TYPES</a></code>
+          One of <code><a href="../../#write_types-constant" title="Cassandra::WRITE_TYPES (constant)">WRITE_TYPES</a></code>
 
           
         </td>
@@ -503,6 +513,7 @@ query timed out
     </ul>
   </dd>
 
+
 </dl>
   </div>
 </div>
@@ -517,6 +528,7 @@ query timed out
   
   
   
+    <a class="anchor" href="#unavailable-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Decides wether to retry and at what consistency level on an Unavailable
@@ -526,7 +538,8 @@ exception.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -571,7 +584,7 @@ exception.</p>
           
           
           the original consistency level for the
-request, one of <code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+request, one of <code><a href="../../#consistencies-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
           
         </td>
@@ -677,6 +690,7 @@ requested consistency level
     </ul>
   </dd>
 
+
 </dl>
   </div>
 </div>
@@ -691,6 +705,7 @@ requested consistency level
   
   
   
+    <a class="anchor" href="#try_again-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a decision that signals retry at a given consistency</p>
@@ -699,7 +714,8 @@ requested consistency level
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -728,7 +744,7 @@ requested consistency level
           
           
           consistency level for the retry, one of
-<code><a href="../../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+<code><a href="../../#consistencies-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
           
         </td>
@@ -772,6 +788,7 @@ requested consistency level
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -786,6 +803,7 @@ requested consistency level
   
   
   
+    <a class="anchor" href="#reraise-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a decision that signals to driver to reraise original error to
@@ -796,6 +814,7 @@ the application</p>
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -830,6 +849,7 @@ the application</p>
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -844,6 +864,7 @@ the application</p>
   
   
   
+    <a class="anchor" href="#ignore-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a decision that signals to driver to ignore the error</p>
@@ -853,6 +874,7 @@ the application</p>
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -887,6 +909,7 @@ and return an empty result to the application
     </tbody>
   </table>
 </dd>
+
 
 </dl>
   </div>
@@ -1015,7 +1038,7 @@ and return an empty result to the application
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -1043,10 +1066,11 @@ and return an empty result to the application
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

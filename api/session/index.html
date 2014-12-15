@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Session</title>
 
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
     <link href="../../css/hotkeys.css" rel="stylesheet">
@@ -81,9 +83,10 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>
+  <h1 id="class-cassandra-session">
 <small>
-  class</small> Cassandra::Session</h1>
+  class</small> Cassandra::Session<a class="anchor" href="#class-cassandra-session" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 </div>
 <p>Sessions are used for query execution. Each session tracks its current keyspace. A session should be reused as much as possible, however it is ok to create several independent session for interacting with different keyspaces in the same application.</p>
 
@@ -92,11 +95,13 @@
 </dl>
 
 
-<h2>Inherits</h2>
+<h2 id="inherits">Inherits<a class="anchor" href="#inherits" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="superclass"><code>Object</code></div>
 
 
-<h2>Extends</h2>
+<h2 id="extends">Extends<a class="anchor" href="#extends" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="extends">
   <ul class="list-inline">
     
@@ -107,7 +112,8 @@
 
 
 
-<h2>Methods</h2>
+<h2 id="methods">Methods<a class="anchor" href="#methods" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="module-methods">
   
     <div class="panel panel-default" id="keyspace-instance_method">
@@ -119,6 +125,7 @@
   
   
   
+    <a class="anchor" href="#keyspace-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns current keyspace</p>
@@ -128,6 +135,7 @@
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -162,6 +170,7 @@
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -176,6 +185,7 @@
   
   
   
+    <a class="anchor" href="#execute_async-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Executes a given statement and returns a future result</p>
@@ -196,7 +206,8 @@ above.
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -298,7 +309,7 @@ statement
             </span>
             
               consistency level for the request.
-Must be one of <code><a href="../#CONSISTENCIES-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
+Must be one of <code><a href="../#consistencies-constant" title="Cassandra::CONSISTENCIES (constant)">CONSISTENCIES</a></code>
 
             
           </td>
@@ -368,7 +379,26 @@ seconds after which to time out the request if it hasn&#8217;t completed
             
               this option is only
 relevant for conditional updates and specifies a serial consistency to
-be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">SERIAL_CONSISTENCIES</a></code>
+be used, one of <code><a href="../#serial_consistencies-constant" title="Cassandra::SERIAL_CONSISTENCIES (constant)">SERIAL_CONSISTENCIES</a></code>
+
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="name"><var>:paging_state</var></td>
+          <td class="type"><code>String</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>nil</code>
+              
+            </span>
+            
+              this option is used for
+stateless paging, where result paging is resumed some time after the
+initial request.
 
             
           </td>
@@ -422,6 +452,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
     </ul>
   </dd>
 
+
 </dl>
   </div>
 </div>
@@ -436,6 +467,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
   
   
   
+    <a class="anchor" href="#execute-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>A blocking wrapper around <code><a href="#execute_async-instance_method" title="Cassandra::Session#execute_async (method)">#execute_async</a></code></p>
@@ -445,6 +477,7 @@ be used, one of <code><a href="../#SERIAL_CONSISTENCIES-constant" title="Cassand
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -566,6 +599,7 @@ within the <code>:timeout</code> given
     </ul>
   </dd>
 
+
 </dl>
   </div>
 </div>
@@ -580,6 +614,7 @@ within the <code>:timeout</code> given
   
   
   
+    <a class="anchor" href="#prepare_async-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Prepares a given statement and returns a future prepared statement</p>
@@ -588,7 +623,8 @@ within the <code>:timeout</code> given
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -738,6 +774,7 @@ prepared statement
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -752,6 +789,7 @@ prepared statement
   
   
   
+    <a class="anchor" href="#prepare-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>A blocking wrapper around <code><a href="#prepare_async-instance_method" title="Cassandra::Session#prepare_async (method)">#prepare_async</a></code></p>
@@ -761,6 +799,7 @@ prepared statement
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -853,6 +892,7 @@ prepared statement
     </ul>
   </dd>
 
+
 </dl>
   </div>
 </div>
@@ -867,10 +907,15 @@ prepared statement
   
   
   
-    <span class="aliases">Aliased as:
-    <span class="names"><span id="batch-instance_method"><strong>batch</strong></span></span>
+    <span class="aliases">aliased as:
+      <span class="names">
+      
+      <span id="batch-instance_method"><strong>batch</strong></span>
+      
+      </span>
     </span>
   
+    <a class="anchor" href="#logged_batch-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a logged <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code> instance and optionally yields it to
@@ -881,6 +926,7 @@ a given block</p>
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Yield Parameters:
 </dt>
@@ -951,6 +997,7 @@ a given block</p>
     </tbody>
   </table>
 </dd>
+
 
 </dl>
   </div>
@@ -966,6 +1013,7 @@ a given block</p>
   
   
   
+    <a class="anchor" href="#unlogged_batch-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a unlogged <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code> instance and optionally yields it
@@ -976,6 +1024,7 @@ to a given block</p>
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Yield Parameters:
 </dt>
@@ -1046,6 +1095,27 @@ to a given block</p>
     </tbody>
   </table>
 </dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Session#unlogged_batch</code> creates an unlogged batch
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s1">'batch'</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="no">Statements</span><span class="o">::</span><span class="no">Batch</span><span class="o">::</span><span class="no">Unlogged</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:new</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">unlogged_batch</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
 
 </dl>
   </div>
@@ -1061,6 +1131,7 @@ to a given block</p>
   
   
   
+    <a class="anchor" href="#counter_batch-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a counter <code><a href="../statements/batch/" title="Cassandra::Statements::Batch (class)">Statements::Batch</a></code> instance and optionally yields it
@@ -1071,6 +1142,7 @@ to a given block</p>
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Yield Parameters:
 </dt>
@@ -1142,6 +1214,27 @@ to a given block</p>
   </table>
 </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Session#counter_batch</code> creates a counter batch
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s1">'batch'</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="no">Statements</span><span class="o">::</span><span class="no">Batch</span><span class="o">::</span><span class="no">Counter</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:new</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">counter_batch</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -1156,6 +1249,7 @@ to a given block</p>
   
   
   
+    <a class="anchor" href="#close_async-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Asynchronously closes current session</p>
@@ -1165,6 +1259,7 @@ to a given block</p>
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -1201,6 +1296,27 @@ self once closed
   </table>
 </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Session#close_async</code> uses Client#close
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">client</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:close</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="no">Ione</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">resolved</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">close_async</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">have_received</span><span class="p">(</span><span class="ss">:fulfill</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="n">session</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -1215,6 +1331,7 @@ self once closed
   
   
   
+    <a class="anchor" href="#close-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Synchronously closes current session</p>
@@ -1224,6 +1341,7 @@ self once closed
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -1267,6 +1385,26 @@ self once closed
     </ul>
   </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Session#close</code> resolves a promise returned by #close_async
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">close</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -1281,6 +1419,7 @@ self once closed
   
   
   
+    <a class="anchor" href="#inspect-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a CLI-friendly session representation</p>
@@ -1290,6 +1429,7 @@ self once closed
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -1323,6 +1463,7 @@ self once closed
     </tbody>
   </table>
 </dd>
+
 
 </dl>
   </div>
@@ -1435,7 +1576,7 @@ self once closed
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -1463,10 +1604,11 @@ self once closed
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../js/mousetrap.js"></script>
     <script src="../../js/hotkeys.js"></script>
+    <script src="../../js/ZeroClipboard.js"></script>
     <script src="../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

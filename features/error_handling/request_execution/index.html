@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Request Execution</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,16 +87,19 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="request-execution-errors">Request Execution Errors</h1>
+<h1 id="request-execution-errors">Request Execution Errors<a class="anchor" href="#request-execution-errors" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>The Ruby driver will error out and provide error messages for various errors.
 <a href="../">Check out the request execution diagram in Error Handling guide</a>
 and come back here for real-world examples of error handling.</p>
-<h2 id="background">Background</h2>
+<h2 id="background">Background<a class="anchor" href="#background" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster</dd>
 </dl>
-<h2 id="executing-a-statement-with-invalid-syntax">Executing a statement with invalid syntax</h2>
+<h2 id="executing-a-statement-with-invalid-syntax">Executing a statement with invalid syntax<a class="anchor" href="#executing-a-statement-with-invalid-syntax" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -119,7 +124,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::SyntaxError: line 0:-1 mismatched input '&lt;EOF&gt;' expecting K_VALUES\n</code></pre>
 </dd>
 </dl>
-<h2 id="connecting-to-non-existent-keyspace">Connecting to non-existent keyspace</h2>
+<h2 id="connecting-to-non-existent-keyspace">Connecting to non-existent keyspace<a class="anchor" href="#connecting-to-non-existent-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -138,7 +144,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::InvalidError: Keyspace 'badkeyspace' does not exist</code></pre>
 </dd>
 </dl>
-<h2 id="modifying-system-keyspace">Modifying system keyspace</h2>
+<h2 id="modifying-system-keyspace">Modifying system keyspace<a class="anchor" href="#modifying-system-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -158,7 +165,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::UnauthorizedError: system keyspace is not user-modifiable.</code></pre>
 </dd>
 </dl>
-<h2 id="dropping-non-existent-keyspace">Dropping non-existent keyspace</h2>
+<h2 id="dropping-non-existent-keyspace">Dropping non-existent keyspace<a class="anchor" href="#dropping-non-existent-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -178,7 +186,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::ConfigurationError: Cannot drop non existing keyspace 'badkeyspace'.</code></pre>
 </dd>
 </dl>
-<h2 id="creating-keyspace-that-already-exists">Creating keyspace that already exists</h2>
+<h2 id="creating-keyspace-that-already-exists">Creating keyspace that already exists<a class="anchor" href="#creating-keyspace-that-already-exists" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span></code></pre>
@@ -201,7 +210,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::AlreadyExistsError: Cannot add existing keyspace "simplex"</code></pre>
 </dd>
 </dl>
-<h2 id="connecting-with-invalid-authentication-credentials">Connecting with invalid authentication credentials</h2>
+<h2 id="connecting-with-invalid-authentication-credentials">Connecting with invalid authentication credentials<a class="anchor" href="#connecting-with-invalid-authentication-credentials" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster with authentication enabled</dd>
@@ -223,7 +233,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::AuthenticationError: Username and/or password are incorrect</code></pre>
 </dd>
 </dl>
-<h2 id="connecting-to-unreachable-cluster">Connecting to unreachable cluster</h2>
+<h2 id="connecting-to-unreachable-cluster">Connecting to unreachable cluster<a class="anchor" href="#connecting-to-unreachable-cluster" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>node 1 is unreachable</dd>
@@ -242,7 +253,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::IOError: Could not connect to 127.0.0.1:9042 within 1s</code></pre>
 </dd>
 </dl>
-<h2 id="executing-a-statement-when-all-hosts-are-down">Executing a statement when all hosts are down</h2>
+<h2 id="executing-a-statement-when-all-hosts-are-down">Executing a statement when all hosts are down<a class="anchor" href="#executing-a-statement-when-all-hosts-are-down" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
@@ -289,7 +301,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::NoHostsAvailable: All hosts down</code></pre>
 </dd>
 </dl>
-<h2 id="executing-a-statement-when-can-t-achieve-desired-consistency">Executing a statement when can&#8217;t achieve desired consistency</h2>
+<h2 id="executing-a-statement-when-can-t-achieve-desired-consistency">Executing a statement when can&#8217;t achieve desired consistency<a class="anchor" href="#executing-a-statement-when-can-t-achieve-desired-consistency" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -317,7 +330,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::UnavailableError: Cannot achieve consistency level ALL</code></pre>
 </dd>
 </dl>
-<h2 id="executing-a-select-statement-when-replica-times-out">Executing a SELECT statement when replica times out</h2>
+<h2 id="executing-a-select-statement-when-replica-times-out">Executing a SELECT statement when replica times out<a class="anchor" href="#executing-a-select-statement-when-replica-times-out" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
@@ -364,7 +378,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::ReadTimeoutError: Operation timed out - received only 0 responses.</code></pre>
 </dd>
 </dl>
-<h2 id="executing-an-update-statement-when-replica-times-out">Executing an UPDATE statement when replica times out</h2>
+<h2 id="executing-an-update-statement-when-replica-times-out">Executing an UPDATE statement when replica times out<a class="anchor" href="#executing-an-update-statement-when-replica-times-out" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
@@ -411,7 +426,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::WriteTimeoutError: Operation timed out - received only 0 responses.</code></pre>
 </dd>
 </dl>
-<h2 id="truncating-a-table-when-replica-times-out">Truncating a table when replica times out</h2>
+<h2 id="truncating-a-table-when-replica-times-out">Truncating a table when replica times out<a class="anchor" href="#truncating-a-table-when-replica-times-out" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
@@ -458,7 +474,8 @@ and come back here for real-world examples of error handling.</p>
 <dd>its output should contain:<pre><code>Cassandra::Errors::TruncateError: Error during truncate</code></pre>
 </dd>
 </dl>
-<h2 id="executing-a-statement-when-all-nodes-time-out">Executing a statement when all nodes time out</h2>
+<h2 id="executing-a-statement-when-all-nodes-time-out">Executing a statement when all nodes time out<a class="anchor" href="#executing-a-statement-when-all-nodes-time-out" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
@@ -561,20 +578,34 @@ and come back here for real-world examples of error handling.</p>
                 <li class="active">
                   <a href="./">Request Execution</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#executing-a-statement-with-invalid-syntax">Executing a statement with invalid syntax</a></li>
-<li><a href="#connecting-to-non-existent-keyspace">Connecting to non-existent keyspace</a></li>
-<li><a href="#modifying-system-keyspace">Modifying system keyspace</a></li>
-<li><a href="#dropping-non-existent-keyspace">Dropping non-existent keyspace</a></li>
-<li><a href="#creating-keyspace-that-already-exists">Creating keyspace that already exists</a></li>
-<li><a href="#connecting-with-invalid-authentication-credentials">Connecting with invalid authentication credentials</a></li>
-<li><a href="#connecting-to-unreachable-cluster">Connecting to unreachable cluster</a></li>
-<li><a href="#executing-a-statement-when-all-hosts-are-down">Executing a statement when all hosts are down</a></li>
-<li><a href="#executing-a-statement-when-can-t-achieve-desired-consistency">Executing a statement when can&#8217;t achieve desired consistency</a></li>
-<li><a href="#executing-a-select-statement-when-replica-times-out">Executing a SELECT statement when replica times out</a></li>
-<li><a href="#executing-an-update-statement-when-replica-times-out">Executing an UPDATE statement when replica times out</a></li>
-<li><a href="#truncating-a-table-when-replica-times-out">Truncating a table when replica times out</a></li>
-<li><a href="#executing-a-statement-when-all-nodes-time-out">Executing a statement when all nodes time out</a></li>
+<li><a href="#background">Background
+</a></li>
+<li><a href="#executing-a-statement-with-invalid-syntax">Executing a statement with invalid syntax
+</a></li>
+<li><a href="#connecting-to-non-existent-keyspace">Connecting to non-existent keyspace
+</a></li>
+<li><a href="#modifying-system-keyspace">Modifying system keyspace
+</a></li>
+<li><a href="#dropping-non-existent-keyspace">Dropping non-existent keyspace
+</a></li>
+<li><a href="#creating-keyspace-that-already-exists">Creating keyspace that already exists
+</a></li>
+<li><a href="#connecting-with-invalid-authentication-credentials">Connecting with invalid authentication credentials
+</a></li>
+<li><a href="#connecting-to-unreachable-cluster">Connecting to unreachable cluster
+</a></li>
+<li><a href="#executing-a-statement-when-all-hosts-are-down">Executing a statement when all hosts are down
+</a></li>
+<li><a href="#executing-a-statement-when-can-t-achieve-desired-consistency">Executing a statement when can&#8217;t achieve desired consistency
+</a></li>
+<li><a href="#executing-a-select-statement-when-replica-times-out">Executing a SELECT statement when replica times out
+</a></li>
+<li><a href="#executing-an-update-statement-when-replica-times-out">Executing an UPDATE statement when replica times out
+</a></li>
+<li><a href="#truncating-a-table-when-replica-times-out">Truncating a table when replica times out
+</a></li>
+<li><a href="#executing-a-statement-when-all-nodes-time-out">Executing a statement when all nodes time out
+</a></li>
 </ul>
                 </li>
                 
@@ -599,7 +630,7 @@ and come back here for real-world examples of error handling.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -627,10 +658,11 @@ and come back here for real-world examples of error handling.</p>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

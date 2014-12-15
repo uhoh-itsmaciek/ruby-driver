@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Automatic Reconnection</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,10 +87,12 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="automatic-reconnection">Automatic reconnection</h1>
+<h1 id="automatic-reconnection">Automatic reconnection<a class="anchor" href="#automatic-reconnection" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>Ruby driver automatically reestablishes failed connections to Cassandra
 cluster. It will use a reconnection policy to determine retry intervals.</p>
-<h2 id="background">Background</h2>
+<h2 id="background">Background<a class="anchor" href="#background" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -186,7 +190,8 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 <dt>And </dt>
 <dd>I wait for its output to contain &#8220;START&#8221;</dd>
 </dl>
-<h2 id="driver-reconnects-when-all-hosts-are-down">Driver reconnects when all hosts are down</h2>
+<h2 id="driver-reconnects-when-all-hosts-are-down">Driver reconnects when all hosts are down<a class="anchor" href="#driver-reconnects-when-all-hosts-are-down" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>When </dt>
 <dd>node 1 stops</dd>
@@ -254,8 +259,10 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
                 <li class="active">
                   <a href="./">Automatic Reconnection</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#driver-reconnects-when-all-hosts-are-down">Driver reconnects when all hosts are down</a></li>
+<li><a href="#background">Background
+</a></li>
+<li><a href="#driver-reconnects-when-all-hosts-are-down">Driver reconnects when all hosts are down
+</a></li>
 </ul>
                 </li>
                 
@@ -280,7 +287,7 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -308,10 +315,11 @@ cluster. It will use a reconnection policy to determine retry intervals.</p>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

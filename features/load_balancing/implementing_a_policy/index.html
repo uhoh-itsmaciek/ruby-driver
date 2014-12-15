@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Implementing A Policy</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,7 +87,8 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="implementing-custom-load-balancing-policies">Implementing custom load balancing policies</h1>
+<h1 id="implementing-custom-load-balancing-policies">Implementing custom load balancing policies<a class="anchor" href="#implementing-custom-load-balancing-policies" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>To implement a load balancing policy, you must implement all of the methods
 specified in <a href="../../../api/load_balancing/policy"><code>Cassandra::LoadBalancing::Policy</code></a>.
 Currently, load balancing policies are required to be thread-safe.</p>
@@ -95,7 +98,8 @@ Currently, load balancing policies are required to be thread-safe.</p>
 
 <p>Plan will be accessed from multiple threads, but never in parallel and it
 doesn’t have to be thread-safe.</p>
-<h2 id="background">Background</h2>
+<h2 id="background">Background<a class="anchor" href="#background" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -134,7 +138,8 @@ doesn’t have to be thread-safe.</p>
 <span class="p">);</span></code></pre>
 </dd>
 </dl>
-<h2 id="a-policy-to-ignore-a-certain-keyspace">A policy to ignore a certain keyspace</h2>
+<h2 id="a-policy-to-ignore-a-certain-keyspace">A policy to ignore a certain keyspace<a class="anchor" href="#a-policy-to-ignore-a-certain-keyspace" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a file named &#8220;ignoring_keyspace_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">IgnoringKeyspacePolicy</span>
@@ -154,6 +159,9 @@ doesn’t have to be thread-safe.</p>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">teardown</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
@@ -206,7 +214,8 @@ doesn’t have to be thread-safe.</p>
 <dd>its output should contain:<pre><code>success</code></pre>
 </dd>
 </dl>
-<h2 id="a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts</h2>
+<h2 id="a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts<a class="anchor" href="#a-policy-to-ignore-certain-hosts" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a file named &#8220;blacklist_policy.rb&#8221; with:<pre class="highlight"><code class="ruby"><span class="k">class</span> <span class="nc">BlackListPolicy</span>
@@ -225,6 +234,9 @@ doesn’t have to be thread-safe.</p>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">teardown</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
   <span class="k">end</span>
 
   <span class="k">def</span> <span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
@@ -336,9 +348,12 @@ Hosts used:
                 <li class="active">
                   <a href="./">Implementing A Policy</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#a-policy-to-ignore-a-certain-keyspace">A policy to ignore a certain keyspace</a></li>
-<li><a href="#a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts</a></li>
+<li><a href="#background">Background
+</a></li>
+<li><a href="#a-policy-to-ignore-a-certain-keyspace">A policy to ignore a certain keyspace
+</a></li>
+<li><a href="#a-policy-to-ignore-certain-hosts">A policy to ignore certain hosts
+</a></li>
 </ul>
                 </li>
                 
@@ -375,7 +390,7 @@ Hosts used:
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -403,10 +418,11 @@ Hosts used:
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

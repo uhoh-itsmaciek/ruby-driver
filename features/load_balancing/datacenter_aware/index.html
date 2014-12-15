@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Datacenter Aware</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,7 +87,8 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="datacenter-aware-round-robin-policy">Datacenter-aware Round Robin Policy</h1>
+<h1 id="datacenter-aware-round-robin-policy">Datacenter-aware Round Robin Policy<a class="anchor" href="#datacenter-aware-round-robin-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>A specialized Round Robin load balancing policy allows for querying remote
 datacenters only when all local nodes are down. This policy will round robin
 requests across hosts in the local datacenter, falling back to remote
@@ -99,7 +102,8 @@ by passing that number when constructing a policy instance.</p>
 <p>By default, this policy will not attempt to use remote hosts for local
 consistencies (<code>:local_one</code> or <code>:local_quorum</code>), however, it is possible to
 change that behavior via constructor.</p>
-<h2 id="background">Background</h2>
+<h2 id="background">Background<a class="anchor" href="#background" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
@@ -140,7 +144,8 @@ change that behavior via constructor.</p>
 <span class="p">);</span></code></pre>
 </dd>
 </dl>
-<h2 id="first-seen-datacenter-is-considered-local-when-not-explicitly-given">First seen datacenter is considered local when not explicitly given</h2>
+<h2 id="first-seen-datacenter-is-considered-local-when-not-explicitly-given">First seen datacenter is considered local when not explicitly given<a class="anchor" href="#first-seen-datacenter-is-considered-local-when-not-explicitly-given" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -164,7 +169,8 @@ change that behavior via constructor.</p>
 127.0.0.4</code></pre>
 </dd>
 </dl>
-<h2 id="requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter</h2>
+<h2 id="requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter<a class="anchor" href="#requests-are-automatically-routed-to-local-datacenter" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -188,7 +194,8 @@ change that behavior via constructor.</p>
 127.0.0.4</code></pre>
 </dd>
 </dl>
-<h2 id="requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down</h2>
+<h2 id="requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down<a class="anchor" href="#requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -216,7 +223,8 @@ change that behavior via constructor.</p>
 127.0.0.2</code></pre>
 </dd>
 </dl>
-<h2 id="requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters</h2>
+<h2 id="requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters<a class="anchor" href="#requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -244,7 +252,8 @@ change that behavior via constructor.</p>
 <dd>its output should match:<pre><code>Used 1 host, with ip 127\.0\.0\.(1|2)</code></pre>
 </dd>
 </dl>
-<h2 id="requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters</h2>
+<h2 id="requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters<a class="anchor" href="#requests-with-local-consistencies-are-not-routed-to-remote-datacenters" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -271,7 +280,8 @@ change that behavior via constructor.</p>
 <dd>its output should contain:<pre><code>success</code></pre>
 </dd>
 </dl>
-<h2 id="routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters</h2>
+<h2 id="routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters<a class="anchor" href="#routing-requests-with-local-consistencies-to-remote-datacenters" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -339,13 +349,20 @@ change that behavior via constructor.</p>
                 <li class="active">
                   <a href="./">Datacenter Aware</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#first-seen-datacenter-is-considered-local-when-not-explicitly-given">First seen datacenter is considered local when not explicitly given</a></li>
-<li><a href="#requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter</a></li>
-<li><a href="#requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down</a></li>
-<li><a href="#requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters</a></li>
-<li><a href="#requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters</a></li>
-<li><a href="#routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters</a></li>
+<li><a href="#background">Background
+</a></li>
+<li><a href="#first-seen-datacenter-is-considered-local-when-not-explicitly-given">First seen datacenter is considered local when not explicitly given
+</a></li>
+<li><a href="#requests-are-automatically-routed-to-local-datacenter">Requests are automatically routed to local datacenter
+</a></li>
+<li><a href="#requests-are-routed-to-remote-datacenters-if-local-datacenter-is-down">Requests are routed to remote datacenters if local datacenter is down
+</a></li>
+<li><a href="#requests-are-routed-up-to-a-maximum-number-of-hosts-in-remote-datacenters">Requests are routed up to a maximum number of hosts in remote datacenters
+</a></li>
+<li><a href="#requests-with-local-consistencies-are-not-routed-to-remote-datacenters">Requests with local consistencies are not routed to remote datacenters
+</a></li>
+<li><a href="#routing-requests-with-local-consistencies-to-remote-datacenters">Routing requests with local consistencies to remote datacenters
+</a></li>
 </ul>
                 </li>
                 
@@ -394,7 +411,7 @@ change that behavior via constructor.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -422,10 +439,11 @@ change that behavior via constructor.</p>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

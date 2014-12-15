@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - TimeUuid</title>
 
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
     <link href="../../css/hotkeys.css" rel="stylesheet">
@@ -81,9 +83,10 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>
+  <h1 id="class-cassandra-timeuuid">
 <small>
-  class</small> Cassandra::TimeUuid</h1>
+  class</small> Cassandra::TimeUuid<a class="anchor" href="#class-cassandra-timeuuid" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 </div>
 <p>A variant of UUID which can extract its time component.</p>
 
@@ -94,12 +97,14 @@
 </dl>
 
 
-<h2>Inherits</h2>
+<h2 id="inherits">Inherits<a class="anchor" href="#inherits" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="superclass"><code><a href="../uuid/" title="Cassandra::Uuid (class)">Uuid</a></code></div>
 
 
 
-<h2>Includes</h2>
+<h2 id="includes">Includes<a class="anchor" href="#includes" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="includes">
   <ul class="list-inline">
     
@@ -109,7 +114,8 @@
 </div>
 
 
-<h2>Methods</h2>
+<h2 id="methods">Methods<a class="anchor" href="#methods" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="module-methods">
   
     <div class="panel panel-default" id="to_time-instance_method">
@@ -121,6 +127,7 @@
   
   
   
+    <a class="anchor" href="#to_time-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns the time component from this UUID as a Time.</p>
@@ -130,6 +137,7 @@
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -161,6 +169,27 @@
   </table>
 </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>TimeUuid#to_time</code> returns a Time
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">x</span> <span class="o">=</span> <span class="no">TimeUuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'00b69180-d0e1-11e2-8b8b-0800200c9a66'</span><span class="p">)</span>
+<span class="n">x</span><span class="p">.</span><span class="nf">to_time</span><span class="p">.</span><span class="nf">should</span> <span class="n">be</span> <span class="o">&gt;</span> <span class="no">Time</span><span class="p">.</span><span class="nf">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">57</span><span class="p">)</span>
+<span class="n">x</span><span class="p">.</span><span class="nf">to_time</span><span class="p">.</span><span class="nf">should</span> <span class="n">be</span> <span class="o">&lt;</span> <span class="no">Time</span><span class="p">.</span><span class="nf">utc</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">58</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -175,6 +204,7 @@
   
   
   
+    <a class="anchor" href="#to_date-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns the date component from this UUID as Date.</p>
@@ -186,6 +216,7 @@
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Returns:
 </dt>
@@ -217,6 +248,7 @@
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -231,6 +263,7 @@
   
   
   
+    <a class="anchor" href="#&lt;=&gt;-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Compares this timeuuid with another timeuuid</p>
@@ -239,7 +272,8 @@
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -334,6 +368,51 @@ and <code>1</code> when greater than <code>other</code>
       
     </ul>
   </dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>TimeUuid#</code> sorts by the time component
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">uuids</span><span class="p">.</span><span class="nf">shuffle</span><span class="p">.</span><span class="nf">sort</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">uuids</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>TimeUuid#</code> allows comparison of UUID and TimeUUID
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">x</span> <span class="o">=</span> <span class="n">generator</span><span class="p">.</span><span class="nf">now</span>
+<span class="n">y</span> <span class="o">=</span> <span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">value</span><span class="p">)</span>
+<span class="n">x</span><span class="p">.</span><span class="nf">should</span> <span class="o">==</span> <span class="n">y</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>TimeUuid#</code> allows comparison of TimeUUID and nil
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">x</span> <span class="o">=</span> <span class="n">generator</span><span class="p">.</span><span class="nf">now</span>
+<span class="n">y</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="nb">lambda</span> <span class="p">{</span> <span class="n">x</span><span class="p">.</span><span class="nf">should_not</span> <span class="o">==</span> <span class="n">y</span> <span class="p">}.</span><span class="nf">should_not</span> <span class="n">raise_error</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
 
 </dl>
   </div>
@@ -446,7 +525,7 @@ and <code>1</code> when greater than <code>other</code>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -474,10 +553,11 @@ and <code>1</code> when greater than <code>other</code>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../js/mousetrap.js"></script>
     <script src="../../js/hotkeys.js"></script>
+    <script src="../../js/ZeroClipboard.js"></script>
     <script src="../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

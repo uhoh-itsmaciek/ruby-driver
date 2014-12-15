@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Token Aware</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,7 +87,8 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="token-aware-load-balancing-policy">Token-aware Load Balancing Policy</h1>
+<h1 id="token-aware-load-balancing-policy">Token-aware Load Balancing Policy<a class="anchor" href="#token-aware-load-balancing-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>Token-aware policy is used to reduce network hops whenever possible by
 sending requests directly to the node that owns the data. Token-aware policy
 acts as a filter, wrapping another load balancing policy.</p>
@@ -96,7 +99,8 @@ locate replicas for a given statement.</p>
 
 <p>In case replica node(s) cannot be found or reached, this policy fallsback
 onto the wrapped policy plan.</p>
-<h2 id="background">Background</h2>
+<h2 id="background">Background<a class="anchor" href="#background" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
@@ -137,7 +141,8 @@ onto the wrapped policy plan.</p>
 <span class="p">);</span></code></pre>
 </dd>
 </dl>
-<h2 id="requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica</h2>
+<h2 id="requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica<a class="anchor" href="#requests-are-routed-to-the-primary-replica" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -167,7 +172,8 @@ uuid=f6071e72-48ec-4fcb-bf3e-379c8a696488 token=-1176857621403111796 replica=127
 uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.0.0.1 total=1</code></pre>
 </dd>
 </dl>
-<h2 id="requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down</h2>
+<h2 id="requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down<a class="anchor" href="#requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -240,9 +246,12 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
                 <li class="active">
                   <a href="./">Token Aware</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica</a></li>
-<li><a href="#requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down</a></li>
+<li><a href="#background">Background
+</a></li>
+<li><a href="#requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica
+</a></li>
+<li><a href="#requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down
+</a></li>
 </ul>
                 </li>
                 
@@ -287,7 +296,7 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -315,10 +324,11 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

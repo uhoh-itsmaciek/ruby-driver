@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Listener</title>
 
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
     <link href="../../css/hotkeys.css" rel="stylesheet">
@@ -81,9 +83,10 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>
+  <h1 id="abstract-class-cassandra-listener">
 <small> <span class="label label-info">abstract</span>
-  class</small> Cassandra::Listener</h1>
+  class</small> Cassandra::Listener<a class="anchor" href="#abstract-class-cassandra-listener" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 </div>
 <p>Cassandra state listener.</p>
 
@@ -98,6 +101,7 @@ solely for documentation purposes
 <dl class="tags">
   
 
+
   <dt class="tag-title">See Also:</dt>
   <dd class="tag-content">
     <ul class="see">
@@ -107,15 +111,18 @@ solely for documentation purposes
     </ul>
   </dd>
 
+
 </dl>
 
-<h2>Inherits</h2>
+<h2 id="inherits">Inherits<a class="anchor" href="#inherits" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="superclass"><code>Object</code></div>
 
 
 
 
-<h2>Methods</h2>
+<h2 id="methods">Methods<a class="anchor" href="#methods" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="module-methods">
   
     <div class="panel panel-default" id="host_up-instance_method">
@@ -127,6 +134,7 @@ solely for documentation purposes
   
   
   
+    <a class="anchor" href="#host_up-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever a host is considered to be up, whether
@@ -139,7 +147,8 @@ solely for documentation purposes
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -176,6 +185,7 @@ solely for documentation purposes
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -192,6 +202,7 @@ solely for documentation purposes
   
   
   
+    <a class="anchor" href="#host_down-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever a host is considered to be down, whether
@@ -204,7 +215,8 @@ solely for documentation purposes
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -241,6 +253,7 @@ solely for documentation purposes
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -257,6 +270,7 @@ solely for documentation purposes
   
   
   
+    <a class="anchor" href="#host_found-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever a host is discovered by the driver,
@@ -269,7 +283,8 @@ solely for documentation purposes
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -306,6 +321,7 @@ solely for documentation purposes
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -322,6 +338,7 @@ solely for documentation purposes
   
   
   
+    <a class="anchor" href="#host_lost-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever a host leaves the cluster, whether
@@ -334,7 +351,8 @@ solely for documentation purposes
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -373,6 +391,7 @@ solely for documentation purposes
 </dd>
 
 
+
 </dl>
   </div>
 </div>
@@ -387,6 +406,7 @@ solely for documentation purposes
   
   
   
+    <a class="anchor" href="#keyspace_created-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever a new keyspace is created.</p>
@@ -397,7 +417,8 @@ solely for documentation purposes
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -434,6 +455,7 @@ solely for documentation purposes
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -450,6 +472,7 @@ solely for documentation purposes
   
   
   
+    <a class="anchor" href="#keyspace_changed-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever an existing keyspace is changed. This
@@ -462,7 +485,8 @@ altered.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -499,6 +523,7 @@ altered.</p>
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -515,6 +540,7 @@ altered.</p>
   
   
   
+    <a class="anchor" href="#keyspace_dropped-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>This method is called whenever an existing keyspace is dropped.</p>
@@ -525,7 +551,8 @@ altered.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -562,6 +589,7 @@ altered.</p>
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -675,7 +703,7 @@ altered.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -703,10 +731,11 @@ altered.</p>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../js/mousetrap.js"></script>
     <script src="../../js/hotkeys.js"></script>
+    <script src="../../js/ZeroClipboard.js"></script>
     <script src="../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

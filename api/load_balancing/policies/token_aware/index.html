@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - TokenAware</title>
 
+    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../../favicon.png">
     <link href="../../../../css/style.css" rel="stylesheet">
     <link href="../../../../css/pygments.css" rel="stylesheet">
     <link href="../../../../css/hotkeys.css" rel="stylesheet">
@@ -93,17 +95,20 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>
+  <h1 id="class-tokenaware">
 <small>
-  class</small> Cassandra::LoadBalancing::Policies::TokenAware</h1>
+  class</small> <abbr title="Cassandra::LoadBalancing::Policies::TokenAware">TokenAware</abbr><a class="anchor" href="#class-tokenaware" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 </div>
 
 
-<h2>Inherits</h2>
+<h2 id="inherits">Inherits<a class="anchor" href="#inherits" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="superclass"><code><a href="../../policy/" title="Cassandra::LoadBalancing::Policy (class)">LoadBalancing::Policy</a></code></div>
 
 
-<h2>Extends</h2>
+<h2 id="extends">Extends<a class="anchor" href="#extends" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="extends">
   <ul class="list-inline">
     
@@ -114,27 +119,41 @@
 
 
 
-<h2>Methods</h2>
+<h2 id="methods">Methods<a class="anchor" href="#methods" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="module-methods">
   
     <div class="panel panel-default" id="initialize-instance_method">
   <div class="panel-heading method-header">
   
     
-      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>wrapped_policy</var><big>)</big> 
+      <em>self.</em><span class="path"><strong>new</strong></span><big>(</big><var>wrapped_policy</var>, <var>shuffle</var> = true<big>)</big> 
     
   
   
   
+    <a class="anchor" href="#initialize-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a new instance of TokenAware</p>
 
 <dl class="dl-horizontal notes">
 
+<dt><span class="label label-primary">Note</span></dt>
+<dd>If replicas are not shuffled (<code>shuffle = false</code>), then it is
+possibile to create hotspots in a write-heavy scenario, where most
+of the write requests will be handled by the same node(s). The
+default behavior of shuffling replicas helps mitigate this by
+universally distributing write load between replicas. However, it
+under-utilizes read caching and forces multiple replicas to cache
+the same read statements.
+</dd>
+
+
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -162,7 +181,26 @@
         <td class="details">
           
           
-          actual policy to filter
+          actual
+policy to filter
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>shuffle</var></td>
+        
+        
+        <td class="type"><code>Boolean</code></td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>true</code>)</em>
+          
+          
+          (true) whether or not to shuffle the replicas
 
           
         </td>
@@ -171,6 +209,7 @@
     </tbody>
   </table>
 </dd>
+
 
 
 </dl>
@@ -187,6 +226,7 @@
   
   
   
+    <a class="anchor" href="#distance-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Delegates to wrapped policy</p>
@@ -197,6 +237,7 @@
 <dl class="tags">
   
 
+
   <dt class="tag-title">See Also:</dt>
   <dd class="tag-content">
     <ul class="see">
@@ -205,6 +246,7 @@
       
     </ul>
   </dd>
+
 
 </dl>
   </div>
@@ -220,6 +262,7 @@
   
   
   
+    <a class="anchor" href="#host_found-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Delegates to wrapped policy</p>
@@ -230,6 +273,7 @@
 <dl class="tags">
   
 
+
   <dt class="tag-title">See Also:</dt>
   <dd class="tag-content">
     <ul class="see">
@@ -238,6 +282,7 @@
       
     </ul>
   </dd>
+
 
 </dl>
   </div>
@@ -253,6 +298,7 @@
   
   
   
+    <a class="anchor" href="#host_up-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Delegates to wrapped policy</p>
@@ -263,6 +309,7 @@
 <dl class="tags">
   
 
+
   <dt class="tag-title">See Also:</dt>
   <dd class="tag-content">
     <ul class="see">
@@ -271,6 +318,7 @@
       
     </ul>
   </dd>
+
 
 </dl>
   </div>
@@ -286,6 +334,7 @@
   
   
   
+    <a class="anchor" href="#host_down-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Delegates to wrapped policy</p>
@@ -296,6 +345,7 @@
 <dl class="tags">
   
 
+
   <dt class="tag-title">See Also:</dt>
   <dd class="tag-content">
     <ul class="see">
@@ -304,6 +354,7 @@
       
     </ul>
   </dd>
+
 
 </dl>
   </div>
@@ -319,6 +370,7 @@
   
   
   
+    <a class="anchor" href="#host_lost-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Delegates to wrapped policy</p>
@@ -329,6 +381,7 @@
 <dl class="tags">
   
 
+
   <dt class="tag-title">See Also:</dt>
   <dd class="tag-content">
     <ul class="see">
@@ -337,6 +390,7 @@
       
     </ul>
   </dd>
+
 
 </dl>
   </div>
@@ -352,6 +406,52 @@
   
   
   
+    <a class="anchor" href="#setup-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  </div>
+  <div class="panel-body method-body">
+    
+<dl class="dl-horizontal notes">
+
+</dl>
+<dl class="tags">
+  
+
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>TokenAware#setup</code> sets up wrapped policy
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">policy</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:setup</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">subject</span><span class="p">.</span><span class="nf">setup</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="teardown-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>teardown</strong></span><big>(</big><var>cluster</var><big>)</big> 
+    
+  
+  
+  
+    <a class="anchor" href="#teardown-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     
@@ -368,6 +468,7 @@
   
   
   
+    <a class="anchor" href="#plan-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     
@@ -525,7 +626,7 @@
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -553,10 +654,11 @@
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../../js/mousetrap.js"></script>
     <script src="../../../../js/hotkeys.js"></script>
+    <script src="../../../../js/ZeroClipboard.js"></script>
     <script src="../../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

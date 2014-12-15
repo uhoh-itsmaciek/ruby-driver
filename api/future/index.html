@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Future</title>
 
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../favicon.png">
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/pygments.css" rel="stylesheet">
     <link href="../../css/hotkeys.css" rel="stylesheet">
@@ -81,9 +83,10 @@
             </ol>
           </nav>
           <div class="page-header">
-  <h1>
+  <h1 id="class-cassandra-future">
 <small>
-  class</small> Cassandra::Future</h1>
+  class</small> Cassandra::Future<a class="anchor" href="#class-cassandra-future" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 </div>
 <p>A Future represents a result of asynchronous execution. It can be used to
 block until a value is available or an error has happened, or register a
@@ -94,7 +97,8 @@ listener to be notified whenever the execution is complete.</p>
 </dl>
 
 
-<h2>Inherits</h2>
+<h2 id="inherits">Inherits<a class="anchor" href="#inherits" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="superclass"><code>Object</code></div>
 
 
@@ -103,7 +107,8 @@ listener to be notified whenever the execution is complete.</p>
 
 
 
-<h2>Classes</h2>
+<h2 id="classes">Classes<a class="anchor" href="#classes" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="child-classes">
   <ul class="list-inline">
     
@@ -112,7 +117,8 @@ listener to be notified whenever the execution is complete.</p>
   </ul>
 </div>
 
-<h2>Methods</h2>
+<h2 id="methods">Methods<a class="anchor" href="#methods" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <div class="module-methods">
   
     <div class="panel panel-default" id="value-class_method">
@@ -124,6 +130,7 @@ listener to be notified whenever the execution is complete.</p>
   
   
   
+    <a class="anchor" href="#value-class_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a future resolved to a given value</p>
@@ -132,7 +139,8 @@ listener to be notified whenever the execution is complete.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -205,6 +213,7 @@ listener to be notified whenever the execution is complete.</p>
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -219,6 +228,7 @@ listener to be notified whenever the execution is complete.</p>
   
   
   
+    <a class="anchor" href="#error-class_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a future resolved to a given error</p>
@@ -227,7 +237,8 @@ listener to be notified whenever the execution is complete.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -300,6 +311,7 @@ listener to be notified whenever the execution is complete.</p>
   </table>
 </dd>
 
+
 </dl>
   </div>
 </div>
@@ -314,6 +326,7 @@ listener to be notified whenever the execution is complete.</p>
   
   
   
+    <a class="anchor" href="#all-class_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a future that resolves with values of all futures</p>
@@ -323,6 +336,7 @@ listener to be notified whenever the execution is complete.</p>
 </dl>
 <dl class="tags">
   
+
   <dt class="tag-title">Overloads:</dt>
   <dd class="tag-content">
     
@@ -338,7 +352,8 @@ listener to be notified whenever the execution is complete.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -411,6 +426,7 @@ listener to be notified whenever the execution is complete.</p>
   </table>
 </dd>
 
+
 </dl>
         </div>
       </div>
@@ -427,7 +443,8 @@ listener to be notified whenever the execution is complete.</p>
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -502,6 +519,7 @@ combine
   </table>
 </dd>
 
+
 </dl>
         </div>
       </div>
@@ -509,426 +527,6 @@ combine
   </dd>
 
 
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="on_success-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>on_success</strong></span> {|value| &#8230; }
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Run block when future resolves to a value</p>
-
-<dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>The block can be called synchronously from current thread if the
-future has already been resolved, or, asynchronously, from background
-thread upon resolution.
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Yield Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>value</var></td>
-        
-        
-        <td class="type"><code>Object</code></td>
-        
-        <td class="details">
-          
-          
-          a value
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>self</code></td>
-        
-        <td class="details">
-          
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-<dt class="tag-title">
-  Raises:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>ArgumentError</code></td>
-        
-        <td class="details">
-          
-          
-          if no block given
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="join-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>join</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Block until the future has been resolved</p>
-
-<dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method blocks until a future is resolved
-</dd>
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method won&#8217;t raise any errors or return anything but the
-future itself
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>self</code></td>
-        
-        <td class="details">
-          
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="get-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>get</strong></span> 
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Returns future value or raises future error</p>
-
-<dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>This method blocks until a future is resolved
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>Object</code></td>
-        
-        <td class="details">
-          
-          
-          value used to resolve this future if any
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-<dt class="tag-title">
-  Raises:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>Exception</code></td>
-        
-        <td class="details">
-          
-          
-          error used to resolve this future if any
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-</dl>
-  </div>
-</div>
-
-  
-    <div class="panel panel-default" id="on_failure-instance_method">
-  <div class="panel-heading method-header">
-  
-    
-      <span class="path"><strong>on_failure</strong></span> {|error| &#8230; }
-    
-  
-  
-  
-  </div>
-  <div class="panel-body method-body">
-    <p>Run block when future resolves to error</p>
-
-<dl class="dl-horizontal notes">
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>The block can be called synchronously from current thread if the
-future has already been resolved, or, asynchronously, from background
-thread upon resolution.
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Yield Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>error</var></td>
-        
-        
-        <td class="type"><code>Exception</code></td>
-        
-        <td class="details">
-          
-          
-          an error
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-<dt class="tag-title">
-  Returns:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>self</code></td>
-        
-        <td class="details">
-          
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-<dt class="tag-title">
-  Raises:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        
-        <td class="type"><code>ArgumentError</code></td>
-        
-        <td class="details">
-          
-          
-          if no block given
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
 
 </dl>
   </div>
@@ -944,6 +542,7 @@ thread upon resolution.
   
   
   
+    <a class="anchor" href="#on_complete-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Run block when future resolves. The block will always be called with 2
@@ -962,6 +561,7 @@ thread upon resolution.
 </dl>
 <dl class="tags">
   
+
 <dt class="tag-title">
   Yield Parameters:
 </dt>
@@ -1079,6 +679,365 @@ thread upon resolution.
   </table>
 </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#on_complete</code> raises if no block given
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span> <span class="p">{</span> <span class="n">future</span><span class="p">.</span><span class="nf">on_complete</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="o">::</span><span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">"no block given"</span><span class="p">)</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#on_complete</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:on_complete</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">on_complete</span> <span class="p">{</span><span class="o">|</span><span class="n">error</span><span class="p">,</span> <span class="n">value</span><span class="o">|</span> <span class="kp">nil</span><span class="p">}</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="on_failure-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>on_failure</strong></span> {|error| &#8230; }
+    
+  
+  
+  
+    <a class="anchor" href="#on_failure-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  </div>
+  <div class="panel-body method-body">
+    <p>Run block when future resolves to error</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>error</var></td>
+        
+        
+        <td class="type"><code>Exception</code></td>
+        
+        <td class="details">
+          
+          
+          an error
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#on_failure</code> raises if no block given
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span> <span class="p">{</span> <span class="n">future</span><span class="p">.</span><span class="nf">on_failure</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="o">::</span><span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">"no block given"</span><span class="p">)</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#on_failure</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:on_failure</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">on_failure</span> <span class="p">{</span><span class="o">|</span><span class="n">error</span><span class="o">|</span> <span class="kp">nil</span><span class="p">}</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="on_success-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>on_success</strong></span> {|value| &#8230; }
+    
+  
+  
+  
+    <a class="anchor" href="#on_success-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  </div>
+  <div class="panel-body method-body">
+    <p>Run block when future resolves to a value</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>The block can be called synchronously from current thread if the
+future has already been resolved, or, asynchronously, from background
+thread upon resolution.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+<dt class="tag-title">
+  Yield Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>value</var></td>
+        
+        
+        <td class="type"><code>Object</code></td>
+        
+        <td class="details">
+          
+          
+          a value
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>ArgumentError</code></td>
+        
+        <td class="details">
+          
+          
+          if no block given
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#on_success</code> raises if no block given
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span> <span class="p">{</span> <span class="n">future</span><span class="p">.</span><span class="nf">on_success</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="o">::</span><span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">"no block given"</span><span class="p">)</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#on_success</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:on_success</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">on_success</span> <span class="p">{</span><span class="o">|</span><span class="n">value</span><span class="o">|</span> <span class="kp">nil</span><span class="p">}</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -1093,6 +1052,7 @@ thread upon resolution.
   
   
   
+    <a class="anchor" href="#add_listener-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Add future listener</p>
@@ -1113,7 +1073,8 @@ background thread upon resolution.
 
 </dl>
 <dl class="tags">
-  <dt class="tag-title">
+  
+<dt class="tag-title">
   Parameters:
 </dt>
 <dd class="tag-content">
@@ -1183,6 +1144,40 @@ background thread upon resolution.
   </table>
 </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#add_listener</code> raises if listener doesn&#39;t respond to #success and #failure
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">listener</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:respond_to?</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+<span class="n">expect</span> <span class="p">{</span> <span class="n">future</span><span class="p">.</span><span class="nf">add_listener</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="o">::</span><span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">"listener must respond to both #success and #failure"</span><span class="p">)</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#add_listener</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">listener</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:respond_to?</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="ss">:success</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">listener</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:respond_to?</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="ss">:failure</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:add_listener</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">future</span><span class="p">.</span><span class="nf">add_listener</span><span class="p">(</span><span class="n">listener</span><span class="p">)).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">future</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -1197,6 +1192,7 @@ background thread upon resolution.
   
   
   
+    <a class="anchor" href="#then-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a new future that will resolve to the result of the block.
@@ -1235,6 +1231,7 @@ thread upon resolution.
   
   </dl>
 </dd>
+
 
 <dt class="tag-title">
   Yield Parameters:
@@ -1374,6 +1371,37 @@ wrapped in a future
   </table>
 </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#then</code> raises if no block given
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span> <span class="p">{</span> <span class="n">future</span><span class="p">.</span><span class="nf">then</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">"no block given"</span><span class="p">)</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#then</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:then</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">then</span> <span class="p">{</span><span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="kp">nil</span><span class="p">}</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
 </dl>
   </div>
 </div>
@@ -1388,6 +1416,7 @@ wrapped in a future
   
   
   
+    <a class="anchor" href="#fallback-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
   </div>
   <div class="panel-body method-body">
     <p>Returns a new future that will resolve to the result of the block in case
@@ -1427,6 +1456,7 @@ thread upon resolution.
   
   </dl>
 </dd>
+
 
 <dt class="tag-title">
   Yield Parameters:
@@ -1565,6 +1595,240 @@ wrapped in a future
     </tbody>
   </table>
 </dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#fallback</code> raises of no block given
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span> <span class="p">{</span> <span class="n">future</span><span class="p">.</span><span class="nf">fallback</span> <span class="p">}.</span><span class="nf">to</span> <span class="n">raise_error</span><span class="p">(</span><span class="no">ArgumentError</span><span class="p">,</span> <span class="s2">"no block given"</span><span class="p">)</span></code></pre></dd>
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#fallback</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:fallback</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">fallback</span> <span class="p">{</span><span class="o">|</span><span class="n">e</span><span class="o">|</span> <span class="kp">nil</span><span class="p">}</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="get-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>get</strong></span> 
+    
+  
+  
+  
+    <a class="anchor" href="#get-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  </div>
+  <div class="panel-body method-body">
+    <p>Returns future value or raises future error</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method blocks until a future is resolved
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Object</code></td>
+        
+        <td class="details">
+          
+          
+          value used to resolve this future if any
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+<dt class="tag-title">
+  Raises:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>Exception</code></td>
+        
+        <td class="details">
+          
+          
+          error used to resolve this future if any
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#get</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">get</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
+
+</dl>
+  </div>
+</div>
+
+  
+    <div class="panel panel-default" id="join-instance_method">
+  <div class="panel-heading method-header">
+  
+    
+      <span class="path"><strong>join</strong></span> 
+    
+  
+  
+  
+    <a class="anchor" href="#join-instance_method" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+  </div>
+  <div class="panel-body method-body">
+    <p>Block until the future has been resolved</p>
+
+<dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method blocks until a future is resolved
+</dd>
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>This method won&#8217;t raise any errors or return anything but the
+future itself
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+<dt class="tag-title">
+  Returns:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        
+        <td class="type"><code>self</code></td>
+        
+        <td class="details">
+          
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Future#join</code> delegates to signal
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">signal</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:join</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">future</span><span class="p">.</span><span class="nf">join</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
 
 </dl>
   </div>
@@ -1686,7 +1950,7 @@ wrapped in a future
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -1714,10 +1978,11 @@ wrapped in a future
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../js/mousetrap.js"></script>
     <script src="../../js/hotkeys.js"></script>
+    <script src="../../js/ZeroClipboard.js"></script>
     <script src="../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

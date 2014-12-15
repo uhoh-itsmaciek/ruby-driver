@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Round Robin</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,14 +87,16 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="round-robin-policy">Round Robin Policy</h1>
+<h1 id="round-robin-policy">Round Robin Policy<a class="anchor" href="#round-robin-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>The Round Robin load balancing policy dispatches requests evenly on cluster
 nodes.</p>
 
 <p>The effects of the policy can be seen by enabling requests tracing. The
 coordinator node that served every request is the last host in
 execution info.</p>
-<h2 id="background">Background</h2>
+<h2 id="background">Background<a class="anchor" href="#background" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster in 2 datacenters with 2 nodes in each</dd>
@@ -133,7 +137,8 @@ execution info.</p>
 <span class="p">);</span></code></pre>
 </dd>
 </dl>
-<h2 id="configuring-round-robin-load-balancing-policy">Configuring Round Robin load balancing policy</h2>
+<h2 id="configuring-round-robin-load-balancing-policy">Configuring Round Robin load balancing policy<a class="anchor" href="#configuring-round-robin-load-balancing-policy" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby"><span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -158,7 +163,8 @@ execution info.</p>
 127.0.0.4</code></pre>
 </dd>
 </dl>
-<h2 id="round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters</h2>
+<h2 id="round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters<a class="anchor" href="#round-robin-policy-ignores-datacenters" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>the following example:<pre class="highlight"><code class="ruby">  <span class="nb">require</span> <span class="s1">'cassandra'</span>
@@ -218,9 +224,12 @@ execution info.</p>
                 <li class="active">
                   <a href="./">Round Robin</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#background">Background</a></li>
-<li><a href="#configuring-round-robin-load-balancing-policy">Configuring Round Robin load balancing policy</a></li>
-<li><a href="#round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters</a></li>
+<li><a href="#background">Background
+</a></li>
+<li><a href="#configuring-round-robin-load-balancing-policy">Configuring Round Robin load balancing policy
+</a></li>
+<li><a href="#round-robin-policy-ignores-datacenters">Round Robin policy ignores datacenters
+</a></li>
 </ul>
                 </li>
                 
@@ -273,7 +282,7 @@ execution info.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -301,10 +310,11 @@ execution info.</p>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

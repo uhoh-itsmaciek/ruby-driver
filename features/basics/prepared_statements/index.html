@@ -11,6 +11,8 @@
 
     <title>Datastax Cassandra Ruby Driver - Prepared Statements</title>
 
+    <link rel="icon" href="../../../favicon.ico">
+    <link rel="apple-touch-icon" href="../../../favicon.png">
     <link href="../../../css/style.css" rel="stylesheet">
     <link href="../../../css/pygments.css" rel="stylesheet">
     <link href="../../../css/hotkeys.css" rel="stylesheet">
@@ -85,11 +87,13 @@
             </ol>
           </nav>
           <div class="feature-section">
-<h1 id="prepared-statements">Prepared statements</h1>
+<h1 id="prepared-statements">Prepared statements<a class="anchor" href="#prepared-statements" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h1>
 <p>Prepared statements are used to prepare a write query only once and execute
 it multiple times with different values. A bind variable marker <code>?</code> is used
 to represent a dynamic value in a statement.</p>
-<h2 id="an-insert-statement-is-prepared">an INSERT statement is prepared</h2>
+<h2 id="an-insert-statement-is-prepared">an INSERT statement is prepared<a class="anchor" href="#an-insert-statement-is-prepared" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -155,7 +159,8 @@ to represent a dynamic value in a statement.</p>
 </dd>
 </dl>
 <div class="pull-right"><span class="label label-primary">since cassadra v2.0</span></div>
-<h2 id="a-select-statement-with-parameterized-limit-is-prepared">a SELECT statement with parameterized LIMIT is prepared</h2>
+<h2 id="a-select-statement-with-parameterized-limit-is-prepared">a SELECT statement with parameterized LIMIT is prepared<a class="anchor" href="#a-select-statement-with-parameterized-limit-is-prepared" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
 <dl class="steps">
 <dt>Given </dt>
 <dd>a running cassandra cluster with schema:<pre class="highlight"><code class="cql"><span class="k">CREATE</span> <span class="k">KEYSPACE</span> <span class="n">simplex</span> <span class="k">WITH</span> <span class="n">replication</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'class'</span><span class="p">:</span> <span class="s1">'SimpleStrategy'</span><span class="p">,</span> <span class="s1">'replication_factor'</span><span class="p">:</span> <span class="mi">3</span><span class="p">};</span>
@@ -241,8 +246,10 @@ selected 3 row(s)</code></pre>
                 <li class="active">
                   <a href="./">Prepared Statements</a>
                   <ul class="nav nav-pills nav-stacked">
-<li><a href="#an-insert-statement-is-prepared">an INSERT statement is prepared</a></li>
-<li><a href="#a-select-statement-with-parameterized-limit-is-prepared">a SELECT statement with parameterized LIMIT is prepared</a></li>
+<li><a href="#an-insert-statement-is-prepared">an INSERT statement is prepared
+</a></li>
+<li><a href="#a-select-statement-with-parameterized-limit-is-prepared">a SELECT statement with parameterized LIMIT is prepared
+</a></li>
 </ul>
                 </li>
                 
@@ -303,7 +310,7 @@ selected 3 row(s)</code></pre>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.0.0</li>
+        <li>v1.1.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
@@ -331,10 +338,11 @@ selected 3 row(s)</code></pre>
       </ul>
     </footer>
     <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
     <script src="../../../js/mousetrap.js"></script>
     <script src="../../../js/hotkeys.js"></script>
+    <script src="../../../js/ZeroClipboard.js"></script>
     <script src="../../../js/app.js"></script>
     <script>
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
