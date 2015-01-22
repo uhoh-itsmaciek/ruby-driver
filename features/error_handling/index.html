@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -260,7 +260,7 @@ be retried on other hosts as part of a normal request execution.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

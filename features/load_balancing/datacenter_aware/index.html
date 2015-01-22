@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -264,7 +264,7 @@ change that behavior via constructor.</p>
 <span class="n">session</span>    <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
 
 <span class="k">begin</span>
-  <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">:consistency</span> <span class="o">=&gt;</span> <span class="ss">:local_one</span><span class="p">)</span>
+  <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM songs"</span><span class="p">,</span> <span class="ss">consistency: :local_one</span><span class="p">)</span>
   <span class="nb">puts</span> <span class="s2">"failure"</span>
 <span class="k">rescue</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">Errors</span><span class="o">::</span><span class="no">NoHostsAvailable</span>
   <span class="nb">puts</span> <span class="s2">"success"</span>
@@ -411,7 +411,7 @@ change that behavior via constructor.</p>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

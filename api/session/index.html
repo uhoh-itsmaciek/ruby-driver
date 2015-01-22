@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -180,7 +180,7 @@
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>execute_async</strong></span><big>(</big><var>statement</var>, <var>*args</var>, <var>options</var> = {}<big>)</big> 
+      <span class="path"><strong>execute_async</strong></span><big>(</big><var>statement</var>, <var>options</var> = nil<big>)</big> 
     
   
   
@@ -193,14 +193,37 @@
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>Last argument will be treated as <code>options</code> if it is a <code>Hash</code>.
-Therefore, make sure to pass empty <code>options</code> when executing a statement
-with the last parameter required to be a map datatype.
+<dd>Positional arguments for simple statements are only supported on
+starting with Apache Cassandra 2.0 and above.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">Overloads:</dt>
+  <dd class="tag-content">
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>execute_async</strong></span>(statement, *args, options = nil) 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Executes a statement using the deprecated splat-style way of passing
+positional arguments/</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-warning">Deprecated</span></dt>
+<dd>This style will soon be removed, use the <code>:arguments</code>
+option to provide positional arguments instead.
 </dd>
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>Positional arguments are only supported on Apache Cassandra 2.0 and
-above.
+<dd>Last argument will be treated as <code>options</code> if it is a <code>Hash</code>.
+Therefore, make sure to pass empty <code>options</code> when executing a
+statement with the last parameter required to be a map datatype.
 </dd>
 
 
@@ -252,8 +275,9 @@ above.
         <td class="details">
           
           
-          arguments to paramterized query or prepared
-statement
+          <strong>this style of positional arguments is
+deprecated, please use the <code>:arguments</code> options instead</strong> -
+positional arguments to paramterized query or prepared statement.
 
           
         </td>
@@ -264,11 +288,74 @@ statement
         <td class="name"><var>options</var></td>
         
         
-        <td class="type"><code>Hash</code></td>
+        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
         
         <td class="details">
           
-            <em class="default">(defaults to: <code>{}</code>)</em>
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          a customizable set of options
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+
+</dl>
+        </div>
+      </div>
+    
+  </dd>
+<dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>)</td>
+        
+        <td class="details">
+          
+          
+          statement to execute
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>options</var></td>
+        
+        
+        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
           
           
           a customizable set of options
@@ -282,8 +369,6 @@ statement
 </dd>
 
   
-    
-    
     
     
     
@@ -404,6 +489,24 @@ initial request.
           </td>
         </tr>
         
+        <tr>
+          <td class="name"><var>:arguments</var></td>
+          <td class="type"><code>Array</code></td>
+          <td class="details">
+            <span class="default">
+              
+                default:
+                <code>nil</code>
+              
+            </span>
+            
+              positional arguments for the
+statement.
+
+            
+          </td>
+        </tr>
+        
         </tbody>
       </table>
     </dd>
@@ -462,7 +565,7 @@ initial request.
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>execute</strong></span><big>(</big><var>statement</var>, <var>*args</var>, <var>options</var> = {}<big>)</big> 
+      <span class="path"><strong>execute</strong></span><big>(</big><var>statement</var>, <var>options</var> = nil<big>)</big> 
     
   
   
@@ -477,6 +580,172 @@ initial request.
 </dl>
 <dl class="tags">
   
+
+  <dt class="tag-title">Overloads:</dt>
+  <dd class="tag-content">
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>execute</strong></span>(statement, *args, options = nil) 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Executes a statement using the deprecated splat-style way of passing
+positional arguments/</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-warning">Deprecated</span></dt>
+<dd>This style will soon be removed, use the <code>:arguments</code>
+option to provide positional arguments instead.
+</dd>
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>Last argument will be treated as <code>options</code> if it is a <code>Hash</code>.
+Therefore, make sure to pass empty <code>options</code> when executing a
+statement with the last parameter required to be a map datatype.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+<dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>)</td>
+        
+        <td class="details">
+          
+          
+          statement to execute
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>args</var></td>
+        
+        
+        <td class="type">*<code>Object</code>
+</td>
+        
+        <td class="details">
+          
+          
+          <strong>this style of positional arguments is
+deprecated, please use the <code>:arguments</code> options instead</strong> -
+positional arguments to paramterized query or prepared statement.
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>options</var></td>
+        
+        
+        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          a customizable set of options
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+
+</dl>
+        </div>
+      </div>
+    
+  </dd>
+<dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>statement</var></td>
+        
+        
+        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>)</td>
+        
+        <td class="details">
+          
+          
+          statement to execute
+
+          
+        </td>
+      </tr>
+    
+      <tr>
+        
+        <td class="name"><var>options</var></td>
+        
+        
+        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
+        
+        <td class="details">
+          
+            <em class="default">(defaults to: <code>nil</code>)</em>
+          
+          
+          a customizable set of options
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
 
 <dt class="tag-title">
   Returns:
@@ -891,6 +1160,26 @@ prepared statement
       
     </ul>
   </dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>Session#prepare</code> resolves a promise returned by #prepare_async
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:prepare_async</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
 
 
 </dl>
@@ -1398,7 +1687,8 @@ self once closed
     
     
     
-    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span>
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:close_async</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">no_args</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">close</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span></code></pre></dd>
   
   </dl>
@@ -1576,7 +1866,7 @@ self once closed
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

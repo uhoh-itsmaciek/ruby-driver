@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -139,7 +139,7 @@ to represent a dynamic value in a statement.</p>
 <span class="p">]</span>
 
 <span class="n">songs</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">song</span><span class="o">|</span>
-  <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="n">song</span><span class="p">[</span><span class="ss">:id</span><span class="p">],</span> <span class="n">song</span><span class="p">[</span><span class="ss">:title</span><span class="p">],</span> <span class="n">song</span><span class="p">[</span><span class="ss">:artist</span><span class="p">],</span> <span class="n">song</span><span class="p">[</span><span class="ss">:album</span><span class="p">])</span>
+  <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">insert</span><span class="p">,</span> <span class="ss">arguments: </span><span class="p">[</span><span class="n">song</span><span class="p">[</span><span class="ss">:id</span><span class="p">],</span> <span class="n">song</span><span class="p">[</span><span class="ss">:title</span><span class="p">],</span> <span class="n">song</span><span class="p">[</span><span class="ss">:artist</span><span class="p">],</span> <span class="n">song</span><span class="p">[</span><span class="ss">:album</span><span class="p">]])</span>
 <span class="k">end</span>
 
 <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"SELECT * FROM playlists"</span><span class="p">).</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">row</span><span class="o">|</span>
@@ -215,7 +215,7 @@ to represent a dynamic value in a statement.</p>
 <span class="n">limits</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 
 <span class="n">limits</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">limit</span><span class="o">|</span>
-  <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+  <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="nb">select</span><span class="p">,</span> <span class="ss">arguments: </span><span class="p">[</span><span class="n">limit</span><span class="p">])</span>
   <span class="nb">puts</span> <span class="s2">"selected </span><span class="si">#{</span><span class="n">rows</span><span class="p">.</span><span class="nf">size</span><span class="si">}</span><span class="s2"> row(s)"</span>
 <span class="k">end</span></code></pre>
 </dd>
@@ -310,7 +310,7 @@ selected 3 row(s)</code></pre>
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

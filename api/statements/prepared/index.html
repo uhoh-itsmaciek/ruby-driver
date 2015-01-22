@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -181,7 +181,7 @@
   <div class="panel-heading method-header">
   
     
-      <span class="path"><strong>bind</strong></span><big>(</big><var>*args</var><big>)</big> 
+      <span class="path"><strong>bind</strong></span><big>(</big><var>args</var><big>)</big> 
     
   
   
@@ -192,6 +192,34 @@
     <p>Creates a statement bound with specific arguments</p>
 
 <dl class="dl-horizontal notes">
+
+<dt><span class="label label-primary">Note</span></dt>
+<dd>Positional arguments are only supported on Apache Cassandra 2.1
+and above.
+</dd>
+
+
+</dl>
+<dl class="tags">
+  
+
+  <dt class="tag-title">Overloads:</dt>
+  <dd class="tag-content">
+    
+      
+      <div class="panel panel-default">
+        <div class="panel-heading overload-header">
+          <span class="path"><strong>bind</strong></span>(*args) 
+        </div>
+        <div class="panel-body overload-body">
+          <p>Creates a statement bound with specific arguments using the
+deprecated splat-style way of passing positional arguments.</p>
+
+<dl class="dl-horizontal notes">
+<dt><span class="label label-warning">Deprecated</span></dt>
+<dd>Please pass a single <code>Array</code> of positional arguments, the
+<code>*args</code> style is deprecated.
+</dd>
 
 </dl>
 <dl class="tags">
@@ -225,9 +253,58 @@
         <td class="details">
           
           
-          arguments to bind, must contain the same number
-of parameters as the number of positional arguments (<code>?</code>) in the
-original cql passed to <code><a href="../../session/#prepare-instance_method" title="Cassandra::Session#prepare (method)">Session#prepare</a></code>
+          <strong>this style of positional arguments is
+deprecated, please pass a single <code>Array</code> instead</strong> - positional
+arguments to bind, must contain the same number of parameters as
+the number of positional argument markers (<code>?</code>) in the CQL passed
+to <code><a href="../../session/#prepare-instance_method" title="Cassandra::Session#prepare (method)">Session#prepare</a></code>.
+
+          
+        </td>
+      </tr>
+    
+    </tbody>
+  </table>
+</dd>
+
+
+
+</dl>
+        </div>
+      </div>
+    
+  </dd>
+<dt class="tag-title">
+  Parameters:
+</dt>
+<dd class="tag-content">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        
+        <th class="name">Name</th>
+        
+        
+        <th class="type">Type</th>
+        
+        <th class="details">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      <tr>
+        
+        <td class="name"><var>args</var></td>
+        
+        
+        <td class="type"><code>Array</code></td>
+        
+        <td class="details">
+          
+          
+          positional arguments to bind, must contain the same
+number of parameters as the number of positional (<code>?</code>) markers in the
+original CQL passed to <code><a href="../../session/#prepare-instance_method" title="Cassandra::Session#prepare (method)">Session#prepare</a></code>
 
           
         </td>
@@ -531,7 +608,7 @@ original cql passed to <code><a href="../../session/#prepare-instance_method" ti
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

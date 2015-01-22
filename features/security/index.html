@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -124,22 +124,16 @@
 </h4>
 
 <p>First, we’re going to have to create a server certificate. It is recommended to use a different certificate for every node that we want to secure communication with using SSL encryption:</p>
-<pre class="highlight"><code class="bash"><span class="nv">server_alias</span><span class="o">=</span>node1
-<span class="nv">keystore_file</span><span class="o">=</span>conf/.keystore
-<span class="nv">keystore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
+<pre class="highlight"><code class="bash"><span class="nv">node_alias</span><span class="o">=</span>node1
+<span class="nv">store_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
 
-<span class="nv">CN</span><span class="o">=</span><span class="s2">"Cassandra Node 1"</span>
-<span class="nv">OU</span><span class="o">=</span><span class="s2">"Drivers and Tools"</span>
-<span class="nv">O</span><span class="o">=</span><span class="s2">"DataStax Inc."</span>
-<span class="nv">L</span><span class="o">=</span><span class="s2">"Santa Clara"</span>
-<span class="nv">ST</span><span class="o">=</span><span class="s2">"California"</span>
-<span class="nv">C</span><span class="o">=</span><span class="s2">"US"</span>
-
-keytool -genkey -keyalg RSA -noprompt <span class="se">\</span>
-  -alias <span class="s2">"</span><span class="nv">$server_alias</span><span class="s2">"</span> <span class="se">\</span>
-  -keystore <span class="s2">"</span><span class="nv">$keystore_file</span><span class="s2">"</span> <span class="se">\</span>
-  -storepass <span class="s2">"</span><span class="nv">$keystore_pass</span><span class="s2">"</span> <span class="se">\</span>
-  -dname <span class="s2">"CN=</span><span class="nv">$CN</span><span class="s2">, OU=</span><span class="nv">$OU</span><span class="s2">, O=</span><span class="nv">$O</span><span class="s2">, L=</span><span class="nv">$L</span><span class="s2">, ST=</span><span class="nv">$ST</span><span class="s2">, C=</span><span class="nv">$C</span><span class="s2">"</span>
+keytool -genkeypair -noprompt <span class="se">\</span>
+  -keyalg RSA <span class="se">\</span>
+  -validity 36500 <span class="se">\</span>
+  -alias <span class="s2">"</span><span class="nv">$node_alias</span><span class="s2">"</span> <span class="se">\</span>
+  -keystore <span class="s2">"</span><span class="nv">$node_alias</span><span class="s2">/conf/.keystore"</span> <span class="se">\</span>
+  -storepass <span class="s2">"</span><span class="nv">$store_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -dname <span class="s2">"CN=Cassandra Server, OU=Ruby Driver Tests, O=DataStax Inc., L=Santa Clara, ST=California, C=US"</span>
 </code></pre>
 <p>Once we’ve run the script above for all nodes in our cluster, we can configure our Apache Cassandra servers to use their respective <code>.keystore</code>s. For this, we’ll have to modify <code>cassandra.yaml</code> to include the following:</p>
 <pre class="highlight"><code class="yaml"><span class="s">client_encryption_options</span><span class="pi">:</span>
@@ -147,7 +141,7 @@ keytool -genkey -keyalg RSA -noprompt <span class="se">\</span>
   <span class="s">keystore</span><span class="pi">:</span> <span class="s">conf/.keystore</span>
   <span class="s">keystore_password</span><span class="pi">:</span> <span class="s2">"</span><span class="s">some</span><span class="nv"> </span><span class="s">very</span><span class="nv"> </span><span class="s">long</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">secure</span><span class="nv"> </span><span class="s">password"</span>
 </code></pre>
-<p><strong>Note</strong>: The values of <code>keystore</code> and <code>keystore_password</code> above must be the same as the values of <code>$keystore_file</code> and <code>$keystore_pass</code> from our shell script.</p>
+<p><strong>Note</strong>: The values of <code>keystore</code> and <code>keystore_password</code> above must be the same as the values of <code>-keystore</code> and <code>storepass</code> options from the previous shell script.</p>
 
 <p>Now you can restart your cassandra processes.</p>
 
@@ -163,24 +157,23 @@ keytool -genkey -keyalg RSA -noprompt <span class="se">\</span>
 
 <p>There are several ways to have client verify server’s identity. I’m going to extract a PEM certificate of the server, which is suitable for use with the OpenSSL library that the Ruby Driver uses, and give it to the client for verification.</p>
 
-<p>First, we must export a DER certificate of the server:</p>
+<p>Let’s extract a PEM certificate out of our server’s keystore:</p>
 <pre class="highlight"><code class="bash"><span class="c"># values same as above</span>
-<span class="nv">server_alias</span><span class="o">=</span>node1
-<span class="nv">keystore_file</span><span class="o">=</span>conf/.keystore
-<span class="nv">keystore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
+<span class="nv">node_alias</span><span class="o">=</span>node1
+<span class="nv">store_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
 
-keytool -export <span class="se">\</span>
-  -alias <span class="s2">"</span><span class="nv">$server_alias</span><span class="s2">"</span> <span class="se">\</span>
-  -keystore <span class="s2">"</span><span class="nv">$keystore_file</span><span class="s2">"</span> <span class="se">\</span>
-  -storepass <span class="s2">"</span><span class="nv">$keystore_pass</span><span class="s2">"</span> <span class="se">\</span>
-  -file <span class="s2">"</span><span class="nv">$server_alias</span><span class="s2">.der"</span>
-</code></pre>
-<p><strong>Note</strong>: The values of <code>$server_alias</code>, <code>$keystore_file</code> and <code>$keystore_pass</code> must be the same as in the script that we used to generate the keystore file.</p>
+keytool -exportcert -noprompt <span class="se">\</span>
+  -rfc <span class="se">\</span>
+  -alias <span class="s2">"</span><span class="nv">$node_alias</span><span class="s2">"</span> <span class="se">\</span>
+  -keystore <span class="s2">"</span><span class="nv">$node_alias</span><span class="s2">/conf/.keystore"</span> <span class="se">\</span>
+  -storepass <span class="s2">"</span><span class="nv">$store_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -file <span class="s2">"</span><span class="nv">$node_alias</span><span class="s2">"</span>.pem
 
-<p>Now that we have our DER certificate, we can use OpenSSL to transform it into a PEM file:</p>
-<pre class="highlight"><code class="bash">openssl x509 -out <span class="s2">"</span><span class="nv">$server_alias</span><span class="s2">.pem"</span> -outform pem -in <span class="s2">"</span><span class="nv">$server_alias</span><span class="s2">.der"</span> -inform der
+chmod 400 <span class="s2">"</span><span class="nv">$node_alias</span><span class="s2">"</span>.pem
 </code></pre>
-<p>This created a PEM certificate out of our DER source certificate that we extracted from the keystore. This process has to be repeated for each unique keystore that we created in the very first section of this guide.</p>
+<p><strong>Note</strong>: The values of <code>-alias</code>, <code>-keystore</code> and <code>-storepass</code> options must be the same as in the script used to generate the keystore file.</p>
+
+<p>This process has to be repeated for each unique keystore that we created in the very first section of this guide.</p>
 
 <p>Once we have all PEM certificates exported we must bundle them for the client to use:</p>
 <pre><code>cat node1.pem node2.pem node3.pem &gt; server.pem
@@ -239,12 +232,12 @@ keytool -export <span class="se">\</span>
     <span class="n">peer_storepass</span> <span class="o">=</span> <span class="n">peer</span><span class="p">[</span><span class="ss">:keystore_pass</span><span class="p">]</span>
 
     <span class="c1"># export .der certificate from this peer's keystore if we haven't already</span>
-    <span class="k">unless</span> <span class="no">File</span><span class="p">.</span><span class="nf">exists?</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="s2">.der"</span><span class="p">)</span>
-      <span class="nb">system</span><span class="p">(</span><span class="s2">"keytool -export -alias </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -keystore </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_keystore</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -storepass </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_storepass</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -file </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="s2">.der</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">unless</span> <span class="no">File</span><span class="p">.</span><span class="nf">exists?</span><span class="p">(</span><span class="s2">"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="s2">.crt"</span><span class="p">)</span>
+      <span class="nb">system</span><span class="p">(</span><span class="s2">"keytool -exportcert -rfc -alias </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -keystore </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_keystore</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -storepass </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_storepass</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -file </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="s2">.crt</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">end</span>
 
     <span class="c1"># now we can import extracted peer's DER certificate into server's truststore</span>
-    <span class="nb">system</span><span class="p">(</span><span class="s2">"keytool -import -noprompt -alias </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -keystore </span><span class="se">\"</span><span class="si">#{</span><span class="n">truststore</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -storepass </span><span class="se">\"</span><span class="si">#{</span><span class="n">storepass</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -file </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="s2">.der</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">system</span><span class="p">(</span><span class="s2">"keytool -import -noprompt -alias </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -keystore </span><span class="se">\"</span><span class="si">#{</span><span class="n">truststore</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -storepass </span><span class="se">\"</span><span class="si">#{</span><span class="n">storepass</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -file </span><span class="se">\"</span><span class="si">#{</span><span class="n">peer_alias</span><span class="si">}</span><span class="s2">.crt</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
@@ -254,34 +247,27 @@ keytool -export <span class="se">\</span>
 <p>This ensures all our servers are trusting each other. But we’re not done yet, it is now time to create a certificate for our client and add it to the servers&#8217; truststores.</p>
 
 <p>First, let’s create a new keystore for the Ruby Driver (make sure to change the data in the example):</p>
-<pre class="highlight"><code class="bash"><span class="nv">driver_alias</span><span class="o">=</span>driver
-<span class="nv">keystore_file</span><span class="o">=</span>driver.keystore
-<span class="nv">keystore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
+<pre class="highlight"><code class="bash"><span class="nv">cnode_alias</span><span class="o">=</span>driver
+<span class="nv">cstore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
 
-<span class="nv">CN</span><span class="o">=</span><span class="s2">"Ruby Driver"</span>
-<span class="nv">OU</span><span class="o">=</span><span class="s2">"Drivers and Tools"</span>
-<span class="nv">O</span><span class="o">=</span><span class="s2">"DataStax Inc."</span>
-<span class="nv">L</span><span class="o">=</span><span class="s2">"Santa Clara"</span>
-<span class="nv">ST</span><span class="o">=</span><span class="s2">"California"</span>
-<span class="nv">C</span><span class="o">=</span><span class="s2">"US"</span>
-
-keytool -genkey -keyalg RSA -noprompt <span class="se">\</span>
-  -alias <span class="s2">"</span><span class="nv">$driver_alias</span><span class="s2">"</span> <span class="se">\</span>
-  -keystore <span class="s2">"</span><span class="nv">$keystore_file</span><span class="s2">"</span> <span class="se">\</span>
-  -storepass <span class="s2">"</span><span class="nv">$keystore_pass</span><span class="s2">"</span> <span class="se">\</span>
-  -dname <span class="s2">"CN=</span><span class="nv">$CN</span><span class="s2">, OU=</span><span class="nv">$OU</span><span class="s2">, O=</span><span class="nv">$O</span><span class="s2">, L=</span><span class="nv">$L</span><span class="s2">, ST=</span><span class="nv">$ST</span><span class="s2">, C=</span><span class="nv">$C</span><span class="s2">"</span>
+keytool -genkeypair -noprompt <span class="se">\</span>
+  -keyalg RSA
+  -validity 36500 <span class="se">\</span>
+  -alias <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">"</span> <span class="se">\</span>
+  -keystore <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.keystore"</span> <span class="se">\</span>
+  -storepass <span class="s2">"</span><span class="nv">$cstore_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -dname <span class="s2">"CN=Ruby Driver, OU=Ruby Driver Tests, O=DataStax Inc., L=Santa Clara, ST=California, C=US"</span>
 </code></pre>
-<p>Check that a file called <code>driver.keystore</code> (or whatever the value of <code>$keystore_file</code> was) exists. Let’s export its DER certificate:</p>
+<p>Check that a file called <code>driver.keystore</code> (or whatever the value of <code>-keystore</code> option was) exists. Let’s export its certificate:</p>
 <pre class="highlight"><code class="bash"><span class="c"># values same as above</span>
-<span class="nv">driver_alias</span><span class="o">=</span>driver
-<span class="nv">keystore_file</span><span class="o">=</span>driver.keystore
-<span class="nv">keystore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
+<span class="nv">cnode_alias</span><span class="o">=</span>driver
+<span class="nv">cstore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
 
-keytool -export <span class="se">\</span>
-  -alias <span class="s2">"</span><span class="nv">$driver_alias</span><span class="s2">"</span> <span class="se">\</span>
-  -keystore <span class="s2">"</span><span class="nv">$keystore_file</span><span class="s2">"</span> <span class="se">\</span>
-  -storepass <span class="s2">"</span><span class="nv">$keystore_pass</span><span class="s2">"</span> <span class="se">\</span>
-  -file <span class="s2">"</span><span class="nv">$server_alias</span><span class="s2">.der"</span>
+keytool -exportcert -noprompt <span class="se">\</span>
+  -alias <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">"</span> <span class="se">\</span>
+  -keystore <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.keystore"</span> <span class="se">\</span>
+  -storepass <span class="s2">"</span><span class="nv">$cstore_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -file <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.crt"</span>
 </code></pre>
 <p>Time to add our driver DER certificate to the truststores of our servers:</p>
 <pre class="highlight"><code class="ruby"><span class="n">servers</span> <span class="o">=</span> <span class="p">[</span>
@@ -308,81 +294,54 @@ keytool -export <span class="se">\</span>
   <span class="p">},</span>
 <span class="p">]</span>
 
-<span class="n">driver_alias</span> <span class="o">=</span> <span class="s2">"driver"</span>
-<span class="n">driver_cert</span>  <span class="o">=</span> <span class="s2">"driver.pem"</span>
+<span class="n">driver_cert</span>  <span class="o">=</span> <span class="s2">"driver.der"</span>
 
 <span class="n">servers</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">server</span><span class="o">|</span>
   <span class="n">truststore</span> <span class="o">=</span> <span class="n">server</span><span class="p">[</span><span class="ss">:truststore</span><span class="p">]</span>
   <span class="n">storepass</span>  <span class="o">=</span> <span class="n">server</span><span class="p">[</span><span class="ss">:truststore_pass</span><span class="p">]</span>
+  <span class="k">alias</span>      <span class="o">=</span> <span class="n">server</span><span class="p">[</span><span class="ss">:alias</span><span class="p">]</span>
 
-  <span class="nb">system</span><span class="p">(</span><span class="s2">"keytool -import -noprompt -alias </span><span class="se">\"</span><span class="si">#{</span><span class="n">driver_alias</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -keystore </span><span class="se">\"</span><span class="si">#{</span><span class="n">truststore</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -storepass </span><span class="se">\"</span><span class="si">#{</span><span class="n">storepass</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -file </span><span class="se">\"</span><span class="si">#{</span><span class="n">driver_cert</span><span class="si">}</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>
+  <span class="nb">system</span><span class="p">(</span><span class="s2">"keytool -import -noprompt -alias </span><span class="se">\"</span><span class="si">#{</span><span class="k">alias</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -keystore </span><span class="se">\"</span><span class="si">#{</span><span class="n">truststore</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -storepass </span><span class="se">\"</span><span class="si">#{</span><span class="n">storepass</span><span class="si">}</span><span class="se">\"</span><span class="s2"> -file </span><span class="se">\"</span><span class="si">#{</span><span class="n">driver_cert</span><span class="si">}</span><span class="se">\"</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">end</span>
 </code></pre>
 <p>Save the above script as <code>add_to_truststores.rb</code> and run it with:</p>
 <pre class="highlight"><code class="bash">ruby add_to_truststores.rb
 </code></pre>
-<p>At this point, we’ve added the driver’s identity to the truststores of all members of Apache Cassandra cluster. Now we will use <code>openssl</code> to convert the exported DER certificate to a PEM one:</p>
-<pre class="highlight"><code class="bash">openssl x509 -in driver.der -inform der -out driver.pem -outform pem
-</code></pre>
-<p>At this point we have our client PEM key, or a public key. To communicate securely, we’ll also need its private key, it will be used to encrypt all communication. <a href="http://www.herongyang.com/crypto/Migrating_Keys_keytool_to_OpenSSL_3.html">We’ll have to write some java code to extract this information from <code>driver.keystore</code></a>:</p>
-<pre class="highlight"><code class="java"><span class="cm">/* DumpKey.java
- * Copyright (c) 2007 by Dr. Herong Yang, http://www.herongyang.com/
- */</span>
-<span class="kn">import</span> <span class="nn">java.io.*</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.security.*</span><span class="o">;</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DumpKey</span> <span class="o">{</span>
-   <span class="kd">static</span> <span class="kd">public</span> <span class="kt">void</span> <span class="n">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="na">length</span><span class="o">&lt;</span><span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
-         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Usage:"</span><span class="o">);</span>
-         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span>
-            <span class="s">"java DumpKey jks storepass alias keypass out"</span><span class="o">);</span>
-         <span class="k">return</span><span class="o">;</span>
-      <span class="o">}</span>
-      <span class="n">String</span> <span class="n">jksFile</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-      <span class="kt">char</span><span class="o">[]</span> <span class="n">jksPass</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">toCharArray</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">keyName</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
-      <span class="kt">char</span><span class="o">[]</span> <span class="n">keyPass</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">3</span><span class="o">].</span><span class="na">toCharArray</span><span class="o">();</span>
-      <span class="n">String</span> <span class="n">outFile</span> <span class="o">=</span> <span class="n">a</span><span class="o">[</span><span class="mi">4</span><span class="o">];</span>
+<p>At this point, we’ve added the driver’s identity to the truststores of all members of Apache Cassandra cluster. Now let’s extract a PEM certificate to use with the driver:</p>
+<pre class="highlight"><code class="bash"><span class="nv">cnode_alias</span><span class="o">=</span>driver
+<span class="nv">cstore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
 
-      <span class="k">try</span> <span class="o">{</span>
-         <span class="n">KeyStore</span> <span class="n">jks</span> <span class="o">=</span> <span class="n">KeyStore</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="s">"jks"</span><span class="o">);</span>
-         <span class="n">jks</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">jksFile</span><span class="o">),</span> <span class="n">jksPass</span><span class="o">);</span>
-         <span class="n">Key</span> <span class="n">key</span> <span class="o">=</span> <span class="n">jks</span><span class="o">.</span><span class="na">getKey</span><span class="o">(</span><span class="n">keyName</span><span class="o">,</span> <span class="n">keyPass</span><span class="o">);</span>
-         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Key algorithm: "</span><span class="o">+</span><span class="n">key</span><span class="o">.</span><span class="na">getAlgorithm</span><span class="o">());</span>
-         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Key format: "</span><span class="o">+</span><span class="n">key</span><span class="o">.</span><span class="na">getFormat</span><span class="o">());</span>
-         <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Writing key in binary form to "</span>
-            <span class="o">+</span><span class="n">outFile</span><span class="o">);</span>
+keytool -exportcert -noprompt <span class="se">\</span>
+  -rfc <span class="se">\</span>
+  -alias <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">"</span> <span class="se">\</span>
+  -keystore <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.keystore"</span> <span class="se">\</span>
+  -storepass <span class="s2">"</span><span class="nv">$cstore_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -file <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.pem"</span>
 
-         <span class="n">FileOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="n">outFile</span><span class="o">);</span>
-         <span class="n">out</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">key</span><span class="o">.</span><span class="na">getEncoded</span><span class="o">());</span>
-         <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-      <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-         <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-         <span class="k">return</span><span class="o">;</span>
-      <span class="o">}</span>
-   <span class="o">}</span>
-<span class="o">}</span>
+chmod 400 <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.pem"</span>
 </code></pre>
-<p>Save the code above to <code>DumpKey.java</code>. Let’s use it to extract the private key:</p>
-<pre class="highlight"><code class="bash"><span class="c"># values same as above</span>
-<span class="nv">driver_alias</span><span class="o">=</span>driver
-<span class="nv">keystore_file</span><span class="o">=</span>driver.keystore
-<span class="nv">keystore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
+<p>At this point we have our client PEM key, or a public key. To communicate securely, we’ll also need its private key, it will be used to encrypt all communication. We’ll covert our java keystore to a format that openssl understands (pkcs12) and use it to extract a private key.</p>
+<pre class="highlight"><code class="bash"><span class="nv">cnode_alias</span><span class="o">=</span>driver
+<span class="nv">cstore_pass</span><span class="o">=</span><span class="s2">"some very long and secure password"</span>
+<span class="nv">cpassphrase</span><span class="o">=</span><span class="s2">"some secure passphrase for the private key"</span>
 
-javac DumpKey.java
-java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$keystore_pass</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$driver_alias</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$keystore_pass</span><span class="s2">"</span> driver_bin.key
-</code></pre>
-<p>This should drop the contents of <code>driver.keystore</code> private key into <code>driver_bin.key</code>. <a href="http://www.herongyang.com/crypto/Migrating_Keys_keytool_to_OpenSSL_4.html">We must now add PEM standard header and footer</a>.</p>
-<pre class="highlight"><code class="bash"><span class="c"># prepend PEM header</span>
-<span class="nb">echo</span> <span class="s2">"-----BEGIN PRIVATE KEY-----"</span> | cat - driver_bin.key &gt; driver.key
-<span class="c"># append PEM footer</span>
-<span class="nb">echo</span> <span class="s2">"-----END PRIVATE KEY-----"</span> &gt;&gt; driver.key
-</code></pre>
-<p>One more thing before we’re ready - let’s set up a passphrase for our private key, to make sure only we and our application can use it:</p>
-<pre class="highlight"><code class="bash">ssh-keygen -p -f driver.key
-</code></pre>
-<p>The above script will prompt you to enter a secure passphrase for the key. Make sure to remember it as we’ll use it below.</p>
+keytool -importkeystore -noprompt <span class="se">\</span>
+  -srcalias certificatekey <span class="se">\</span>
+  -deststoretype PKCS12 <span class="se">\</span>
+  -srcalias <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">"</span> <span class="se">\</span>
+  -srckeystore <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.keystore"</span> <span class="se">\</span>
+  -srcstorepass <span class="s2">"</span><span class="nv">$cstore_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -storepass <span class="s2">"</span><span class="nv">$cstore_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -destkeystore <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">-keystore.p12"</span>
 
+openssl pkcs12 -nomacver -nocerts <span class="se">\</span>
+  -in <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">-keystore.p12"</span> <span class="se">\</span>
+  -password pass:<span class="s2">"</span><span class="nv">$cstore_pass</span><span class="s2">"</span> <span class="se">\</span>
+  -passout pass:<span class="s2">"</span><span class="nv">$cpassphrase</span><span class="s2">"</span> <span class="se">\</span>
+  -out <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.key"</span>
+
+chmod 400 <span class="s2">"</span><span class="nv">$cnode_alias</span><span class="s2">.key"</span>
+</code></pre>
 <p>With all of this ready, let’s enable SSL authentication. For that, we should add the following to <code>cassandra.yaml</code> on each server:</p>
 <pre class="highlight"><code class="yaml"><span class="s">client_encryption_options</span><span class="pi">:</span>
   <span class="s">enabled</span><span class="pi">:</span> <span class="s">true</span>
@@ -475,7 +434,7 @@ java DumpKey <span class="s2">"</span><span class="nv">$keystore_file</span><spa
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>

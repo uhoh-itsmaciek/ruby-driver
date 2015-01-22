@@ -47,7 +47,7 @@
               <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
             </div>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
+              <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
             </ul>
           </form>
         </div>
@@ -250,6 +250,27 @@
     </ul>
   </dd>
 
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>RoundRobin#host_up</code> adds the host to the rotation
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">policy</span><span class="p">.</span><span class="nf">host_up</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">policy</span><span class="p">.</span><span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">plan</span><span class="p">).</span><span class="nf">to</span> <span class="n">have_next</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">plan</span><span class="p">.</span><span class="nf">next</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">host</span><span class="p">)</span></code></pre></dd>
+  
+  </dl>
+</dd>
+
 
 </dl>
   </div>
@@ -355,6 +376,27 @@
       
     </ul>
   </dd>
+
+<dt class="tag-title">Specifications:</dt>
+<dd class="tag-content">
+  <dl class="specs">
+  
+    
+    
+    
+    <dt class="spec-title">
+<code>RoundRobin#host_down</code> removes the host from the rotation
+</dt>
+    
+    
+    
+    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">policy</span><span class="p">.</span><span class="nf">host_up</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+<span class="n">policy</span><span class="p">.</span><span class="nf">host_down</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">policy</span><span class="p">.</span><span class="nf">plan</span><span class="p">(</span><span class="n">keyspace</span><span class="p">,</span> <span class="n">statement</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="n">expect</span><span class="p">(</span><span class="n">plan</span><span class="p">).</span><span class="nf">to_not</span> <span class="n">have_next</span></code></pre></dd>
+  
+  </dl>
+</dd>
 
 
 </dl>
@@ -973,7 +1015,7 @@ be used
 
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v1.1.1</li>
+        <li>v2.0.0</li>
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver">Code</a>
