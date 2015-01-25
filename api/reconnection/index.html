@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
-    <meta name="author" content="">
+    <meta name="description" content="A pure Ruby client for Apache Cassandra">
+    <meta name="author" content="DataStax">
 
-    <title>Datastax Cassandra Ruby Driver - Reconnection</title>
+    <title>Ruby Driver for Apache Cassandra - Reconnection</title>
 
     <link rel="icon" href="../../favicon.ico">
     <link rel="apple-touch-icon" href="../../favicon.png">
@@ -22,8 +22,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
-  <body data-spy="scroll" data-target=".toc" data-offset="0" ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -33,18 +32,27 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../">Ruby Driver for Apache Cassandra</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li><a href="../../features/">Features</a></li>
-            <li class="active"><a href="../">API docs</a></li>
+            
+            <li>
+              <a href="../../">Introduction</a>
+            </li>
+            
+            <li>
+              <a href="../../features/">Features</a>
+            </li>
+            
+            <li class="active">
+              <a href="../">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0.0')" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -60,11 +68,40 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0.0</a></li>
+                  
+                    <li><a href="../../v1.2.0/api/reconnection/">v1.2.0</a></li>
+                  
+                    <li><a href="../../v1.1.1/api/reconnection/">v1.1.1</a></li>
+                  
+                    <li><a href="../../v1.1.0/api/reconnection/">v1.1.0</a></li>
+                  
+                    <li><a href="../../v1.0.0/api/reconnection/">v1.0.0</a></li>
+                  
+                    <li><a href="../../v1.0.0-rc.1/api/reconnection/">v1.0.0-rc.1</a></li>
+                  
+                    <li><a href="../../v1.0.0-beta.3/api/reconnection/">v1.0.0-beta.3</a></li>
+                  
+                    <li><a href="../../v1.0.0-beta.2/api/reconnection/">v1.0.0-beta.2</a></li>
+                  
+                    <li><a href="../../v1.0.0-beta.1/api/reconnection/">v1.0.0-beta.1</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
+              
+              
               
               
               <li><a href="../../">Introduction</a></li>
-              
-              
               
               
               
@@ -82,7 +119,9 @@
               
             </ol>
           </nav>
-          <div class="page-header">
+          
+
+<div class="page-header">
   <h1 id="module-cassandra-reconnection">
 <small>
   module</small> Cassandra::Reconnection<a class="anchor" href="#module-cassandra-reconnection" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
@@ -119,170 +158,106 @@
 </div>
 
 
+
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
-            
-            
-
-<li><a href="../address_resolution/">AddressResolution</a></li>
-
-
-
-<li><a href="../auth/">Auth</a></li>
-
-
-
-<li><a href="../cluster/">Cluster</a></li>
-
-
-
-<li><a href="../column/">Column</a></li>
-
-
-
-<li><a href="../compression/">Compression</a></li>
-
-
-
-<li><a href="../error/">Error</a></li>
-
-
-
-<li><a href="../errors/">Errors</a></li>
-
-
-
-<li><a href="../execution/">Execution</a></li>
-
-
-
-<li><a href="../future/">Future</a></li>
-
-
-
-<li><a href="../host/">Host</a></li>
-
-
-
-<li><a href="../keyspace/">Keyspace</a></li>
-
-
-
-<li><a href="../listener/">Listener</a></li>
-
-
-
-<li><a href="../load_balancing/">LoadBalancing</a></li>
-
-
-
-<li class="active">
-  <a href="./">Reconnection</a>
-  
-  <ul class="nav nav-pills nav-stacked">
-    
-
-<li><a href="policies/">Policies</a></li>
-
-
-
-<li><a href="policy/">Policy</a></li>
-
-
-
-<li><a href="schedule/">Schedule</a></li>
-
-
-
-  </ul>
-  
-</li>
-
-
-
-<li><a href="../result/">Result</a></li>
-
-
-
-<li><a href="../retry/">Retry</a></li>
-
-
-
-<li><a href="../session/">Session</a></li>
-
-
-
-<li><a href="../statement/">Statement</a></li>
-
-
-
-<li><a href="../statements/">Statements</a></li>
-
-
-
-<li><a href="../table/">Table</a></li>
-
-
-
-<li><a href="../time_uuid/">TimeUuid</a></li>
-
-
-
-<li><a href="../uuid/">Uuid</a></li>
-
-
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#navigation" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">Contents</a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc">
+<li><a href="#modules">Modules
+</a></li>
+<li><a href="#classes">Classes
+</a></li>
+</ol>
+                </div>
+              </div>
+            </div>
 
             
-          </ol>
-        </nav>
+            <div class="panel panel-default">
+              <div id="read-more-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#navigation" href="#read-more" aria-expanded="true" aria-controls="read-more">Read More</a>
+                </h4>
+              </div>
+              <div id="read-more" class="panel-collapse collapse" role="tabpanel" aria-labelledby="read-more-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked">
+                  
+                    <li>
+                      <a href="policies/">Policies</a>
+                    </li>
+                  
+                    <li>
+                      <a href="policy/">Policy</a>
+                    </li>
+                  
+                    <li>
+                      <a href="schedule/">Schedule</a>
+                    </li>
+                  
+                  </ol>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
       </div>
     </div>
 
+    
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v2.0.0</li>
-        <li>·</li>
+      
+        
         <li>
-          <a href="https://github.com/datastax/ruby-driver">Code</a>
+          <a href="https://github.com/datastax/ruby-driver/">Code</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="http://datastax.github.io/ruby-driver/">Docs</a>
         </li>
+      
         <li>·</li>
         <li>
-          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY/">Issues</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
         </li>
+      
       </ul>
     </footer>
-    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    
+
+    <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="../../js/angular.js"></script>
     <script src="../../js/mousetrap.js"></script>
     <script src="../../js/hotkeys.js"></script>
     <script src="../../js/ZeroClipboard.js"></script>
+    <script src="../../js/lunr.js"></script>
     <script src="../../js/app.js"></script>
-    <script>
-     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-54260831-1', 'auto');
-      ga('send', 'pageview');
-    </script>
   </body>
 </html>

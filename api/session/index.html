@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="description" content="Datastax Cassandra Ruby Driver Documentation">
-    <meta name="author" content="">
+    <meta name="description" content="A pure Ruby client for Apache Cassandra">
+    <meta name="author" content="DataStax">
 
-    <title>Datastax Cassandra Ruby Driver - Session</title>
+    <title>Ruby Driver for Apache Cassandra - Session</title>
 
     <link rel="icon" href="../../favicon.ico">
     <link rel="apple-touch-icon" href="../../favicon.png">
@@ -22,8 +22,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
-  <body data-spy="scroll" data-target=".toc" data-offset="0" ng-app="docs">
+  <body ng-app="docs" data-spy="scroll" data-target=".side-nav">
     <header class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -33,18 +32,27 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../../">Cassandra Ruby Driver</a>
+          <a class="navbar-brand" href="../../">Ruby Driver for Apache Cassandra</a>
         </div>
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
-            <li><a href="../../">Introduction</a></li>
-            <li><a href="../../features/">Features</a></li>
-            <li class="active"><a href="../">API docs</a></li>
+            
+            <li>
+              <a href="../../">Introduction</a>
+            </li>
+            
+            <li>
+              <a href="../../features/">Features</a>
+            </li>
+            
+            <li class="active">
+              <a href="../">API docs</a>
+            </li>
+            
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search()" data-toggle="dropdown" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
-              <button type="button" class="close form-control-feedback input-sm hidden" ng-click="reset()" ng-class="{hidden: !hasResults}"><span aria-hidden="true">×</span><span class="sr-only">Reset</span></button>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0.0')" data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -60,11 +68,40 @@
           <nav class="crumbs">
             <ol class="breadcrumb">
               
+              <li>
+                <div class="dropdown">
+                  <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    v2.0.0
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
+                  
+                    <li class="disabled"><a href="./">v2.0.0</a></li>
+                  
+                    <li><a href="../../v1.2.0/api/session/">v1.2.0</a></li>
+                  
+                    <li><a href="../../v1.1.1/api/session/">v1.1.1</a></li>
+                  
+                    <li><a href="../../v1.1.0/api/session/">v1.1.0</a></li>
+                  
+                    <li><a href="../../v1.0.0/api/session/">v1.0.0</a></li>
+                  
+                    <li><a href="../../v1.0.0-rc.1/api/session/">v1.0.0-rc.1</a></li>
+                  
+                    <li><a href="../../v1.0.0-beta.3/api/session/">v1.0.0-beta.3</a></li>
+                  
+                    <li><a href="../../v1.0.0-beta.2/api/session/">v1.0.0-beta.2</a></li>
+                  
+                    <li><a href="../../v1.0.0-beta.1/api/session/">v1.0.0-beta.1</a></li>
+                  
+                  </ul>
+                </div>
+              </li>
+              
+              
               
               
               <li><a href="../../">Introduction</a></li>
-              
-              
               
               
               
@@ -82,7 +119,9 @@
               
             </ol>
           </nav>
-          <div class="page-header">
+          
+
+<div class="page-header">
   <h1 id="class-cassandra-session">
 <small>
   class</small> Cassandra::Session<a class="anchor" href="#class-cassandra-session" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
@@ -116,7 +155,7 @@
 </h2>
 <div class="module-methods">
   
-    <div class="panel panel-default" id="keyspace-instance_method">
+    <div class="panel panel-default member-definition" id="keyspace-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -176,7 +215,7 @@
 </div>
 
   
-    <div class="panel panel-default" id="execute_async-instance_method">
+    <div class="panel panel-default member-definition" id="execute_async-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -202,16 +241,7 @@ starting with Apache Cassandra 2.0 and above.
 <dl class="tags">
   
 
-  <dt class="tag-title">Overloads:</dt>
-  <dd class="tag-content">
-    
-      
-      <div class="panel panel-default">
-        <div class="panel-heading overload-header">
-          <span class="path"><strong>execute_async</strong></span>(statement, *args, options = nil) 
-        </div>
-        <div class="panel-body overload-body">
-          <p>Executes a statement using the deprecated splat-style way of passing
+  <p>Executes a statement using the deprecated splat-style way of passing
 positional arguments/</p>
 
 <dl class="dl-horizontal notes">
@@ -308,10 +338,6 @@ positional arguments to paramterized query or prepared statement.
 
 
 </dl>
-        </div>
-      </div>
-    
-  </dd>
 <dt class="tag-title">
   Parameters:
 </dt>
@@ -561,7 +587,7 @@ statement.
 </div>
 
   
-    <div class="panel panel-default" id="execute-instance_method">
+    <div class="panel panel-default member-definition" id="execute-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -581,16 +607,7 @@ statement.
 <dl class="tags">
   
 
-  <dt class="tag-title">Overloads:</dt>
-  <dd class="tag-content">
-    
-      
-      <div class="panel panel-default">
-        <div class="panel-heading overload-header">
-          <span class="path"><strong>execute</strong></span>(statement, *args, options = nil) 
-        </div>
-        <div class="panel-body overload-body">
-          <p>Executes a statement using the deprecated splat-style way of passing
+  <p>Executes a statement using the deprecated splat-style way of passing
 positional arguments/</p>
 
 <dl class="dl-horizontal notes">
@@ -687,10 +704,6 @@ positional arguments to paramterized query or prepared statement.
 
 
 </dl>
-        </div>
-      </div>
-    
-  </dd>
 <dt class="tag-title">
   Parameters:
 </dt>
@@ -874,7 +887,7 @@ within the <code>:timeout</code> given
 </div>
 
   
-    <div class="panel panel-default" id="prepare_async-instance_method">
+    <div class="panel panel-default member-definition" id="prepare_async-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1049,7 +1062,7 @@ prepared statement
 </div>
 
   
-    <div class="panel panel-default" id="prepare-instance_method">
+    <div class="panel panel-default member-definition" id="prepare-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1174,7 +1187,7 @@ prepared statement
     
     
     
-    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:prepare_async</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
+    <dd class="spec-code"><pre class="highlight"><code><span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:prepare_async</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span>
 <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></code></pre></dd>
   
@@ -1187,7 +1200,7 @@ prepared statement
 </div>
 
   
-    <div class="panel panel-default" id="logged_batch-instance_method">
+    <div class="panel panel-default member-definition" id="logged_batch-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1293,7 +1306,7 @@ a given block</p>
 </div>
 
   
-    <div class="panel panel-default" id="unlogged_batch-instance_method">
+    <div class="panel panel-default member-definition" id="unlogged_batch-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1398,7 +1411,7 @@ to a given block</p>
     
     
     
-    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s1">'batch'</span><span class="p">)</span>
+    <dd class="spec-code"><pre class="highlight"><code><span class="n">batch</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s1">'batch'</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="no">Statements</span><span class="o">::</span><span class="no">Batch</span><span class="o">::</span><span class="no">Unlogged</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:new</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">unlogged_batch</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></code></pre></dd>
   
@@ -1411,7 +1424,7 @@ to a given block</p>
 </div>
 
   
-    <div class="panel panel-default" id="counter_batch-instance_method">
+    <div class="panel panel-default member-definition" id="counter_batch-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1516,7 +1529,7 @@ to a given block</p>
     
     
     
-    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">batch</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s1">'batch'</span><span class="p">)</span>
+    <dd class="spec-code"><pre class="highlight"><code><span class="n">batch</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s1">'batch'</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="no">Statements</span><span class="o">::</span><span class="no">Batch</span><span class="o">::</span><span class="no">Counter</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:new</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">counter_batch</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span></code></pre></dd>
   
@@ -1529,7 +1542,7 @@ to a given block</p>
 </div>
 
   
-    <div class="panel panel-default" id="close_async-instance_method">
+    <div class="panel panel-default member-definition" id="close_async-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1598,7 +1611,7 @@ self once closed
     
     
     
-    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">client</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:close</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="no">Ione</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">resolved</span><span class="p">)</span>
+    <dd class="spec-code"><pre class="highlight"><code><span class="n">expect</span><span class="p">(</span><span class="n">client</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:close</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="no">Ione</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">resolved</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">close_async</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">have_received</span><span class="p">(</span><span class="ss">:fulfill</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">with</span><span class="p">(</span><span class="n">session</span><span class="p">)</span></code></pre></dd>
   
@@ -1611,7 +1624,7 @@ self once closed
 </div>
 
   
-    <div class="panel panel-default" id="close-instance_method">
+    <div class="panel panel-default member-definition" id="close-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1687,7 +1700,7 @@ self once closed
     
     
     
-    <dd class="spec-code"><pre class="highlight"><code class="ruby"><span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:close_async</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">no_args</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
+    <dd class="spec-code"><pre class="highlight"><code><span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:close_async</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">no_args</span><span class="p">).</span><span class="nf">and_return</span><span class="p">(</span><span class="n">promise</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">promise</span><span class="p">).</span><span class="nf">to</span> <span class="n">receive</span><span class="p">(</span><span class="ss">:get</span><span class="p">).</span><span class="nf">once</span><span class="p">.</span><span class="nf">and_return</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span>
 <span class="n">expect</span><span class="p">(</span><span class="n">session</span><span class="p">.</span><span class="nf">close</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="s1">'success'</span><span class="p">)</span></code></pre></dd>
   
@@ -1700,7 +1713,7 @@ self once closed
 </div>
 
   
-    <div class="panel panel-default" id="inspect-instance_method">
+    <div class="panel panel-default member-definition" id="inspect-instance_method">
   <div class="panel-heading method-header">
   
     
@@ -1761,153 +1774,82 @@ self once closed
 
   
 </div>
+
+
         </div>
-        <nav class="col-md-3 side-nav">
-          <ol class="nav nav-pills nav-stacked toc" data-spy="affix" data-offset-top="60" data-offset-bottom="25">
-            
-            
-
-<li><a href="../address_resolution/">AddressResolution</a></li>
-
-
-
-<li><a href="../auth/">Auth</a></li>
-
-
-
-<li><a href="../cluster/">Cluster</a></li>
-
-
-
-<li><a href="../column/">Column</a></li>
-
-
-
-<li><a href="../compression/">Compression</a></li>
-
-
-
-<li><a href="../error/">Error</a></li>
-
-
-
-<li><a href="../errors/">Errors</a></li>
-
-
-
-<li><a href="../execution/">Execution</a></li>
-
-
-
-<li><a href="../future/">Future</a></li>
-
-
-
-<li><a href="../host/">Host</a></li>
-
-
-
-<li><a href="../keyspace/">Keyspace</a></li>
-
-
-
-<li><a href="../listener/">Listener</a></li>
-
-
-
-<li><a href="../load_balancing/">LoadBalancing</a></li>
-
-
-
-<li><a href="../reconnection/">Reconnection</a></li>
-
-
-
-<li><a href="../result/">Result</a></li>
-
-
-
-<li><a href="../retry/">Retry</a></li>
-
-
-
-<li class="active">
-  <a href="./">Session</a>
-  
-</li>
-
-
-
-<li><a href="../statement/">Statement</a></li>
-
-
-
-<li><a href="../statements/">Statements</a></li>
-
-
-
-<li><a href="../table/">Table</a></li>
-
-
-
-<li><a href="../time_uuid/">TimeUuid</a></li>
-
-
-
-<li><a href="../uuid/">Uuid</a></li>
-
-
+        <div class="col-md-3">
+          <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div id="table-of-contents-heading" class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#navigation" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">Contents</a>
+                </h4>
+              </div>
+              <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
+                <div class="panel-body">
+                  <ol class="nav nav-pills nav-stacked toc">
+<li><a href="#inherits">Inherits
+</a></li>
+<li><a href="#extends">Extends
+</a></li>
+<li><a href="#methods">Methods
+</a></li>
+</ol>
+                </div>
+              </div>
+            </div>
 
             
-          </ol>
-        </nav>
+          </div>
+        </div>
       </div>
     </div>
 
+    
     <footer class="container text-muted">
       <ul class="list-inline">
-        <li>v2.0.0</li>
-        <li>·</li>
+      
+        
         <li>
-          <a href="https://github.com/datastax/ruby-driver">Code</a>
+          <a href="https://github.com/datastax/ruby-driver/">Code</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="http://datastax.github.io/ruby-driver/">Docs</a>
         </li>
+      
         <li>·</li>
         <li>
-          <a href="https://datastax-oss.atlassian.net/browse/RUBY">Issues</a>
+          <a href="https://datastax-oss.atlassian.net/browse/RUBY/">Issues</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="https://groups.google.com/a/lists.datastax.com/forum/#!forum/ruby-driver-user">Mailing List</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="irc://irc.freenode.net/datastax-drivers">IRC Channel</a>
         </li>
+      
         <li>·</li>
         <li>
           <a href="https://github.com/datastax/ruby-driver/releases">Releases</a>
         </li>
+      
       </ul>
     </footer>
-    <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+    
+
+    <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script src="../../js/angular.js"></script>
     <script src="../../js/mousetrap.js"></script>
     <script src="../../js/hotkeys.js"></script>
     <script src="../../js/ZeroClipboard.js"></script>
+    <script src="../../js/lunr.js"></script>
     <script src="../../js/app.js"></script>
-    <script>
-     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-54260831-1', 'auto');
-      ga('send', 'pageview');
-    </script>
   </body>
 </html>
