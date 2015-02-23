@@ -52,7 +52,7 @@
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.0.1')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.1.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -71,12 +71,14 @@
               <li>
                 <div class="dropdown">
                   <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    v2.0.1
+                    v2.1.0
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
                   
-                    <li class="disabled"><a href="./">v2.0.1</a></li>
+                    <li class="disabled"><a href="./">v2.1.0</a></li>
+                  
+                    <li><a href="../../v2.0.1/api/session/">v2.0.1</a></li>
                   
                     <li><a href="../../v2.0.0/api/session/">v2.0.0</a></li>
                   
@@ -234,37 +236,13 @@
 <dl class="dl-horizontal notes">
 
 <dt><span class="label label-primary">Note</span></dt>
-<dd>Positional arguments for simple statements are only supported on
+<dd>Positional arguments for simple statements are only supported
 starting with Apache Cassandra 2.0 and above.
 </dd>
 
-
-</dl>
-<dl class="tags">
-  
-
-  <dt class="tag-title">Overloads:</dt>
-  <dd class="tag-content">
-    
-      
-      <div class="panel panel-default">
-        <div class="panel-heading overload-header">
-          <span class="path"><strong>execute_async</strong></span>(statement, *args, options = nil) 
-        </div>
-        <div class="panel-body overload-body">
-          <p>Executes a statement using the deprecated splat-style way of passing
-positional arguments/</p>
-
-<dl class="dl-horizontal notes">
-<dt><span class="label label-warning">Deprecated</span></dt>
-<dd>This style will soon be removed, use the <code>:arguments</code>
-option to provide positional arguments instead.
-</dd>
-
 <dt><span class="label label-primary">Note</span></dt>
-<dd>Last argument will be treated as <code>options</code> if it is a <code>Hash</code>.
-Therefore, make sure to pass empty <code>options</code> when executing a
-statement with the last parameter required to be a map datatype.
+<dd>Named arguments for simple statements are only supported
+starting with Apache Cassandra 2.1 and above.
 </dd>
 
 
@@ -307,99 +285,17 @@ statement with the last parameter required to be a map datatype.
     
       <tr>
         
-        <td class="name"><var>args</var></td>
-        
-        
-        <td class="type">*<code>Object</code>
-</td>
-        
-        <td class="details">
-          
-          
-          <strong>this style of positional arguments is
-deprecated, please use the <code>:arguments</code> options instead</strong> -
-positional arguments to paramterized query or prepared statement.
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
         <td class="name"><var>options</var></td>
         
         
-        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
+        <td class="type"><code>Hash</code></td>
         
         <td class="details">
           
             <em class="default">(defaults to: <code>nil</code>)</em>
           
           
-          a customizable set of options
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-
-
-</dl>
-        </div>
-      </div>
-    
-  </dd>
-<dt class="tag-title">
-  Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>statement</var></td>
-        
-        
-        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>)</td>
-        
-        <td class="details">
-          
-          
-          statement to execute
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
-        <td class="name"><var>options</var></td>
-        
-        
-        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
-        
-        <td class="details">
-          
-            <em class="default">(defaults to: <code>nil</code>)</em>
-          
-          
-          a customizable set of options
+          (nil) a customizable set of options
 
           
         </td>
@@ -532,7 +428,7 @@ initial request.
         
         <tr>
           <td class="name"><var>:arguments</var></td>
-          <td class="type"><code>Array</code></td>
+          <td class="type">(<code>Array</code> or <code>Hash</code>)</td>
           <td class="details">
             <span class="default">
               
@@ -541,8 +437,8 @@ initial request.
               
             </span>
             
-              positional arguments for the
-statement.
+              positional or named
+arguments for the statement.
 
             
           </td>
@@ -621,117 +517,6 @@ statement.
 </dl>
 <dl class="tags">
   
-
-  <dt class="tag-title">Overloads:</dt>
-  <dd class="tag-content">
-    
-      
-      <div class="panel panel-default">
-        <div class="panel-heading overload-header">
-          <span class="path"><strong>execute</strong></span>(statement, *args, options = nil) 
-        </div>
-        <div class="panel-body overload-body">
-          <p>Executes a statement using the deprecated splat-style way of passing
-positional arguments/</p>
-
-<dl class="dl-horizontal notes">
-<dt><span class="label label-warning">Deprecated</span></dt>
-<dd>This style will soon be removed, use the <code>:arguments</code>
-option to provide positional arguments instead.
-</dd>
-
-<dt><span class="label label-primary">Note</span></dt>
-<dd>Last argument will be treated as <code>options</code> if it is a <code>Hash</code>.
-Therefore, make sure to pass empty <code>options</code> when executing a
-statement with the last parameter required to be a map datatype.
-</dd>
-
-
-</dl>
-<dl class="tags">
-  
-<dt class="tag-title">
-  Parameters:
-</dt>
-<dd class="tag-content">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        
-        <th class="name">Name</th>
-        
-        
-        <th class="type">Type</th>
-        
-        <th class="details">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <tr>
-        
-        <td class="name"><var>statement</var></td>
-        
-        
-        <td class="type">(<code>String</code>, <code><a href="../statements/simple/" title="Cassandra::Statements::Simple (class)">Statements::Simple</a></code>, <code><a href="../statements/bound/" title="Cassandra::Statements::Bound (class)">Statements::Bound</a></code> or <code><a href="../statements/prepared/" title="Cassandra::Statements::Prepared (class)">Statements::Prepared</a></code>)</td>
-        
-        <td class="details">
-          
-          
-          statement to execute
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
-        <td class="name"><var>args</var></td>
-        
-        
-        <td class="type">*<code>Object</code>
-</td>
-        
-        <td class="details">
-          
-          
-          <strong>this style of positional arguments is
-deprecated, please use the <code>:arguments</code> options instead</strong> -
-positional arguments to paramterized query or prepared statement.
-
-          
-        </td>
-      </tr>
-    
-      <tr>
-        
-        <td class="name"><var>options</var></td>
-        
-        
-        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
-        
-        <td class="details">
-          
-            <em class="default">(defaults to: <code>nil</code>)</em>
-          
-          
-          a customizable set of options
-
-          
-        </td>
-      </tr>
-    
-    </tbody>
-  </table>
-</dd>
-
-
-
-</dl>
-        </div>
-      </div>
-    
-  </dd>
 <dt class="tag-title">
   Parameters:
 </dt>
@@ -771,14 +556,14 @@ positional arguments to paramterized query or prepared statement.
         <td class="name"><var>options</var></td>
         
         
-        <td class="type">(<code>nil</code> or <code>Hash</code>)</td>
+        <td class="type"><code>Hash</code></td>
         
         <td class="details">
           
             <em class="default">(defaults to: <code>nil</code>)</em>
           
           
-          a customizable set of options
+          (nil) a customizable set of options
 
           
         </td>
@@ -981,7 +766,7 @@ prepare
             <em class="default">(defaults to: <code>nil</code>)</em>
           
           
-          a customizable set of options
+          (nil) a customizable set of options
 
           
         </td>
