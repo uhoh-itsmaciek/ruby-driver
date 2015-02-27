@@ -52,7 +52,7 @@
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.1.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.1.1')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -71,12 +71,14 @@
               <li>
                 <div class="dropdown">
                   <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    v2.1.0
+                    v2.1.1
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
                   
-                    <li class="disabled"><a href="./">v2.1.0</a></li>
+                    <li class="disabled"><a href="./">v2.1.1</a></li>
+                  
+                    <li><a href="../../../v2.1.0/features/load_balancing/token_aware/">v2.1.0</a></li>
                   
                     <li><a href="../../../v2.0.1/features/load_balancing/token_aware/">v2.0.1</a></li>
                   
@@ -183,6 +185,46 @@ onto the wrapped policy plan.</p>
    <span class="s1">'Mick Jager'</span><span class="p">,</span>
    <span class="p">{</span><span class="s1">'soundtrack'</span><span class="p">,</span> <span class="s1">'1991'</span><span class="p">}</span>
 <span class="p">);</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">playlists</span> <span class="p">(</span>
+  <span class="n">id</span> <span class="k">uuid</span><span class="p">,</span>
+  <span class="n">title</span> <span class="k">text</span><span class="p">,</span>
+  <span class="n">album</span> <span class="k">text</span><span class="p">,</span>
+  <span class="n">artist</span> <span class="k">text</span><span class="p">,</span>
+  <span class="n">song_id</span> <span class="k">uuid</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">((</span><span class="n">id</span><span class="p">,</span> <span class="n">title</span><span class="p">),</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">2cc9ccb7-6221-4ccb-8387-f22b6a1b354d</span><span class="p">,</span>
+   <span class="mi">756716f7-2e54-4715-9f00-91dcbea6cf50</span><span class="p">,</span>
+   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
+   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
+   <span class="s1">'Joséphine Baker'</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">2cc9ccb7-6221-4ccb-8387-f22b6a1b354d</span><span class="p">,</span>
+   <span class="mi">f6071e72-48ec-4fcb-bf3e-379c8a696488</span><span class="p">,</span>
+   <span class="s1">'Die Mösch'</span><span class="p">,</span>
+   <span class="s1">'In Gold'</span><span class="p">,</span>
+   <span class="s1">'Willi Ostermann'</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">3fd2bedf-a8c8-455a-a462-0cd3a4353c54</span><span class="p">,</span>
+   <span class="mi">fbdf82ed-0063-4796-9c7c-a3d4f47b4b25</span><span class="p">,</span>
+   <span class="s1">'Memo From Turner'</span><span class="p">,</span>
+   <span class="s1">'Performance'</span><span class="p">,</span>
+   <span class="s1">'Mick Jager'</span>
+<span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">playlists</span> <span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">song_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">album</span><span class="p">,</span> <span class="n">artist</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span>
+   <span class="mi">3fd2bedf-a8c8-455a-a462-0cd3a4353c54</span><span class="p">,</span>
+   <span class="mi">756716f7-2e54-4715-9f00-91dcbea6cf50</span><span class="p">,</span>
+   <span class="s1">'La Petite Tonkinoise'</span><span class="p">,</span>
+   <span class="s1">'Bye Bye Blackbird'</span><span class="p">,</span>
+   <span class="s1">'Joséphine Baker'</span>
+<span class="p">);</span>
 </code></pre>
 </dd>
 </dl>
@@ -252,6 +294,41 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 </code></pre>
 </dd>
 </dl>
+<h2 id="requests-with-compound-partition-keys-are-routed-to-the-primary-replica">Requests with compound partition keys are routed to the primary replica<a class="anchor" href="#requests-with-compound-partition-keys-are-routed-to-the-primary-replica" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+</h2>
+<dl class="steps">
+<dt>Given </dt>
+<dd>the following example:<pre class="highlight"><code><span class="nb">require</span> <span class="s1">'cassandra'</span>
+
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">DCAwareRoundRobin</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">policy</span>    <span class="o">=</span> <span class="no">Cassandra</span><span class="o">::</span><span class="no">LoadBalancing</span><span class="o">::</span><span class="no">Policies</span><span class="o">::</span><span class="no">TokenAware</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+<span class="n">cluster</span>   <span class="o">=</span> <span class="no">Cassandra</span><span class="p">.</span><span class="nf">cluster</span><span class="p">(</span><span class="ss">load_balancing_policy: </span><span class="n">policy</span><span class="p">)</span>
+<span class="n">session</span>   <span class="o">=</span> <span class="n">cluster</span><span class="p">.</span><span class="nf">connect</span><span class="p">(</span><span class="s1">'simplex'</span><span class="p">)</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s2">"SELECT token(id, title) FROM playlists WHERE id = ? AND title = ?"</span><span class="p">)</span>
+
+<span class="p">[</span>
+  <span class="p">[</span><span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'2cc9ccb7-6221-4ccb-8387-f22b6a1b354d'</span><span class="p">),</span> <span class="s1">'La Petite Tonkinoise'</span><span class="p">],</span>
+  <span class="p">[</span><span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'2cc9ccb7-6221-4ccb-8387-f22b6a1b354d'</span><span class="p">),</span> <span class="s1">'Die Mösch'</span><span class="p">],</span>
+  <span class="p">[</span><span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'3fd2bedf-a8c8-455a-a462-0cd3a4353c54'</span><span class="p">),</span> <span class="s1">'Memo From Turner'</span><span class="p">],</span>
+  <span class="p">[</span><span class="no">Cassandra</span><span class="o">::</span><span class="no">Uuid</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'3fd2bedf-a8c8-455a-a462-0cd3a4353c54'</span><span class="p">),</span> <span class="s1">'La Petite Tonkinoise'</span><span class="p">],</span>
+<span class="p">].</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arguments</span><span class="o">|</span>
+  <span class="n">result</span>  <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="ss">arguments: </span><span class="n">arguments</span><span class="p">)</span>
+  <span class="n">replica</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">execution_info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">first</span>
+  <span class="n">total</span>   <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="nf">execution_info</span><span class="p">.</span><span class="nf">hosts</span><span class="p">.</span><span class="nf">size</span>
+  <span class="nb">puts</span> <span class="s2">"uuid=</span><span class="si">#{</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> title=</span><span class="si">#{</span><span class="n">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> token=</span><span class="si">#{</span><span class="n">result</span><span class="p">.</span><span class="nf">first</span><span class="p">[</span><span class="s1">'token(id, title)'</span><span class="p">]</span><span class="si">}</span><span class="s2"> replica=</span><span class="si">#{</span><span class="n">replica</span><span class="p">.</span><span class="nf">ip</span><span class="si">}</span><span class="s2"> total=</span><span class="si">#{</span><span class="n">total</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+</code></pre>
+</dd>
+<dt>When </dt>
+<dd>it is executed</dd>
+<dt>Then </dt>
+<dd>its output should contain:<pre><code>uuid=2cc9ccb7-6221-4ccb-8387-f22b6a1b354d title=2cc9ccb7-6221-4ccb-8387-f22b6a1b354d token=6231549073425362204 replica=127.0.0.1 total=1
+uuid=2cc9ccb7-6221-4ccb-8387-f22b6a1b354d title=2cc9ccb7-6221-4ccb-8387-f22b6a1b354d token=-115815985718975675 replica=127.0.0.2 total=1
+uuid=3fd2bedf-a8c8-455a-a462-0cd3a4353c54 title=3fd2bedf-a8c8-455a-a462-0cd3a4353c54 token=-463065628644986368 replica=127.0.0.2 total=1
+uuid=3fd2bedf-a8c8-455a-a462-0cd3a4353c54 title=3fd2bedf-a8c8-455a-a462-0cd3a4353c54 token=-8087998491924709995 replica=127.0.0.2 total=1
+</code></pre>
+</dd>
+</dl>
 </div>
 
         </div>
@@ -271,6 +348,8 @@ uuid=fbdf82ed-0063-4796-9c7c-a3d4f47b4b25 token=2440231132048646025 replica=127.
 <li><a href="#requests-are-routed-to-the-primary-replica">Requests are routed to the primary replica
 </a></li>
 <li><a href="#requests-are-routed-according-to-wrapped-policy-plan-when-primary-replica-is-down">Requests are routed according to wrapped policy plan when primary replica is down
+</a></li>
+<li><a href="#requests-with-compound-partition-keys-are-routed-to-the-primary-replica">Requests with compound partition keys are routed to the primary replica
 </a></li>
 </ol>
                 </div>

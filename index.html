@@ -52,7 +52,7 @@
           </ul>
           <form class="navbar-form form-search navbar-right dropdown visible-lg-block" ng-class="{open: hasResults}" role="search" ng-submit="submit()">
             <div class="form-group has-feedback">
-              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.1.0')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
+              <input type="search" class="form-control input-sm mousetrap" placeholder="Search..." ng-model="q" ng-change="search('v2.1.1')" ng-disabled="!searchReady" disabled data-hotkey="{down: moveDown, up: moveUp, esc: reset}" data-search>
             </div>
             <ul class="dropdown-menu" role="menu">
               <li ng-repeat="result in results" ng-class="{'bg-warning': $index == current}"><a ng-href="{{basePath}}{{result.path}}"><span ng-bind-html="summary(result)"></span></a></li>
@@ -71,12 +71,14 @@
               <li>
                 <div class="dropdown">
                   <button id="current-version" class="btn btn-default btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    v2.1.0
+                    v2.1.1
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="current-version">
                   
-                    <li class="disabled"><a href="./">v2.1.0</a></li>
+                    <li class="disabled"><a href="./">v2.1.1</a></li>
+                  
+                    <li><a href="v2.1.0/">v2.1.0</a></li>
                   
                     <li><a href="v2.0.1/">v2.0.1</a></li>
                   
@@ -218,7 +220,7 @@ the Cassandra Query Language version 3 (CQL3) and Cassandra’s native protocol.
 
 <p>Some of the new features added to the driver have unfortunately led to changes in the original cql-rb API. In the examples directory, you can find <a href="https://github.com/datastax/ruby-driver/blob/master/examples/cql-rb-wrapper.rb">an example of how to wrap the ruby driver to achieve almost complete interface parity with cql-rb</a> to assist you with gradual upgrade.</p>
 
-<h2 id="what-s-new-in-v2-1-0">What’s new in v2.1.0<a class="anchor" href="#what-s-new-in-v2-1-0" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
+<h2 id="what-s-new-in-v2-1-1">What’s new in v2.1.1<a class="anchor" href="#what-s-new-in-v2-1-1" aria-hidden="true"><span class="glyphicon glyphicon-link"></span></a>
 </h2>
 
 <p>Features:</p>
@@ -335,7 +337,7 @@ bundle <span class="nb">exec </span>rake <span class="nb">test</span> <span clas
 </a></li>
 <li><a href="#upgrading-from-cql-rb">Upgrading from cql-rb
 </a></li>
-<li><a href="#what-s-new-in-v2-1-0">What’s new in v2.1.0
+<li><a href="#what-s-new-in-v2-1-1">What’s new in v2.1.1
 </a></li>
 <li><a href="#code-examples">Code examples
 </a></li>
