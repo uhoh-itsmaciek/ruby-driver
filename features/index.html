@@ -159,7 +159,7 @@
 </h3>
 
 <p><strong>If you’re using Cassandra 2.0 or later</strong> you no longer have to build CQL strings when you want to insert a value in a query, there’s a new feature that lets you bind values with regular statements:</p>
-<pre class="highlight"><code><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">)</span>
+<pre class="highlight"><code><span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="ss">arguments: </span><span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="s1">'Sam'</span><span class="p">])</span>
 </code></pre>
 <p>If you find yourself doing this often, it’s better to use prepared statements. As a rule of thumb, if your application is sending a request more than once, a prepared statement is almost always the right choice.</p>
 
@@ -178,7 +178,7 @@
 
 <span class="c1"># execute all statements in background</span>
 <span class="n">futures</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span><span class="o">|</span>
-  <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+  <span class="n">session</span><span class="p">.</span><span class="nf">execute_async</span><span class="p">(</span><span class="s2">"UPDATE users SET age = ? WHERE user_name = ?"</span><span class="p">,</span> <span class="ss">arguments: </span><span class="p">[</span><span class="n">age</span><span class="p">,</span> <span class="n">username</span><span class="p">])</span>
 <span class="k">end</span>
 
 <span class="c1"># block until both statements executed</span>
@@ -192,7 +192,7 @@
 <p>The driver supports prepared statements. Use <code>#prepare</code> to create a statement object, and then call <code>#execute</code> on that object to run a statement. You must supply values for all bound parameters when you call <code>#execute</code>.</p>
 <pre class="highlight"><code><span class="n">statement</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="nf">prepare</span><span class="p">(</span><span class="s1">'INSERT INTO users (username, email) VALUES (?, ?)'</span><span class="p">)</span>
 
-<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="s1">'avalanche123'</span><span class="p">,</span> <span class="s1">'bulat.shakirzyanov@datastax.com'</span><span class="p">)</span>
+<span class="n">session</span><span class="p">.</span><span class="nf">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">,</span> <span class="ss">arguments: </span><span class="p">[</span><span class="s1">'avalanche123'</span><span class="p">,</span> <span class="s1">'bulat.shakirzyanov@datastax.com'</span><span class="p">])</span>
 </code></pre>
 <p>You should prepare a statement for a given query <strong>only</strong> once and then resue it by calling #execute. Re-preparing the same statement will have a negative impact on the performance and should be avoided.</p>
 
