@@ -37,13 +37,12 @@
         <div class="collapse navbar-collapse" ng-controller="search">
           <ul class="nav navbar-nav">
             
-            <li>
-              <a href="../">Introduction</a>
-            </li>
+            
             
             <li class="active">
               <a href="./">Features</a>
             </li>
+            
             
             <li>
               <a href="../api/">API docs</a>
@@ -101,7 +100,7 @@
               
               
               
-              <li><a href="../">Introduction</a></li>
+              <li><a href="../">Home</a></li>
               
               
               
@@ -482,10 +481,12 @@
         </div>
         <div class="col-md-3">
           <div id="navigation" class="panel-group side-nav" data-spy="affix" data-offset-top="60" data-offset-bottom="54" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
+            <div id="table-of-contents-panel" class="panel panel-default">
               <div id="table-of-contents-heading" class="panel-heading" role="tab">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#navigation" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">Contents</a>
+                  <a data-toggle="collapse" href="#table-of-contents" aria-expanded="true" aria-controls="table-of-contents">
+                    Contents<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
                 </h4>
               </div>
               <div id="table-of-contents" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="table-of-contents-heading">
@@ -554,18 +555,20 @@
             </div>
 
             
-            <div class="panel panel-default">
+            <div id="read-more-panel" class="panel panel-default">
               <div id="read-more-heading" class="panel-heading" role="tab">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#navigation" href="#read-more" aria-expanded="true" aria-controls="read-more">Read More</a>
+                  <a data-toggle="collapse" href="#read-more" aria-expanded="true" aria-controls="read-more">
+                    Read More<i class="pull-right glyphicon glyphicon-chevron-up"></i>
+                  </a>
                 </h4>
               </div>
-              <div id="read-more" class="panel-collapse collapse" role="tabpanel" aria-labelledby="read-more-heading">
+              <div id="read-more" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="read-more-heading">
                 <div class="panel-body">
                   <ol class="nav nav-pills nav-stacked">
                   
                     <li>
-                      <a href="basics/">Basics</a>
+                      <a href="address_resolution/">Address resolution</a>
                     </li>
                   
                     <li>
@@ -573,7 +576,7 @@
                     </li>
                   
                     <li>
-                      <a href="security/">Security</a>
+                      <a href="basics/">Basics</a>
                     </li>
                   
                     <li>
@@ -581,15 +584,11 @@
                     </li>
                   
                     <li>
+                      <a href="error_handling/">Error Handling</a>
+                    </li>
+                  
+                    <li>
                       <a href="load_balancing/">Load Balancing</a>
-                    </li>
-                  
-                    <li>
-                      <a href="retry_policies/">Retry Policies</a>
-                    </li>
-                  
-                    <li>
-                      <a href="state_listeners/">State Listeners</a>
                     </li>
                   
                     <li>
@@ -597,11 +596,15 @@
                     </li>
                   
                     <li>
-                      <a href="error_handling/">Error Handling</a>
+                      <a href="retry_policies/">Retry Policies</a>
                     </li>
                   
                     <li>
-                      <a href="address_resolution/">Address resolution</a>
+                      <a href="security/">Security</a>
+                    </li>
+                  
+                    <li>
+                      <a href="state_listeners/">State Listeners</a>
                     </li>
                   
                   </ol>
