@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email         = ['theo@iconara.net', 'bulat.shakirzyanov@datastax.com']
   s.homepage      = 'http://datastax.github.io/ruby-driver'
   s.summary       = %q{Datastax Ruby Driver for Apache Cassandra}
-  s.description   = %q{A pure Ruby driver for Apache Cassandra}
+  s.description   = %q{A Ruby driver for Apache Cassandra}
   s.license       = 'Apache License 2.0'
   s.files         = Dir['lib/**/*.rb', 'README.md', '.yardopts']
   s.require_paths = %w(lib)
